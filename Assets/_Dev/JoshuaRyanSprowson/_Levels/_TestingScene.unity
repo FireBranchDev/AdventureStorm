@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 209745338}
   m_Layer: 0
-  m_Name: '@UI'
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000012912081574, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_Name
-      value: KnightGray
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalScale.x
@@ -422,11 +422,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -7.99
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -4.86
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -511,8 +511,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1000012912081574, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1323409133}
   m_SourcePrefab: {fileID: 100100000, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
+--- !u!1 &1323409132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000012912081574, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
+  m_PrefabInstance: {fileID: 1323409131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1323409133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323409132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bdcdbb5a132d644ad31c94bfe492d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovementSpeed: 5
 --- !u!1 &1411757181
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1411757182}
   m_Layer: 0
-  m_Name: '@System'
+  m_Name: System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
