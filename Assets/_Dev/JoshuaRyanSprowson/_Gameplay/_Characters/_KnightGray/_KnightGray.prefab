@@ -793,6 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackMouseButton: 0
+  _dodgeButton: 32
 --- !u!114 &5270749013075987215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,10 +806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 759c34035bdfb6840b7678a6ba8853df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 5
-  Damage: 5
-  AttackRange: 5
   MovementSpeed: 5
+  _dodgeDistance: 5
 --- !u!1 &1000013038388218
 GameObject:
   m_ObjectHideFlags: 0
