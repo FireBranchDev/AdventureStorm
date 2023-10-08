@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace AdventureStorm
 {
     /// <summary>
@@ -37,6 +36,17 @@ namespace AdventureStorm
                 if (_playerInputManager.IsAttacking && !_playerInputManager.IsMoving)
                 {
                     Attack();
+                }
+                else if (_playerInputManager.IsDodging)
+                {
+                    if (_playerInputManager.IsDodgingLeft)
+                    {
+                        Debug.Log("Dodging left");
+                    }
+                    else if (_playerInputManager.IsDodgingRight)
+                    {
+                        Debug.Log("Dodging right");
+                    }
                 }
                 else if (!_playerInputManager.IsAttacking && !_playerInputManager.IsMoving)
                 {
