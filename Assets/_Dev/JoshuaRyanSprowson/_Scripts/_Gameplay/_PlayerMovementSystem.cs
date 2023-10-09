@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace AdventureStorm
@@ -14,6 +16,31 @@ namespace AdventureStorm
         /// </summary>
         public float MovementSpeed = 5f;
 
+        [Tooltip("How far is the distance that the character can dodge?")]
+        /// <summary>
+        /// How far is the distance that the character can dodge
+        ///</summary>
+        [SerializeField] private float _dodgeDistance = 0.75f;
+
+        [Tooltip("How much stamina for dodging does the character have?")]
+        /// <summary>
+        /// How much stamina for dodging does the character have
+        /// </summary>
+        [SerializeField] private int _dodgeStamina = 4;
+
+
+        [Tooltip("What height does the character reach when dodging?")]
+        /// <summary>
+        /// What height does the character reach when dodging
+        /// </summary>
+        [SerializeField] private float _dodgeHeight = 0.25f;
+
+        [Tooltip("How long in seconds should it take for the stamina required for dodging to recharge?")]
+        /// <summary>
+        /// How long in seconds should it take for the stamina required for dodging to recharge
+        /// </summary>
+        [SerializeField] private float _dodgingStaminaRechargeDurationInSeconds = 3f;
+
         private Animator _animator;
 
         private _PlayerInputManager _playerInputManager;
@@ -21,12 +48,25 @@ namespace AdventureStorm
         private int _isIdleHash = Animator.StringToHash("IsIdle");
         private int _isMovingHash = Animator.StringToHash("IsMoving");
         private int _attackingTriggerHash = Animator.StringToHash("TrAttacking");
+        private int _isDodgingHash = Animator.StringToHash("IsDodging");
+
+        private int _maxDodgeStamina;
+
+        private float _maxDodgeHeight = 0f;
+
+        private bool _canDodge = true;
         #endregion
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _playerInputManager = GetComponent<_PlayerInputManager>();
+
+            _maxDodgeStamina = _dodgeStamina;
+
+            _maxDodgeHeight = transform.position.y + _dodgeHeight;
+
+            StartCoroutine(RechargeDodgeStamina());
         }
 
         private void Update()
@@ -39,13 +79,13 @@ namespace AdventureStorm
                 }
                 else if (_playerInputManager.IsDodging)
                 {
-                    if (_playerInputManager.IsDodgingLeft)
+                    if (_playerInputManager.IsDodgingLeft && _canDodge && _dodgeStamina > 0)
                     {
-                        Debug.Log("Dodging left");
+                        DodgeLeft();
                     }
-                    else if (_playerInputManager.IsDodgingRight)
+                    else if (_playerInputManager.IsDodgingRight && _canDodge && _dodgeStamina > 0)
                     {
-                        Debug.Log("Dodging right");
+                        DodgeRight();
                     }
                 }
                 else if (!_playerInputManager.IsAttacking && !_playerInputManager.IsMoving)
@@ -69,6 +109,72 @@ namespace AdventureStorm
         private void Attack()
         {
             _animator.SetTrigger(_attackingTriggerHash);
+        }
+
+        private void DodgeLeft()
+        {
+            _dodgeStamina--;
+            PlayDodgingAnimation();
+            Vector3 movement = new(-_dodgeDistance, _dodgeHeight);
+            transform.Translate(movement);
+
+            if (transform.position.y >= _maxDodgeHeight)
+            {
+                _canDodge = false;
+            }
+
+            StartCoroutine(DodgeFinished());
+        }
+
+        private void DodgeRight()
+        {
+            _dodgeStamina--;
+            PlayDodgingAnimation();
+            Vector3 movement = new(_dodgeDistance, _dodgeHeight);
+            transform.Translate(movement);
+
+            if (transform.position.y >= _maxDodgeHeight)
+            {
+                _canDodge = false;
+            }
+
+            StartCoroutine(DodgeFinished());
+        }
+
+        private void PlayDodgingAnimation()
+        {
+            _animator.SetBool(_isIdleHash, false);
+            _animator.SetBool(_isMovingHash, false);
+            _animator.SetBool(_isDodgingHash, true);
+        }
+
+        private IEnumerator DodgeFinished()
+        {
+            yield return new WaitForSeconds(0.3f);
+            Vector3 movement = new(0, -_dodgeHeight);
+            transform.Translate(movement);
+            _animator.SetBool(_isDodgingHash, false);
+            _animator.SetBool(_isIdleHash, true);
+            StartCoroutine(DodgeReset());
+        }
+
+        private IEnumerator DodgeReset()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _canDodge = true;
+        }
+
+        private IEnumerator RechargeDodgeStamina()
+        {
+            for(;;)
+            {
+                yield return new WaitForSecondsRealtime(_dodgingStaminaRechargeDurationInSeconds);
+
+                if (_dodgeStamina < _maxDodgeStamina && !_playerInputManager.IsDodging)
+                {
+                    _dodgeStamina++;
+                }
+            }
         }
 
         private void Idle()

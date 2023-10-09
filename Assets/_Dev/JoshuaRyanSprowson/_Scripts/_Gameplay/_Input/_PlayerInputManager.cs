@@ -26,6 +26,8 @@ namespace AdventureStorm
         #endregion
 
         #region Properties
+        public bool IsDirectionKeysPressed { get; private set; }
+        
         public bool IsMoving { get; private set; }
         public bool IsMovingLeft { get; private set; }
         public bool IsMovingRight { get; private set; }
@@ -40,17 +42,18 @@ namespace AdventureStorm
         private void Update()
         {
             float horizontalAxis = Input.GetAxis(Horizontal);
-            
-            IsMoving = horizontalAxis != 0 && !Input.GetKey(_dodgeButton);
-            IsMovingLeft = horizontalAxis < 0 && IsMoving;
-            IsMovingRight = horizontalAxis > 0 && IsMoving;
-            
-            IsAttacking = !IsMoving && Input.GetMouseButtonDown(attackMouseButton);
 
-            IsDodging = !IsMoving && Input.GetKey(_dodgeButton);
+            IsDirectionKeysPressed = horizontalAxis != 0;
 
-            IsDodgingLeft = IsDodging && horizontalAxis < 0;
-            IsDodgingRight = IsDodging && horizontalAxis > 0;
+            IsDodging = !IsMoving && !IsAttacking && IsDirectionKeysPressed && Input.GetKey(_dodgeButton);
+            IsMoving = !IsAttacking && !IsDodging && IsDirectionKeysPressed;
+            IsAttacking = !IsDodging && !IsMoving && Input.GetMouseButtonDown(attackMouseButton);
+
+            IsDodgingLeft = !IsMoving && !IsAttacking && IsDodging && horizontalAxis < 0;
+            IsDodgingRight = !IsMoving && !IsAttacking && IsDodging && horizontalAxis > 0;
+
+            IsMovingLeft = !IsDodging && !IsAttacking && IsMoving && horizontalAxis < 0;
+            IsMovingRight = !IsDodging && !IsAttacking && IsMoving && horizontalAxis > 0;
         }
     }
 }

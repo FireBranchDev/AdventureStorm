@@ -522,11 +522,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.99
+      value: -7.82
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.86
+      value: -4.81
       objectReference: {fileID: 0}
     - target: {fileID: 4000011675342040, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -631,6 +631,18 @@ PrefabInstance:
     - target: {fileID: 2410518042043500937, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270749013075987215, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
+      propertyPath: _dodgeHeight
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270749013075987215, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
+      propertyPath: _dodgeDistance
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270749013075987215, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
+      propertyPath: _dodgingStaminaRechargeDurationInSeconds
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 295307005679427294, guid: 29a7ae2e9ad952f4fa2f5938828d5c3e, type: 3}
