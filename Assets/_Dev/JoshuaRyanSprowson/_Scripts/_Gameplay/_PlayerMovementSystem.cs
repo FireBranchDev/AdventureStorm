@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace AdventureStorm
@@ -19,8 +18,8 @@ namespace AdventureStorm
 
         private _PlayerInputManager _playerInputManager;
 
-        private int _isIdleHash = Animator.StringToHash("IsIdle");
-        private int _isMovingHash = Animator.StringToHash("IsMoving");
+        private readonly int _isIdleHash = Animator.StringToHash("IsIdle");
+        private readonly int _isMovingHash = Animator.StringToHash("IsMoving");
         #endregion
 
         private void Start()
