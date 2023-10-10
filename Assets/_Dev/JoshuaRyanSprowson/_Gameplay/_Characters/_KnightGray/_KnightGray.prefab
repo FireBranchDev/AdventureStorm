@@ -682,6 +682,7 @@ GameObject:
   - component: {fileID: 114000011083442008}
   - component: {fileID: 9089742349384083574}
   - component: {fileID: 5270749013075987215}
+  - component: {fileID: 3562447653497848237}
   m_Layer: 0
   m_Name: _KnightGray
   m_TagString: Player
@@ -807,8 +808,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 5
-  _jumpHeight: 5
-  _dodgeDistance: 5
+--- !u!114 &3562447653497848237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012912081574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26acc6b73ad0bb747ad42e056f204cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dodgeDistance: 0.75
+  _dodgeStamina: 4
+  _dodgeHeight: 0.25
+  _dodgingStaminaRechargeDurationInSeconds: 3
 --- !u!1 &1000013038388218
 GameObject:
   m_ObjectHideFlags: 0
