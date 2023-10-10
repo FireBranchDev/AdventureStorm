@@ -8,6 +8,12 @@ namespace AdventureStorm
     /// </summary>
     public class _PlayerCombatSystem : MonoBehaviour
     {
+        #region Constant Fields
+
+        private const string EnemyTag = "Enemy";
+
+        #endregion
+
         #region Fields
 
         [Tooltip("How far is the distance that the character can dodge?")]
@@ -34,6 +40,18 @@ namespace AdventureStorm
         /// </summary>
         [SerializeField] private float _dodgingStaminaRechargeDurationInSeconds = 3f;
 
+        [Tooltip("How much should the attack damage be?")]
+        /// <summary>
+        /// How much should the attack damage be
+        /// </summary>
+        [SerializeField] private float _attackDamage = 2.5f;
+
+        [Tooltip("What is the attack range?")]
+        /// <summary>
+        /// What is the attack range
+        /// </summary>
+        [SerializeField] private float _attackRange = 3f;
+
         private Animator _animator;
 
         private _PlayerInputManager _playerInputManager;
@@ -46,7 +64,6 @@ namespace AdventureStorm
         private int _maximumDodgeStamina;
         private float _maximumDodgeHeight = 0f;
         private bool _canDodge = true;
-
         #endregion
 
         #region LifeCycle
@@ -80,6 +97,58 @@ namespace AdventureStorm
                     else if (_playerInputManager.IsDodgingRight && _canDodge && _dodgeStamina > 0)
                     {
                         DodgeRight();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// This runs once player's attacking animation has finished
+        /// </summary>
+        public void AttackFinished()
+        {
+            bool isFacingRight = transform.localScale.x > 0f;
+            // Generate a raycast towards the right side of the screen
+            if (isFacingRight)
+            {
+                RaycastHit2D raycast = Physics2D.Raycast(transform.position, transform.right);
+                if (raycast.collider != null)
+                {
+                    if (raycast.collider.CompareTag(EnemyTag))
+                    {
+                        var enemyPosition = raycast.collider.transform.position;
+                        var distance = Mathf.Abs(enemyPosition.x - transform.position.x);
+
+                        if (distance <= _attackRange)
+                        {
+                            Debug.Log("Hit an enemy");
+                            var enemyHealthSystem = raycast.collider.GetComponent<_IDamageable>();
+                            enemyHealthSystem.Damage(_attackDamage);
+                            Debug.Log($"Player health: {enemyHealthSystem.Health}");
+                            Debug.Log($"Player alive? {enemyHealthSystem.IsAlive}");
+                        }
+                    }
+                }
+            }
+            else // Generate a raycast towards the left side of the screen
+            {
+                RaycastHit2D raycast = Physics2D.Raycast(transform.position, -transform.right);
+                if (raycast.collider != null)
+                {
+                    var enemyPosition = raycast.collider.transform.position;
+                    var distance = Mathf.Abs(enemyPosition.x - transform.position.x);
+
+                    if (distance <= _attackRange)
+                    {
+                        Debug.Log("Hit an enemy");
+                        var enemyHealthSystem = raycast.collider.GetComponent<_IDamageable>();
+                        enemyHealthSystem.Damage(_attackDamage);
+                        Debug.Log($"Player health: {enemyHealthSystem.Health}");
+                        Debug.Log($"Player alive? {enemyHealthSystem.IsAlive}");
                     }
                 }
             }

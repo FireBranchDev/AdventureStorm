@@ -824,6 +824,8 @@ MonoBehaviour:
   _dodgeStamina: 4
   _dodgeHeight: 0.25
   _dodgingStaminaRechargeDurationInSeconds: 3
+  _attackDamage: 2.5
+  _attackRange: 3
 --- !u!1 &1000013038388218
 GameObject:
   m_ObjectHideFlags: 0
@@ -12496,7 +12498,14 @@ AnimationClip:
     flags: 16
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.4
+    functionName: AttackFinished
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
 --- !u!74 &74000010905355410
 AnimationClip:
   m_ObjectHideFlags: 0
