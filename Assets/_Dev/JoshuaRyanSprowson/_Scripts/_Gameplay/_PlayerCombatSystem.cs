@@ -3,9 +3,13 @@ using UnityEngine;
 
 namespace AdventureStorm
 {
+    /// <summary>
+    /// Player combat system
+    /// </summary>
     public class _PlayerCombatSystem : MonoBehaviour
     {
         #region Fields
+
         [Tooltip("How far is the distance that the character can dodge?")]
         /// <summary>
         /// How far is the distance that the character can dodge
@@ -42,7 +46,10 @@ namespace AdventureStorm
         private int _maximumDodgeStamina;
         private float _maximumDodgeHeight = 0f;
         private bool _canDodge = true;
+
         #endregion
+
+        #region LifeCycle
 
         private void Start()
         {
@@ -54,19 +61,6 @@ namespace AdventureStorm
             _maximumDodgeHeight = transform.position.y + _dodgeHeight;
 
             StartCoroutine(RechargeDodgeStamina());
-        }
-
-        private IEnumerator RechargeDodgeStamina()
-        {
-            for (;;)
-            {
-                yield return new WaitForSecondsRealtime(_dodgingStaminaRechargeDurationInSeconds);
-
-                if (_dodgeStamina < _maximumDodgeStamina && !_playerInputManager.IsDodging)
-                {
-                    _dodgeStamina++;
-                }
-            }
         }
 
         private void Update()
@@ -90,7 +84,24 @@ namespace AdventureStorm
                 }
             }
         }
-        
+
+        #endregion
+
+        #region Private Methods
+
+        private IEnumerator RechargeDodgeStamina()
+        {
+            for (;;)
+            {
+                yield return new WaitForSecondsRealtime(_dodgingStaminaRechargeDurationInSeconds);
+
+                if (_dodgeStamina < _maximumDodgeStamina && !_playerInputManager.IsDodging)
+                {
+                    _dodgeStamina++;
+                }
+            }
+        }
+
         private void Attack()
         {
             _animator.SetTrigger(_attackingTriggerHash);
@@ -148,5 +159,7 @@ namespace AdventureStorm
             yield return new WaitForSeconds(0.5f);
             _canDodge = true;
         }
+
+        #endregion
     }
 }
