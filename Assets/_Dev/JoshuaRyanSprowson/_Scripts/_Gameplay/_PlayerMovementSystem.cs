@@ -3,11 +3,12 @@ using UnityEngine;
 namespace AdventureStorm
 {
     /// <summary>
-    /// Player system
+    /// Player movement system
     /// </summary>
     public class _PlayerMovementSystem : MonoBehaviour
     {
         #region Fields
+
         [Tooltip("How fast the character moves")]
         /// <summary>
         /// How fast the character moves
@@ -20,7 +21,10 @@ namespace AdventureStorm
 
         private readonly int _isIdleHash = Animator.StringToHash("IsIdle");
         private readonly int _isMovingHash = Animator.StringToHash("IsMoving");
+
         #endregion
+
+        #region LifeCycle
 
         private void Start()
         {
@@ -50,6 +54,10 @@ namespace AdventureStorm
             }
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void Idle()
         {
             _animator.SetBool(_isMovingHash, false);
@@ -75,5 +83,7 @@ namespace AdventureStorm
             movement *= Time.deltaTime;
             transform.Translate(movement);
         }
+
+        #endregion
     }
 }
