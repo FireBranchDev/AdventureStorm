@@ -128,8 +128,8 @@ namespace AdventureStorm
                             Debug.Log("Hit an enemy");
                             var enemyHealthSystem = raycast.collider.GetComponent<_IDamageable>();
                             enemyHealthSystem.Damage(_attackDamage);
-                            Debug.Log($"Player health: {enemyHealthSystem.Health}");
-                            Debug.Log($"Player alive? {enemyHealthSystem.IsAlive}");
+                            Debug.Log($"Enemy health: {enemyHealthSystem.Health}");
+                            Debug.Log($"Enemy alive? {enemyHealthSystem.IsAlive}");
                         }
                     }
                 }
@@ -147,8 +147,8 @@ namespace AdventureStorm
                         Debug.Log("Hit an enemy");
                         var enemyHealthSystem = raycast.collider.GetComponent<_IDamageable>();
                         enemyHealthSystem.Damage(_attackDamage);
-                        Debug.Log($"Player health: {enemyHealthSystem.Health}");
-                        Debug.Log($"Player alive? {enemyHealthSystem.IsAlive}");
+                        Debug.Log($"Enemy health: {enemyHealthSystem.Health}");
+                        Debug.Log($"Enemy alive? {enemyHealthSystem.IsAlive}");
                     }
                 }
             }
