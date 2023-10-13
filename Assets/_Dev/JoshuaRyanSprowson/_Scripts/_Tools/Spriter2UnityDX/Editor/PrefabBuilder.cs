@@ -156,7 +156,7 @@ namespace Spriter2UnityDX.Prefabs {
 				}
 			}
 			if (instance.GetComponent<EntityRenderer> () == null) instance.AddComponent<EntityRenderer> (); //Adds an EntityRenderer if one is not already present
-			PrefabUtility.ReplacePrefabAssetOfPrefabInstance (instance, prefab, InteractionMode.AutomatedAction);
+			PrefabUtility.SaveAsPrefabAssetAndConnect (instance, prefabPath, InteractionMode.AutomatedAction);
 			DestroyImmediate (instance); //Apply the instance's changes to the prefab, then destroy the instance.
 		}
 
