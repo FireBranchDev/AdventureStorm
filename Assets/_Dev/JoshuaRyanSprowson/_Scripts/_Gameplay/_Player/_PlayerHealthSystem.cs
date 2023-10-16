@@ -4,6 +4,12 @@ namespace AdventureStorm
 {
     public class _PlayerHealthSystem : MonoBehaviour, _IDamageable
     {
+        #region Constant Fields
+
+        private const string DyingAnimationTrigger = "TrDying";
+
+        #endregion
+
         #region Fields
 
         [Tooltip("How much health does the player have?")]
@@ -11,6 +17,10 @@ namespace AdventureStorm
         /// How much health does the player have?
         /// </summary>
         [SerializeField] private float _health = 5f;
+
+        private Animator _animator;
+
+        private readonly int _dyingAnimationTriggerHash = Animator.StringToHash(DyingAnimationTrigger);
 
         #endregion
 
@@ -23,6 +33,11 @@ namespace AdventureStorm
         #endregion
 
         #region LifeCycle
+
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
         private void Update()
         {
@@ -48,6 +63,14 @@ namespace AdventureStorm
             }
         }
 
+        /// <summary>
+        /// Method to be executed once the dying animation has finished
+        /// </summary>
+        public void FinishedDyingAnimation()
+        {
+            Destroy(gameObject);
+        }
+
         #endregion
 
         #region Private Methods
@@ -59,7 +82,7 @@ namespace AdventureStorm
                 return;
             }
 
-            Destroy(gameObject);
+            _animator.SetTrigger(_dyingAnimationTriggerHash);
         }
 
         #endregion
