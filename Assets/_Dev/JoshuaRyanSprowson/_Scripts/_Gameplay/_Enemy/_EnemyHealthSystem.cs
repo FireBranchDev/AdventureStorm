@@ -20,7 +20,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
 
     private Animator _animator;
 
-    private int _dyingAnimationTriggerHash = Animator.StringToHash(DyingAnimationTrigger);
+    private readonly int _dyingAnimationTriggerHash = Animator.StringToHash(DyingAnimationTrigger);
 
     #endregion
 
