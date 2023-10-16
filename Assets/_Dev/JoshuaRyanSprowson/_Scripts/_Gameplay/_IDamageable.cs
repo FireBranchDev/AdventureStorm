@@ -5,5 +5,6 @@ namespace AdventureStorm
         bool IsAlive { get; }
         float Health { get; }
         void Damage(float damage);
+        void FinishedDyingAnimation();
     }
 }

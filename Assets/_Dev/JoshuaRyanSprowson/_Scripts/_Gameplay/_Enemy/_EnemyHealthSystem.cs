@@ -1,8 +1,15 @@
 using AdventureStorm;
+using System.Collections;
 using UnityEngine;
 
 public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
 {
+    #region Constant Fields
+
+    private const string DyingAnimationTrigger = "TrDying";
+
+    #endregion
+
     #region Fields
 
     [Tooltip("How much starting health does the enemy have?")]
@@ -10,6 +17,10 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
     /// How much starting health does the enemy have
     /// </summary>
     [SerializeField] private float _startingHealth = 5f;
+
+    private Animator _animator;
+
+    private int _dyingAnimationTriggerHash = Animator.StringToHash(DyingAnimationTrigger);
 
     #endregion
 
@@ -25,6 +36,9 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
     private void Start()
     {
         Health = _startingHealth;
+        
+        _animator = GetComponent<Animator>();
+
         IsAlive = true;
     }
 
@@ -33,9 +47,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
         IsAlive = Health > 0;
 
         if (!IsAlive)
-        {
-            Destroy(gameObject);
-        }
+            Dying();  
     }
 
     #endregion
@@ -53,6 +65,26 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
             Health = 0;
             IsAlive = false;
         }
+    }
+
+    /// <summary>
+    /// Executed once the dying animation has finished.
+    /// </summary>
+    public void FinishedDyingAnimation()
+    {
+        Destroy(gameObject);
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void Dying()
+    {
+        if (IsAlive)
+            return;
+
+        _animator.SetTrigger(_dyingAnimationTriggerHash);
     }
 
     #endregion
