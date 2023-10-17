@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AdventureStorm
 {
     /// <summary>
-    /// Handles the enemy's dodge attack game mechanic.
+    /// Handles the enemy's dodge attack system.
     /// </summary>
     public class _EnemyDodgeAttackSystem : MonoBehaviour
     {
