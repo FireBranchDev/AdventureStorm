@@ -3,11 +3,15 @@ using UnityEngine;
 
 namespace AdventureStorm
 {
+    /// <summary>
+    /// Handles the enemy's dodge attack game mechanic.
+    /// </summary>
     public class _EnemyDodgeAttackSystem : MonoBehaviour
     {
         #region Constant Fields
 
-        private const string IsDodgingAnimation = "IsDodging";
+        private const string DodgeAnimation = "Dodge";
+        private const string IdleAnimation = "Idle";
 
         #endregion
 
@@ -17,7 +21,7 @@ namespace AdventureStorm
         /// <summary>
         /// How far is the distance that the enemy can dodge?
         /// </summary>
-        [SerializeField] private float _dodgeDistance = 0.75f;
+        [SerializeField] private float _dodgeDistance = 1.5f;
 
         [Tooltip("What height does the enemy reach when dodging?")]
         /// <summary>
@@ -25,11 +29,9 @@ namespace AdventureStorm
         /// </summary>
         [SerializeField] private float _dodgeHeight = 0.25f;
 
-        private Animator _animator;
-
         private _EnemyAIBehaviour _aiBehaviour;
 
-        private readonly int _isDodgingAnimationHash = Animator.StringToHash(IsDodgingAnimation);
+        private _AnimatorManager _animatorManager;
 
         #endregion
 
@@ -37,35 +39,39 @@ namespace AdventureStorm
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
             _aiBehaviour = GetComponent<_EnemyAIBehaviour>();
+            _animatorManager = GetComponent<_AnimatorManager>();
         }
 
         private void Update()
         {
-            if (_aiBehaviour.IsDodging && _aiBehaviour.IsFacingLeft && _aiBehaviour.IsDodgeAttackFinished)
+            if (_aiBehaviour.IsDodging && _aiBehaviour.IsDodgeAttackFinished)
             {
+                _animatorManager.ChangeAnimationState(DodgeAnimation);
                 _aiBehaviour.IsDodgeAttackFinished = false;
-                PlayDodgeAnimation();
-                transform.Translate(new(_dodgeDistance, _dodgeHeight));
-                StartCoroutine(DodgeFinishedCoroutine());
+
+                if (_aiBehaviour.IsFacingLeft)
+                {   
+                    transform.Translate(new(_dodgeDistance, _dodgeHeight));
+                    StartCoroutine(DodgeFinishedCoroutine());
+                }
+                else
+                {
+                    transform.Translate(new(-_dodgeDistance, _dodgeHeight));
+                    StartCoroutine(DodgeFinishedCoroutine());
+                }
             }
         }
 
         #endregion
 
         #region Private Methods
-
-        private void PlayDodgeAnimation()
-        {
-            _animator.SetBool(_isDodgingAnimationHash, true);
-        }
         
         private IEnumerator DodgeFinishedCoroutine()
         {
             yield return new WaitForSeconds(0.3f);
             transform.Translate(new(0, -_dodgeHeight));
-            _animator.SetBool(_isDodgingAnimationHash, false);
+            _animatorManager.ChangeAnimationState(IdleAnimation);
             _aiBehaviour.IsDodgeAttackFinished = true;
         }
 
