@@ -6,13 +6,13 @@ namespace AdventureStorm
     {
         #region Constant Fields
 
-        private const string IsMovingAnimatorParameter = "IsMoving";
+        private const string MovingAnimation = "Moving";
+
+        private const string IdleAnimation = "Idle";
 
         #endregion
 
         #region Fields
-
-        private Animator _animator;
 
         [Tooltip("How fast does the enemy move?")]
         /// <summary>
@@ -20,9 +20,11 @@ namespace AdventureStorm
         /// </summary>
         [SerializeField] private float _movementSpeed = 5f;
 
-        private readonly int _isMovingAnimatorParameterHash = Animator.StringToHash(IsMovingAnimatorParameter);
+        private _AnimatorManager _animatorManager;
 
         private _EnemyAIBehaviour _aiBehaviour;
+
+        private _EnemyHealthSystem _healthSystem;
 
         #endregion
 
@@ -30,19 +32,26 @@ namespace AdventureStorm
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
+            _animatorManager = GetComponent<_AnimatorManager>();
             _aiBehaviour = GetComponent<_EnemyAIBehaviour>();
+            _healthSystem = GetComponent<_EnemyHealthSystem>();
         }
 
         private void Update()
         {
             if (_aiBehaviour != null)
             {
-                if (_aiBehaviour.IsMovingLeft)
-                    MovingLeft();
-
-                if (_aiBehaviour.IsIdle)
-                    Idle();
+                if (_healthSystem.IsAlive)
+                {
+                    if (_aiBehaviour.IsMovingLeft)
+                    {
+                        MovingLeft();
+                    }
+                    else
+                    {
+                        Idle();
+                    }
+                }
             }
         }
 
@@ -52,7 +61,8 @@ namespace AdventureStorm
 
         private void MovingLeft()
         {
-            _animator.SetBool(_isMovingAnimatorParameterHash, true);
+            _animatorManager.ChangeAnimationState(MovingAnimation);
+
             Vector3 position = new Vector3(-_movementSpeed, 0);
             position *= Time.deltaTime;
             transform.Translate(position);
@@ -60,7 +70,7 @@ namespace AdventureStorm
 
         private void Idle()
         {
-            _animator.SetBool(_isMovingAnimatorParameterHash, false);
+            _animatorManager.ChangeAnimationState(IdleAnimation);
         }
 
         #endregion
