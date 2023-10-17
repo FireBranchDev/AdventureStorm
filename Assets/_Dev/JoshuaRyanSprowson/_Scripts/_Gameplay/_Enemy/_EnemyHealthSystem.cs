@@ -6,7 +6,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
 {
     #region Constant Fields
 
-    private const string DyingAnimationTrigger = "TrDying";
+    private const string DyingAnimation = "Dying";
 
     #endregion
 
@@ -18,9 +18,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
     /// </summary>
     [SerializeField] private float _startingHealth = 5f;
 
-    private Animator _animator;
-
-    private readonly int _dyingAnimationTriggerHash = Animator.StringToHash(DyingAnimationTrigger);
+    private _AnimatorManager _animatorManager;
 
     #endregion
 
@@ -37,7 +35,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
     {
         Health = _startingHealth;
         
-        _animator = GetComponent<Animator>();
+        _animatorManager = GetComponent<_AnimatorManager>();
 
         IsAlive = true;
     }
@@ -84,7 +82,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
         if (IsAlive)
             return;
 
-        _animator.SetTrigger(_dyingAnimationTriggerHash);
+        _animatorManager.ChangeAnimationState(DyingAnimation);
     }
 
     #endregion
