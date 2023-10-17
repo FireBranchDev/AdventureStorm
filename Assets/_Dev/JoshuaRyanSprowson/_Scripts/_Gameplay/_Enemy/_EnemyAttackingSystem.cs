@@ -7,19 +7,11 @@ namespace AdventureStorm
     {
         #region Constant Fields
 
-        private const string PlayerTag = "Player";
-
         private const string AttackAnimationTrigger = "TrAttack";
 
         #endregion
 
         #region Fields
-
-        [Tooltip("What is the range of the attack?")]
-        /// <summary>
-        /// What is the range of the attack
-        /// </summary>
-        [SerializeField] private float _attackRange = 2.5f;
 
         [Tooltip("What is the attack delay?")]
         /// <summary>
@@ -35,23 +27,17 @@ namespace AdventureStorm
 
         private Animator _animator;
 
-        private bool _facingLeft = true;
-
-        private bool _isInAttackRange;
-
-        private bool _isAttacking;
+        private _EnemyAIBehaviour _aiBehaviour;
 
         private int _attackAnimationTriggerHash = Animator.StringToHash(AttackAnimationTrigger);
-
-        private GameObject _player;
 
         #endregion
 
         #region Properties
 
-        public bool IsInAttackRange => _isInAttackRange;
+        public bool IsInAttackRange => _aiBehaviour.IsInCombatInteractionRange;
 
-        public bool IsAttacking => _isAttacking;
+        public bool IsAttacking => _aiBehaviour.IsAttacking;
 
         #endregion
 
@@ -60,14 +46,8 @@ namespace AdventureStorm
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            StartCoroutine(CheckPlayerInAttackRangeCoroutine());
+            _aiBehaviour = GetComponent<_EnemyAIBehaviour>();
             StartCoroutine(AttackCoroutine());
-        }
-
-        private void Update()
-        {
-            _facingLeft = transform.localScale.x < 0;
-            CheckPlayerInAttackRange();
         }
 
         #endregion
@@ -76,13 +56,25 @@ namespace AdventureStorm
 
         public void AttackFinished()
         {
-            if (IsInAttackRange)
+            if (_aiBehaviour.IsInCombatInteractionRange && _aiBehaviour.IsAttacking)
             {
-                if (_player != null)
+                GameObject player;
+                if (_aiBehaviour.IsFacingLeft)
                 {
-                    var component = _player.GetComponent<_IDamageable>();
-                    component?.Damage(_attackDamage);
+                    player = _aiBehaviour.CastRaycastToCollideWithPlayer(-Vector2.right);  
                 }
+                else
+                {
+                    player = _aiBehaviour.CastRaycastToCollideWithPlayer(Vector2.right);
+                }
+
+                if (player != null)
+                {
+                    _IDamageable damageable = player.GetComponent<_IDamageable>();
+                    damageable?.Damage(_attackDamage);
+                }
+
+                _aiBehaviour.IsAttackFinished = true;
             }
         }
 
@@ -90,20 +82,11 @@ namespace AdventureStorm
 
         #region Private Methods
 
-        private IEnumerator CheckPlayerInAttackRangeCoroutine()
-        {
-            for (;;)
-            {
-                CheckPlayerInAttackRange();
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-
         private IEnumerator AttackCoroutine()
         {
             for(;;)
             {
-                if (IsInAttackRange)
+                if (_aiBehaviour.IsInCombatInteractionRange && _aiBehaviour.IsAttacking)
                 {
                     Attack();
                     yield return new WaitForSecondsRealtime(_attackDelayInSeconds);
@@ -117,34 +100,9 @@ namespace AdventureStorm
             }
         }
 
-        private void CheckPlayerInAttackRange()
-        {
-            if (_facingLeft)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.right);
-
-                if (hit.collider != null)
-                {
-                    if (hit.collider.CompareTag(PlayerTag))
-                    {
-                        float distance = Mathf.Abs(transform.position.x - hit.collider.transform.position.x);
-                        _isInAttackRange = distance <= _attackRange;
-
-                        if (IsInAttackRange && _player == null)
-                        {
-                            _player = hit.collider.gameObject;
-                        }
-                    }
-                }
-                else
-                {
-                    _isInAttackRange = false;
-                }
-            }
-        }
-
         private void Attack()
         {
+            _aiBehaviour.IsAttackFinished = false;
             _animator.SetTrigger(_attackAnimationTriggerHash);
         }
 

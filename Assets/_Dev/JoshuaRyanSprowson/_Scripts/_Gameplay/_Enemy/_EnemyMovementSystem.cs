@@ -14,17 +14,15 @@ namespace AdventureStorm
 
         private Animator _animator;
 
-        private _EnemyAttackingSystem _enemyAttackingSystem;
-
         [Tooltip("How fast does the enemy move?")]
         /// <summary>
         /// How fast does the enemy move?
         /// </summary>
         [SerializeField] private float _movementSpeed = 5f;
 
-        private bool _facingLeft = true;
-
         private readonly int _isMovingAnimatorParameterHash = Animator.StringToHash(IsMovingAnimatorParameter);
+
+        private _EnemyAIBehaviour _aiBehaviour;
 
         #endregion
 
@@ -33,23 +31,18 @@ namespace AdventureStorm
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            _enemyAttackingSystem = GetComponent<_EnemyAttackingSystem>();
+            _aiBehaviour = GetComponent<_EnemyAIBehaviour>();
         }
 
         private void Update()
         {
-            _facingLeft = transform.localScale.x < 0;
-
-            if (_enemyAttackingSystem != null)
+            if (_aiBehaviour != null)
             {
-                if (!_enemyAttackingSystem.IsAttacking && _facingLeft)
-                {
+                if (_aiBehaviour.IsMovingLeft)
                     MovingLeft();
-                }
-                else
-                {
-                    _animator.SetBool(_isMovingAnimatorParameterHash, true);
-                }
+
+                if (_aiBehaviour.IsIdle)
+                    Idle();
             }
         }
 
@@ -59,10 +52,15 @@ namespace AdventureStorm
 
         private void MovingLeft()
         {
-            _animator.SetBool(_isMovingAnimatorParameterHash, true);   
+            _animator.SetBool(_isMovingAnimatorParameterHash, true);
             Vector3 position = new Vector3(-_movementSpeed, 0);
             position *= Time.deltaTime;
             transform.Translate(position);
+        }
+
+        private void Idle()
+        {
+            _animator.SetBool(_isMovingAnimatorParameterHash, false);
         }
 
         #endregion
