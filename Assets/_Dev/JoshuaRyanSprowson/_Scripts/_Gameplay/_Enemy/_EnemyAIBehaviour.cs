@@ -72,9 +72,9 @@ namespace AdventureStorm
         {
             IsFacingLeft = transform.localScale.x < 0;
 
-            IsMoving = !IsAttacking;
+            IsMoving = !IsAttacking && !IsDodging && IsDodgeAttackFinished && IsAttackFinished;
 
-            IsMovingLeft = IsFacingLeft && IsMoving && !IsAttacking;
+            IsMovingLeft = IsFacingLeft && IsMoving;
 
             if (IsInCombatInteractionRange)
             {
