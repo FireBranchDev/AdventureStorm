@@ -41,7 +41,7 @@ namespace AdventureStorm
         {
             if (_aiBehaviour != null)
             {
-                if (_healthSystem.IsAlive)
+                if (_healthSystem.IsAlive && !_aiBehaviour.IsAttacking)
                 {
                     if (_aiBehaviour.IsMovingLeft)
                     {

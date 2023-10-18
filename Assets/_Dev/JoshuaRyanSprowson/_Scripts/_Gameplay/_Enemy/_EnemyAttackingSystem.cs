@@ -7,7 +7,9 @@ namespace AdventureStorm
     {
         #region Constant Fields
 
-        private const string AttackAnimationTrigger = "TrAttack";
+        private const string AttackAnimation = "Attack";
+
+        private const string IdleAnimation = "Idle";
 
         #endregion
 
@@ -25,11 +27,11 @@ namespace AdventureStorm
         /// </summary>
         [SerializeField] private float _attackDamage = 1.75f;
 
-        private Animator _animator;
+        private _AnimatorManager _animatorManager;
 
         private _EnemyAIBehaviour _aiBehaviour;
 
-        private int _attackAnimationTriggerHash = Animator.StringToHash(AttackAnimationTrigger);
+        private _EnemyHealthSystem _healthSystem;
 
         #endregion
 
@@ -45,8 +47,9 @@ namespace AdventureStorm
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
+            _animatorManager = GetComponent<_AnimatorManager>();
             _aiBehaviour = GetComponent<_EnemyAIBehaviour>();
+            _healthSystem = GetComponent<_EnemyHealthSystem>();
             StartCoroutine(AttackCoroutine());
         }
 
@@ -75,6 +78,8 @@ namespace AdventureStorm
                 }
 
                 _aiBehaviour.IsAttackFinished = true;
+
+                _animatorManager.ChangeAnimationState(IdleAnimation);
             }
         }
 
@@ -86,24 +91,20 @@ namespace AdventureStorm
         {
             for(;;)
             {
-                if (_aiBehaviour.IsInCombatInteractionRange && _aiBehaviour.IsAttacking)
+                if (_healthSystem.IsAlive && _aiBehaviour.IsInCombatInteractionRange && _aiBehaviour.IsAttacking)
                 {
                     Attack();
                     yield return new WaitForSecondsRealtime(_attackDelayInSeconds);
                 }
-                else
-                {
-                    _animator.ResetTrigger(_attackAnimationTriggerHash);
-                }
 
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(0.1f);
             }
         }
 
         private void Attack()
         {
             _aiBehaviour.IsAttackFinished = false;
-            _animator.SetTrigger(_attackAnimationTriggerHash);
+            _animatorManager.ChangeAnimationState(AttackAnimation);
         }
 
         #endregion
