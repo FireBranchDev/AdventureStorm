@@ -76,11 +76,10 @@ namespace AdventureStorm
                     _IDamageable damageable = player.GetComponent<_IDamageable>();
                     damageable?.Damage(_attackDamage);
                 }
-
-                _aiBehaviour.IsAttackFinished = true;
-
-                _animatorManager.ChangeAnimationState(IdleAnimation);
             }
+
+            _aiBehaviour.IsAttackFinished = true;
+            _animatorManager.ChangeAnimationState(IdleAnimation);
         }
 
         #endregion

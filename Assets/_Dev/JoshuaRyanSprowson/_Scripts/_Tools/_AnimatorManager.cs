@@ -9,16 +9,21 @@ namespace AdventureStorm
     {
         #region Fields
 
-        private Animator _animator;
         private string _currentState;
+
+        #endregion
+
+        #region Properties
+
+        public Animator Animator { get; private set; }
 
         #endregion
 
         #region LifeCycle
 
-        private void Start()
+        private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
         }
 
         #endregion
@@ -35,7 +40,7 @@ namespace AdventureStorm
             if (_currentState == newState) return;
 
             // Play the animation.
-            _animator.Play(newState);
+            Animator.Play(newState);
 
             // Reassign the current state.
             _currentState = newState;

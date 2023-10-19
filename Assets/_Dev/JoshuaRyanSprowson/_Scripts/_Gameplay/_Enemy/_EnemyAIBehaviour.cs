@@ -48,10 +48,14 @@ namespace AdventureStorm
         public bool IsMovingLeft { get; private set; }
 
         public bool IsAttacking { get; private set; }
+        public bool IsAttackingLeft { get; private set; }
+        public bool IsAttackingRight { get; private set; }
 
         public bool IsAttackFinished { get; set; } = true;
 
         public bool IsDodging { get; private set; }
+        public bool IsDodgingLeft { get; private set; }
+        public bool IsDodgingRight { get; private set; }
 
         public bool IsDodgeAttackFinished { get; set; } = true;
 
@@ -83,6 +87,17 @@ namespace AdventureStorm
                     var combatInteractionRNG = Random.Range(_minimumInclusiveToDetermineCombatInteraction, _maximumInclusiveToDetermineCombatInteraction);
                     IsDodging = combatInteractionRNG <= _dodgeChance;
                     IsAttacking = !IsDodging;
+
+                    if (IsFacingLeft)
+                    {
+                        IsDodgingLeft = IsDodging;
+                        IsAttackingLeft = IsAttacking;
+                    }
+                    else
+                    {
+                        IsDodgingRight = IsDodging;
+                        IsAttackingRight = IsAttacking;
+                    }
                 }
             }
             else
@@ -90,7 +105,7 @@ namespace AdventureStorm
                 IsAttacking = IsDodging = false;
             }
 
-            IsIdle = !IsMoving && !IsAttacking;
+            IsIdle = !IsMoving && !IsAttacking && !IsDodging && IsDodgeAttackFinished && IsAttackFinished;
         }
 
         #endregion

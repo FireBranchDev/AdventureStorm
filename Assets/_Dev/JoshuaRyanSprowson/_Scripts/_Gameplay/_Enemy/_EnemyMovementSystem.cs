@@ -47,10 +47,6 @@ namespace AdventureStorm
                     {
                         MovingLeft();
                     }
-                    else
-                    {
-                        Idle();
-                    }
                 }
             }
         }
