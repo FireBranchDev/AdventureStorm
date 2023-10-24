@@ -36,7 +36,7 @@ namespace AdventureStorm
         /// What is the maximum inclusive to determine the combat interaction?
         /// </summary>
         [SerializeField] private float _maximumInclusiveToDetermineCombatInteraction = 100f;
-        
+
         #endregion
 
         #region Properties
@@ -44,7 +44,7 @@ namespace AdventureStorm
         public bool IsFacingLeft { get; private set; }
 
         public bool IsMoving { get; private set; }
-        
+
         public bool IsMovingLeft { get; private set; }
 
         public bool IsAttacking { get; private set; }
@@ -135,7 +135,7 @@ namespace AdventureStorm
 
         private IEnumerator CheckIsPlayerInRangeCoroutine()
         {
-            for (;;)
+            for (; ; )
             {
                 IsInCombatInteractionRange = CheckIsPlayerInRange();
                 yield return new WaitForSeconds(0.1f);
@@ -152,7 +152,7 @@ namespace AdventureStorm
             }
             else
             {
-                player = CastRaycastToCollideWithPlayer(Vector2.right);        
+                player = CastRaycastToCollideWithPlayer(Vector2.right);
             }
 
             if (player)

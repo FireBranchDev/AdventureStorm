@@ -1,5 +1,4 @@
 using AdventureStorm;
-using System.Collections;
 using UnityEngine;
 
 public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
@@ -34,7 +33,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
     private void Start()
     {
         Health = _startingHealth;
-        
+
         _animatorManager = GetComponent<_AnimatorManager>();
 
         IsAlive = true;
@@ -45,7 +44,7 @@ public class _EnemyHealthSystem : MonoBehaviour, _IDamageable
         IsAlive = Health > 0;
 
         if (!IsAlive)
-            Dying();  
+            Dying();
     }
 
     #endregion

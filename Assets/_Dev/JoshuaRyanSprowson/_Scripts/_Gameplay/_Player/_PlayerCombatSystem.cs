@@ -160,7 +160,7 @@ namespace AdventureStorm
 
         private IEnumerator RechargeDodgeStamina()
         {
-            for (;;)
+            for (; ; )
             {
                 yield return new WaitForSecondsRealtime(_dodgingStaminaRechargeDurationInSeconds);
 

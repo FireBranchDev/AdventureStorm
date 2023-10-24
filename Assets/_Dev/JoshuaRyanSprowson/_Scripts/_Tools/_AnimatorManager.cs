@@ -3,7 +3,7 @@ using UnityEngine;
 namespace AdventureStorm
 {
     /// <summary>
-    /// In charge of making sure the animations are being played
+    /// A tool to make it simpler to play and manage animations.
     /// </summary>
     public class _AnimatorManager : MonoBehaviour
     {
@@ -44,6 +44,33 @@ namespace AdventureStorm
 
             // Reassign the current state.
             _currentState = newState;
+        }
+
+        /// <summary>
+        /// To check that the current playing animation has finished.
+        /// </summary>
+        /// <param name="name">The name of the animation.</param>
+        /// <returns></returns>
+        public bool DidAnimationFinish(string name)
+        {
+            AnimatorStateInfo animationState = Animator.GetCurrentAnimatorStateInfo(0);
+            // Matching the name of the state and checking that the animation clip has finished.
+            return animationState.IsName(name) && animationState.normalizedTime >= 1f;
+        }
+
+        /// <summary>
+        /// Replays the last played animation.
+        /// </summary>
+        public void ReplayAnimation()
+        {
+            // Only allowing to play previous animations.
+            if (string.IsNullOrEmpty(_currentState)) return;
+
+            // Needs to be a different state in order for the animation to play again.
+            Animator.Play(string.Empty);
+
+            // Play the last animation played.
+            Animator.Play(_currentState);
         }
 
         #endregion

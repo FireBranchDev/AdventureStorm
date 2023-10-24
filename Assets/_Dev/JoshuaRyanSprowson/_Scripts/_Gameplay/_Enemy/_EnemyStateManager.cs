@@ -6,7 +6,9 @@ namespace AdventureStorm
     {
         #region Constant Fields
 
-        private const string PlayerGameObjectName = "Player";
+        public const string PlayerTag = "Player";
+
+        public const string PlayerLayerMaskName = "Player";
 
         #endregion
 
@@ -14,33 +16,65 @@ namespace AdventureStorm
 
         private _EnemyBaseState _currentState;
 
-        private GameObject _player;
-
         #endregion
 
         #region Properties
 
+        public Rigidbody2D RB2D { get; private set; }
+
         public _AnimatorManager AnimatorManager { get; private set; }
 
-        public _EnemyIdleState IdleState { get; private set; } = new();
+        public LayerMask PlayerLayerMask { get; private set; }
+
+        public bool IsFacingLeft { get; private set; }
+
+        public _EnemyAttackingState AttackingState { get; private set; }
+        public _EnemyIdleState IdleState { get; private set; }
+        public _EnemyMovementState MovementState { get; private set; }
 
         #endregion
 
         #region LifeCycle
 
+        private void Awake()
+        {
+            RB2D = GetComponent<Rigidbody2D>();
+
+            AnimatorManager = GetComponent<_AnimatorManager>();
+
+            PlayerLayerMask = LayerMask.GetMask(PlayerLayerMaskName);
+
+            IsFacingLeft = true;
+
+            AttackingState = new _EnemyAttackingState();
+            IdleState = new _EnemyIdleState();
+            MovementState = new _EnemyMovementState();
+
+            _currentState = IdleState;
+        }
+
         // Start is called before the first frame update.
         private void Start()
         {
-            _player = GameObject.Find(PlayerGameObjectName);
-            Physics2D.IgnoreCollision(_player.GetComponent<CapsuleCollider2D>(), GetComponent<CapsuleCollider2D>());
-            AnimatorManager = GetComponent<_AnimatorManager>();
-            _currentState = IdleState;
             _currentState.EnterState(this);
+        }
+
+        private void FixedUpdate()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, float.MaxValue, PlayerLayerMask);
+
+            IsFacingLeft = hit.collider != null;
+
+            Debug.DrawRay(transform.position, Vector2.left * float.MaxValue, Color.magenta);
+
+            _currentState.FixedUpdateState(this);
         }
 
         // Update is called once per frame.
         private void Update()
         {
+            FlipEnemy();
+
             _currentState.UpdateState(this);
         }
 
@@ -50,17 +84,35 @@ namespace AdventureStorm
 
         public void SwitchState(_EnemyBaseState state)
         {
+            _currentState.ExitState(this);
             _currentState = state;
-            state.EnterState(this);
+            _currentState.EnterState(this);        
         }
 
         #endregion
 
         #region Private Methods
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void FlipEnemy()
         {
-            _currentState.OnTriggerEnter2D(this, collision);
+            Vector3 direction = transform.localScale;
+
+            if (IsFacingLeft && transform.localScale.x < 0)
+                return;
+
+            if (!IsFacingLeft && transform.localScale.x > 0)
+                return;
+
+            if (IsFacingLeft)
+            {
+                direction.x = -transform.localScale.x;
+            }
+            else
+            {
+                direction.x = Mathf.Abs(transform.localScale.x);
+            }
+
+            transform.localScale = direction;
         }
 
         #endregion

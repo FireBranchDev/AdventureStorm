@@ -4,23 +4,46 @@ namespace AdventureStorm
 {
     public class _EnemyIdleState : _EnemyBaseState
     {
-        private const string IdleAnimation = "Idle";
-        private const string IdleBlinkingAnimation = "Idle Blinking";
+        #region Constant Fields
 
+        private const string IdleAnimation = "Idle";
+
+        private const float DistanceForMovementState = 5f;
+
+        #endregion
+
+        #region Public Methods
+        
         public override void EnterState(_EnemyStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(IdleAnimation);
-            enemy.AnimatorManager.ChangeAnimationState(IdleBlinkingAnimation);
         }
 
-        public override void OnTriggerEnter2D(_EnemyStateManager enemy, Collider2D collision)
+        public override void ExitState(_EnemyStateManager enemy)
         {
-            Debug.Log($"Trigger has been entered. {collision.name}");
+            
+        }
+
+        public override void FixedUpdateState(_EnemyStateManager enemy)
+        {
+            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
+            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
+            Debug.DrawRay(enemy.transform.position, direction * DistanceForMovementState, Color.blue);
+            
+            if (hit.collider != null)
+            {
+                enemy.SwitchState(enemy.MovementState);
+            }
         }
 
         public override void UpdateState(_EnemyStateManager enemy)
         {
-            
+            if (enemy.AnimatorManager.DidAnimationFinish(IdleAnimation))
+            {
+                enemy.AnimatorManager.ReplayAnimation();
+            }
         }
+
+        #endregion
     }
 }

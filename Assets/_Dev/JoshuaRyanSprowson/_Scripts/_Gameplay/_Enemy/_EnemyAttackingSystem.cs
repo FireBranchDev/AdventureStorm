@@ -64,7 +64,7 @@ namespace AdventureStorm
                 GameObject player;
                 if (_aiBehaviour.IsFacingLeft)
                 {
-                    player = _aiBehaviour.CastRaycastToCollideWithPlayer(-Vector2.right);  
+                    player = _aiBehaviour.CastRaycastToCollideWithPlayer(-Vector2.right);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace AdventureStorm
 
         private IEnumerator AttackCoroutine()
         {
-            for(;;)
+            for (; ; )
             {
                 if (_healthSystem.IsAlive && _aiBehaviour.IsInCombatInteractionRange && _aiBehaviour.IsAttacking)
                 {

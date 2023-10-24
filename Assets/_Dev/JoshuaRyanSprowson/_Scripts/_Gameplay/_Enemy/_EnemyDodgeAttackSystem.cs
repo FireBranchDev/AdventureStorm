@@ -51,7 +51,7 @@ namespace AdventureStorm
                 _aiBehaviour.IsDodgeAttackFinished = false;
 
                 if (_aiBehaviour.IsFacingLeft)
-                {   
+                {
                     transform.Translate(new(_dodgeDistance, _dodgeHeight));
                     StartCoroutine(DodgeFinishedCoroutine());
                 }
@@ -66,7 +66,7 @@ namespace AdventureStorm
         #endregion
 
         #region Private Methods
-        
+
         private IEnumerator DodgeFinishedCoroutine()
         {
             yield return new WaitForSeconds(0.3f);

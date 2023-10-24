@@ -27,7 +27,7 @@ namespace AdventureStorm
 
         #region Properties
         public bool IsDirectionKeysPressed { get; private set; }
-        
+
         public bool IsMoving { get; private set; }
         public bool IsMovingLeft { get; private set; }
         public bool IsMovingRight { get; private set; }
