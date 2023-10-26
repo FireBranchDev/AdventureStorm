@@ -39,19 +39,19 @@ namespace AdventureStorm
 
         public override void FixedUpdateState(_EnemyStateManager enemy)
         {
-            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
 
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
 
             if (hit.collider == null)
             {
-                enemy.SwitchState(enemy.MovementState);
+                enemy.SwitchState(enemy.AliveState.MovementState);
             }
         }
 
         public override void UpdateState(_EnemyStateManager enemy)
         {
-            
+
         }
 
         #endregion
@@ -62,7 +62,7 @@ namespace AdventureStorm
         {
             enemy.AnimatorManager.ChangeAnimationState(AttackingAnimation);
             yield return new WaitForSeconds(AttackDelay);
-            for (;;)
+            for (; ; )
             {
                 if (enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
                 {

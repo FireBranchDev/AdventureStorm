@@ -57,7 +57,7 @@ namespace AdventureStorm
         {
             if (_isIdle)
             {
-                enemy.SwitchState(enemy.IdleState);
+                enemy.SwitchState(enemy.AliveState.IdleState);
             }
 
             if (enemy.AnimatorManager.DidAnimationFinish(WalkingAnimation))
@@ -72,19 +72,19 @@ namespace AdventureStorm
 
         private void Attack(_EnemyStateManager enemy)
         {
-            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForAttackState, enemy.PlayerLayerMask);
             Debug.DrawRay(enemy.transform.position, direction * DistanceForAttackState, Color.cyan);
 
             if (hit.collider != null)
             {
-                enemy.SwitchState(enemy.AttackingState);
+                enemy.SwitchState(enemy.AliveState.AttackingState);
             }
         }
 
         private void Idle(_EnemyStateManager enemy)
         {
-            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForIdleState, enemy.PlayerLayerMask);
             Debug.DrawRay(enemy.transform.position, direction * DistanceForIdleState, Color.yellow);
 
@@ -115,7 +115,7 @@ namespace AdventureStorm
         {
             Vector2 velocity = new(0, 0);
 
-            if (enemy.IsFacingLeft)
+            if (enemy.AliveState.IsFacingLeft)
             {
                 velocity.x = -MovementSpeed;
             }

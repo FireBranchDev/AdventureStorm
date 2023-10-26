@@ -32,7 +32,7 @@ namespace AdventureStorm
         #endregion
 
         #region Constructors
-        
+
         public _PlayerDodgeAttackState()
         {
             _dodgeAttackStamina = MaximumDodgeAttackStamina;
@@ -72,17 +72,17 @@ namespace AdventureStorm
 
         public override void FixedUpdateState(_PlayerStateManager player)
         {
-            
+
         }
 
         public override void UpdateState(_PlayerStateManager player)
         {
-            
+
         }
 
         public IEnumerator RechargeDodgeAttackStaminaCoroutine()
         {
-            for (;;)
+            for (; ; )
             {
                 yield return new WaitForSeconds(SecondsForRechargingDodgeAttackStamina);
                 if (_dodgeAttackStamina < MaximumDodgeAttackStamina)

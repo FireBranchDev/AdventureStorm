@@ -1,16 +1,27 @@
 using UnityEngine;
 
-public class _EnemyDeathState : MonoBehaviour
+namespace AdventureStorm
 {
-    // Start is called before the first frame update
-    void Start()
+    public class _EnemyDeathState : _EnemyBaseState
     {
+        public override void EnterState(_EnemyStateManager enemy)
+        {
+            Object.Destroy(enemy.gameObject);
+        }
 
-    }
+        public override void ExitState(_EnemyStateManager enemy)
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
+        }
 
+        public override void FixedUpdateState(_EnemyStateManager enemy)
+        {
+
+        }
+
+        public override void UpdateState(_EnemyStateManager enemy)
+        {
+
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace AdventureStorm
         #endregion
 
         #region Public Methods
-        
+
         public override void EnterState(_EnemyStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(IdleAnimation);
@@ -21,18 +21,18 @@ namespace AdventureStorm
 
         public override void ExitState(_EnemyStateManager enemy)
         {
-            
+
         }
 
         public override void FixedUpdateState(_EnemyStateManager enemy)
         {
-            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
             Debug.DrawRay(enemy.transform.position, direction * DistanceForMovementState, Color.blue);
-            
+
             if (hit.collider != null)
             {
-                enemy.SwitchState(enemy.MovementState);
+                enemy.SwitchState(enemy.AliveState.MovementState);
             }
         }
 

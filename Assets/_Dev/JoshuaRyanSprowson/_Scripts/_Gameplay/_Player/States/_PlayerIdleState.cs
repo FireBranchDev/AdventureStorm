@@ -22,12 +22,12 @@ namespace AdventureStorm
 
         public override void ExitState(_PlayerStateManager player)
         {
-            
+
         }
 
         public override void FixedUpdateState(_PlayerStateManager player)
         {
-            
+
         }
 
         public override void UpdateState(_PlayerStateManager player)

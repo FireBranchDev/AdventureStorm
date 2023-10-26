@@ -74,7 +74,7 @@ namespace AdventureStorm
             if (player.AnimatorManager != null)
             {
                 player.AnimatorManager.ChangeAnimationState(WalkingAnimation);
-                for (;;)
+                for (; ; )
                 {
                     if (player.AnimatorManager.DidAnimationFinish(WalkingAnimation))
                     {
@@ -93,7 +93,7 @@ namespace AdventureStorm
             // Move to the right.
             if (_horizontalAxis > 0f && _horizontalAxis != 0)
             {
-                velocity.x = WalkingSpeed;    
+                velocity.x = WalkingSpeed;
             }
             // Move to the left.
             else
