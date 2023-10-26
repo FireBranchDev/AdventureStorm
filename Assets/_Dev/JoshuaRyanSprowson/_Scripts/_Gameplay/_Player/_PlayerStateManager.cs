@@ -8,6 +8,8 @@ namespace AdventureStorm
 
         public const string HorizontalAxis = "Horizontal";
 
+        public const string EnemyLayerMaskName = "Enemy";
+
         #endregion
 
         #region Fields
@@ -34,12 +36,16 @@ namespace AdventureStorm
 
         public Coroutine RechargeDodgeAttackStaminaCoroutine { get; set; }
 
+        public LayerMask EnemyLayerMask { get; private set; }
+
         #endregion
 
         #region LifeCycle
 
         private void Awake()
         {
+            _currentState = null;
+
             Rb2D = GetComponent<Rigidbody2D>();
             AnimatorManager = GetComponent<_AnimatorManager>();
 
@@ -50,11 +56,14 @@ namespace AdventureStorm
 
             IsFacingLeft = false;
 
-            _currentState = IdleState;
+            RechargeDodgeAttackStaminaCoroutine = null;
+
+            EnemyLayerMask = LayerMask.GetMask(EnemyLayerMaskName);
         }
 
         private void Start()
         {
+            _currentState = IdleState;
             _currentState.EnterState(this);
         }
 

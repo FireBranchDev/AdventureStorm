@@ -8,12 +8,30 @@ namespace AdventureStorm
 
         private const string AttackingAnimation = "Attacking";
 
+        private const float AttackRange = 2.1f;
+
+        #endregion
+
+        #region Fields
+
+        private bool _enemyDetectionFinished;
+
+        #endregion
+
+        #region Constructors
+
+        public _PlayerAttackingState()
+        {
+            _enemyDetectionFinished = false;
+        }
+
         #endregion
 
         #region Public Methods
 
         public override void EnterState(_PlayerStateManager player)
         {
+            _enemyDetectionFinished = false;
             player.AnimatorManager.ChangeAnimationState(AttackingAnimation);
         }
 
@@ -24,12 +42,24 @@ namespace AdventureStorm
 
         public override void FixedUpdateState(_PlayerStateManager player)
         {
-            
+            if (player.AnimatorManager.DidAnimationFinish(AttackingAnimation))
+            {
+                var direction = player.IsFacingLeft ? Vector2.left : Vector2.right;
+                RaycastHit2D hit = Physics2D.Raycast(player.transform.position, direction, AttackRange, player.EnemyLayerMask);
+
+                if (hit.collider != null)
+                {
+                    var enemy = hit.collider.gameObject;
+                    Object.Destroy(enemy);
+                }
+
+                _enemyDetectionFinished = true;
+            }
         }
 
         public override void UpdateState(_PlayerStateManager player)
         {
-            if (player.AnimatorManager.DidAnimationFinish(AttackingAnimation))
+            if (player.AnimatorManager.DidAnimationFinish(AttackingAnimation) && _enemyDetectionFinished)
             {
                 float horizontal = Input.GetAxis(_PlayerStateManager.HorizontalAxis);
 
