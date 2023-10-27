@@ -48,14 +48,14 @@ namespace AdventureStorm
         {
             if (CanPerformDodgeAttack())
             {
-                player.StopCoroutine(player.RechargeDodgeAttackStaminaCoroutine);
-                player.RechargeDodgeAttackStaminaCoroutine = null;
+                player.StopCoroutine(player.AliveState.RechargeDodgeAttackStaminaCoroutine);
+                player.AliveState.RechargeDodgeAttackStaminaCoroutine = null;
 
                 _dodgeAttackCoroutine ??= player.StartCoroutine(DodgeAttackCoroutine(player));
             }
             else
             {
-                player.SwitchState(player.MovementState);
+                player.SwitchState(player.AliveState.MovementState);
             }
         }
 
@@ -126,7 +126,7 @@ namespace AdventureStorm
             _isDodgeAttackInProgress = false;
             _dodgeAttackStamina--;
             player.StartCoroutine(DodgeAttackCooldownTimerCoroutine());
-            player.SwitchState(player.IdleState);
+            player.SwitchState(player.AliveState.IdleState);
         }
 
         private IEnumerator DodgeAttackCooldownTimerCoroutine()

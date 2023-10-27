@@ -10,6 +10,8 @@ namespace AdventureStorm
 
         private const float AttackRange = 2.1f;
 
+        private const float AttackDamage = 2.5f;
+
         #endregion
 
         #region Fields
@@ -49,8 +51,15 @@ namespace AdventureStorm
 
                 if (hit.collider != null)
                 {
-                    var enemy = hit.collider.gameObject;
-                    Object.Destroy(enemy);
+                    if (hit.collider.gameObject.TryGetComponent<_EnemyStateManager>(out var enemy))
+                    {
+                        enemy.Damage(AttackDamage);
+
+                        if (!enemy.IsAlive)
+                        {
+                            enemy.SwitchState(enemy.DeathState);
+                        }
+                    }
                 }
 
                 _enemyDetectionFinished = true;
@@ -65,11 +74,11 @@ namespace AdventureStorm
 
                 if (horizontal != 0f)
                 {
-                    player.SwitchState(player.MovementState);
+                    player.SwitchState(player.AliveState.MovementState);
                 }
                 else
                 {
-                    player.SwitchState(player.IdleState);
+                    player.SwitchState(player.AliveState.IdleState);
                 }
             }
         }

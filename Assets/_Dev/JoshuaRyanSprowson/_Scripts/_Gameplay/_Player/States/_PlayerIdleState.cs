@@ -16,8 +16,8 @@ namespace AdventureStorm
         {
             player.AnimatorManager.ChangeAnimationState(IdleAnimation);
 
-            player.RechargeDodgeAttackStaminaCoroutine ??=
-                player.StartCoroutine(player.DodgeAttackState.RechargeDodgeAttackStaminaCoroutine());
+            player.AliveState.RechargeDodgeAttackStaminaCoroutine ??=
+                player.StartCoroutine(player.AliveState.DodgeAttackState.RechargeDodgeAttackStaminaCoroutine());
         }
 
         public override void ExitState(_PlayerStateManager player)
@@ -44,17 +44,17 @@ namespace AdventureStorm
 
             if (horizontal != 0f)
             {
-                player.SwitchState(player.MovementState);
+                player.SwitchState(player.AliveState.MovementState);
             }
 
             if (Input.GetMouseButtonDown(0))
             {
-                player.SwitchState(player.AttackingState);
+                player.SwitchState(player.AliveState.AttackingState);
             }
 
             if (Input.GetKey(KeyCode.Space) && horizontal != 0f)
             {
-                player.SwitchState(player.DodgeAttackState);
+                player.SwitchState(player.AliveState.DodgeAttackState);
             }
         }
 

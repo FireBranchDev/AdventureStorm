@@ -32,7 +32,13 @@ namespace AdventureStorm
 
             if (hit.collider != null)
             {
-                enemy.SwitchState(enemy.AliveState.MovementState);
+                if (hit.collider.TryGetComponent<_PlayerStateManager>(out var player))
+                {
+                    if (player.IsAlive)
+                    {
+                        enemy.SwitchState(enemy.AliveState.MovementState);
+                    }
+                }
             }
         }
 

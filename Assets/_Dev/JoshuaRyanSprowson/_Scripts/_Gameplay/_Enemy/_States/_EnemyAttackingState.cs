@@ -13,11 +13,25 @@ namespace AdventureStorm
 
         private const float AttackDelay = 0.35f;
 
+        private const float AttackDamage = 1.25f;
+
         #endregion
 
         #region Fields
 
         private Coroutine _attackCoroutine;
+
+        private bool _attackDone;
+
+        #endregion
+
+        #region Constructors
+
+        public _EnemyAttackingState()
+        {
+            _attackCoroutine = null;
+            _attackDone = false;
+        }
 
         #endregion
 
@@ -26,6 +40,7 @@ namespace AdventureStorm
         public override void EnterState(_EnemyStateManager enemy)
         {
             _attackCoroutine = enemy.StartCoroutine(AttackCoroutine(enemy));
+            _attackDone = false;
         }
 
         public override void ExitState(_EnemyStateManager enemy)
@@ -43,7 +58,24 @@ namespace AdventureStorm
 
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
 
-            if (hit.collider == null)
+            if (hit.collider != null)
+            {
+                if (_attackDone)
+                {
+                    _attackDone = false;
+                    if (hit.collider.gameObject.TryGetComponent<_PlayerStateManager>(out var player))
+                    {
+                        player.Damage(AttackDamage);
+
+                        if (!player.IsAlive)
+                        {
+                            player.SwitchState(player.DeathState);
+                            enemy.SwitchState(enemy.AliveState.IdleState);
+                        }
+                    }
+                }
+            }
+            else
             {
                 enemy.SwitchState(enemy.AliveState.MovementState);
             }
@@ -61,15 +93,16 @@ namespace AdventureStorm
         private IEnumerator AttackCoroutine(_EnemyStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(AttackingAnimation);
-            yield return new WaitForSeconds(AttackDelay);
             for (; ; )
             {
                 if (enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
                 {
+                    _attackDone = true;
+                    yield return new WaitForSeconds(AttackDelay);
                     enemy.AnimatorManager.ReplayAnimation();
                 }
 
-                yield return new WaitForSeconds(AttackDelay);
+                yield return null;
             }
         }
 

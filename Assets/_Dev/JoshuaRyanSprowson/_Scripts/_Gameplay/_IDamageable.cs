@@ -2,9 +2,9 @@ namespace AdventureStorm
 {
     public interface _IDamageable
     {
-        bool IsAlive { get; }
-        float Health { get; }
-        void Damage(float damage);
-        void FinishedDyingAnimation();
+        public float Health { get; }
+        public bool IsAlive { get; }
+        public void Damage(float damage);
+        public void FinishedDyingAnimation();
     }
 }

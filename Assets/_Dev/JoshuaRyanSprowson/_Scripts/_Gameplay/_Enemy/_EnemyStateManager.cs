@@ -2,13 +2,15 @@ using UnityEngine;
 
 namespace AdventureStorm
 {
-    public class _EnemyStateManager : MonoBehaviour
+    public class _EnemyStateManager : MonoBehaviour, _IDamageable
     {
         #region Constant Fields
 
         public const string PlayerTag = "Player";
 
         public const string PlayerLayerMaskName = "Player";
+
+        public const float MaximumHealth = 5f;
 
         #endregion
 
@@ -26,9 +28,15 @@ namespace AdventureStorm
 
         public LayerMask PlayerLayerMask { get; private set; }
 
+        public Coroutine RechargeDodgeAttackStaminaCoroutine { get; set; }
+
         public _EnemyAliveState AliveState { get; private set; }
 
         public _EnemyDeathState DeathState { get; private set; }
+
+        public float Health { get; private set; }
+
+        public bool IsAlive { get => Health > 0f; }
 
         #endregion
 
@@ -42,7 +50,12 @@ namespace AdventureStorm
 
             PlayerLayerMask = LayerMask.GetMask(PlayerLayerMaskName);
 
+            RechargeDodgeAttackStaminaCoroutine = null;
+
             AliveState = new _EnemyAliveState();
+            DeathState = new _EnemyDeathState();
+
+            Health = MaximumHealth;
         }
 
         // Start is called before the first frame update.
@@ -60,7 +73,7 @@ namespace AdventureStorm
         // Update is called once per frame.
         private void Update()
         {
-            if (AliveState.Health > 0f)
+            if (IsAlive)
             {
                 AliveState.FacePlayer(this);
                 AliveState.FlipEnemy(this);
@@ -78,6 +91,16 @@ namespace AdventureStorm
             _currentState.ExitState(this);
             _currentState = state;
             _currentState.EnterState(this);
+        }
+
+        public void Damage(float damage)
+        {
+            Health -= damage;
+        }
+
+        public void FinishedDyingAnimation()
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

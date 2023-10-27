@@ -2,13 +2,15 @@ using UnityEngine;
 
 namespace AdventureStorm
 {
-    public class _PlayerStateManager : MonoBehaviour
+    public class _PlayerStateManager : MonoBehaviour, _IDamageable
     {
         #region Constant Fields
 
         public const string HorizontalAxis = "Horizontal";
 
         public const string EnemyLayerMaskName = "Enemy";
+
+        public const float MaximumHealth = 5f;
 
         #endregion
 
@@ -24,19 +26,17 @@ namespace AdventureStorm
 
         public _AnimatorManager AnimatorManager { get; private set; }
 
-        public _PlayerIdleState IdleState { get; private set; }
-
-        public _PlayerMovementState MovementState { get; private set; }
-
-        public _PlayerAttackingState AttackingState { get; private set; }
-
-        public _PlayerDodgeAttackState DodgeAttackState { get; private set; }
-
         public bool IsFacingLeft { get; private set; }
 
-        public Coroutine RechargeDodgeAttackStaminaCoroutine { get; set; }
-
         public LayerMask EnemyLayerMask { get; private set; }
+
+        public _PlayerAliveState AliveState { get; private set; }
+
+        public _PlayerDeathState DeathState { get; private set; }
+
+        public float Health { get; private set; }
+
+        public bool IsAlive { get => Health > 0f; }
 
         #endregion
 
@@ -49,21 +49,19 @@ namespace AdventureStorm
             Rb2D = GetComponent<Rigidbody2D>();
             AnimatorManager = GetComponent<_AnimatorManager>();
 
-            IdleState = new _PlayerIdleState();
-            MovementState = new _PlayerMovementState();
-            AttackingState = new _PlayerAttackingState();
-            DodgeAttackState = new _PlayerDodgeAttackState();
-
             IsFacingLeft = false;
 
-            RechargeDodgeAttackStaminaCoroutine = null;
-
             EnemyLayerMask = LayerMask.GetMask(EnemyLayerMaskName);
+
+            AliveState = new _PlayerAliveState();
+            DeathState = new _PlayerDeathState();
+
+            Health = MaximumHealth;
         }
 
         private void Start()
         {
-            _currentState = IdleState;
+            _currentState = AliveState;
             _currentState.EnterState(this);
         }
 
@@ -74,7 +72,10 @@ namespace AdventureStorm
 
         private void Update()
         {
-            FlipPlayerSprite();
+            if (IsAlive)
+            {
+                FlipPlayerSprite();
+            }
 
             _currentState.UpdateState(this);
         }
@@ -90,6 +91,16 @@ namespace AdventureStorm
             _currentState.ExitState(this);
             _currentState = state;
             _currentState.EnterState(this);
+        }
+
+        public void Damage(float damage)
+        {
+            Health -= damage;
+        }
+
+        public void FinishedDyingAnimation()
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
