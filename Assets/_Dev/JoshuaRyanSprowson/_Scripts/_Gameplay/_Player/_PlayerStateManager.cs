@@ -98,6 +98,18 @@ namespace AdventureStorm
             Health -= damage;
         }
 
+        public void Heal(float health)
+        {
+            if (Health + health > MaximumHealth)
+            {
+                Health = MaximumHealth;
+            }
+            else
+            {
+                Health += health;
+            }
+        }
+
         public void FinishedDyingAnimation()
         {
             throw new System.NotImplementedException();

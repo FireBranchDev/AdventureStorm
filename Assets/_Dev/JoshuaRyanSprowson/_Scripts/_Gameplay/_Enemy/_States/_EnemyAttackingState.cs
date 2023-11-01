@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace AdventureStorm
 {
@@ -9,7 +10,7 @@ namespace AdventureStorm
 
         private const string AttackingAnimation = "Attacking";
 
-        private const float DistanceForMovementState = 2.5f;
+        private const float AttackRange = 2.5f;
 
         private const float AttackDelay = 0.35f;
 
@@ -21,7 +22,9 @@ namespace AdventureStorm
 
         private Coroutine _attackCoroutine;
 
-        private bool _attackDone;
+        private GameObject _player;
+
+        private _PlayerStateManager _playerStateManager;
 
         #endregion
 
@@ -30,7 +33,6 @@ namespace AdventureStorm
         public _EnemyAttackingState()
         {
             _attackCoroutine = null;
-            _attackDone = false;
         }
 
         #endregion
@@ -39,8 +41,10 @@ namespace AdventureStorm
 
         public override void EnterState(_EnemyStateManager enemy)
         {
-            _attackCoroutine = enemy.StartCoroutine(AttackCoroutine(enemy));
-            _attackDone = false;
+            if (_attackCoroutine == null)
+            {
+                _attackCoroutine = enemy.StartCoroutine(AttackCoroutine(enemy));
+            }
         }
 
         public override void ExitState(_EnemyStateManager enemy)
@@ -55,35 +59,26 @@ namespace AdventureStorm
         public override void FixedUpdateState(_EnemyStateManager enemy)
         {
             var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, AttackRange, enemy.PlayerLayerMask);
 
-            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
-
-            if (hit.collider != null)
+            if (_player == null)
             {
-                if (_attackDone)
+                if (hit.collider != null)
                 {
-                    _attackDone = false;
-                    if (hit.collider.gameObject.TryGetComponent<_PlayerStateManager>(out var player))
-                    {
-                        player.Damage(AttackDamage);
-
-                        if (!player.IsAlive)
-                        {
-                            player.SwitchState(player.DeathState);
-                            enemy.SwitchState(enemy.AliveState.IdleState);
-                        }
-                    }
+                    _player = hit.collider.gameObject;
                 }
-            }
-            else
-            {
-                enemy.SwitchState(enemy.AliveState.MovementState);
             }
         }
 
         public override void UpdateState(_EnemyStateManager enemy)
         {
-
+            if (_player != null && _playerStateManager == null)
+            {
+                if (_player.TryGetComponent<_PlayerStateManager>(out var playerStateManager))
+                {
+                    _playerStateManager = playerStateManager;
+                }
+            }
         }
 
         #endregion
@@ -92,18 +87,38 @@ namespace AdventureStorm
 
         private IEnumerator AttackCoroutine(_EnemyStateManager enemy)
         {
-            enemy.AnimatorManager.ChangeAnimationState(AttackingAnimation);
-            for (; ; )
+            if (enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
             {
-                if (enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
-                {
-                    _attackDone = true;
-                    yield return new WaitForSeconds(AttackDelay);
-                    enemy.AnimatorManager.ReplayAnimation();
-                }
-
+                enemy.AnimatorManager.ReplayAnimation();
+            }
+            else
+            {
+                enemy.AnimatorManager.ChangeAnimationState(AttackingAnimation);
+            }
+            
+            while (!enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
+            {
                 yield return null;
             }
+
+            float distance = Mathf.Abs(enemy.transform.position.x - _player.transform.position.x);
+
+            if (distance <= AttackRange)
+            {
+                if (_playerStateManager != null)
+                {
+                    _playerStateManager.Damage(AttackDamage);
+
+                    if (!_playerStateManager.IsAlive)
+                    {
+                        _playerStateManager.SwitchState(_playerStateManager.DeathState);
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(AttackDelay);
+
+            enemy.SwitchState(enemy.AliveState.CombatState);
         }
 
         #endregion

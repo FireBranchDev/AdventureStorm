@@ -13,7 +13,7 @@ namespace AdventureStorm
 
         private const float DistanceForIdleState = 5f;
 
-        private const float DistanceForAttackState = 2.5f;
+        private const float DistanceForCombatState = 2.5f;
 
         private const float SecondsRequiredForIdleState = 0.33f;
 
@@ -48,7 +48,7 @@ namespace AdventureStorm
 
         public override void FixedUpdateState(_EnemyStateManager enemy)
         {
-            Attack(enemy);
+            Combat(enemy);
             Idle(enemy);
             Movement(enemy);
         }
@@ -70,11 +70,10 @@ namespace AdventureStorm
 
         #region Private Methods
 
-        private void Attack(_EnemyStateManager enemy)
+        private void Combat(_EnemyStateManager enemy)
         {
             var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
-            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForAttackState, enemy.PlayerLayerMask);
-            Debug.DrawRay(enemy.transform.position, direction * DistanceForAttackState, Color.cyan);
+            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForCombatState, enemy.PlayerLayerMask);
 
             if (hit.collider != null)
             {
@@ -82,7 +81,7 @@ namespace AdventureStorm
                 {
                     if (player.IsAlive)
                     {
-                        enemy.SwitchState(enemy.AliveState.AttackingState);
+                        enemy.SwitchState(enemy.AliveState.CombatState);
                     }
                 }
             }
@@ -92,7 +91,6 @@ namespace AdventureStorm
         {
             var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForIdleState, enemy.PlayerLayerMask);
-            Debug.DrawRay(enemy.transform.position, direction * DistanceForIdleState, Color.yellow);
 
             if (hit.collider != null)
             {

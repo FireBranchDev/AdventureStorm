@@ -8,7 +8,7 @@ namespace AdventureStorm
 
         public _EnemyAliveState()
         {
-            AttackingState = new _EnemyAttackingState();
+            CombatState = new _EnemyCombatState();
             IdleState = new _EnemyIdleState();
             MovementState = new _EnemyMovementState();
 
@@ -19,7 +19,7 @@ namespace AdventureStorm
 
         #region Properties
 
-        public _EnemyAttackingState AttackingState { get; private set; }
+        public _EnemyCombatState CombatState { get; private set; }
         public _EnemyIdleState IdleState { get; private set; }
         public _EnemyMovementState MovementState { get; private set; }
 
@@ -81,9 +81,6 @@ namespace AdventureStorm
             {
                 IsFacingLeft = true;
             }
-
-            Debug.DrawRay(enemy.transform.position, Vector2.left * float.MaxValue, Color.magenta);
-            Debug.DrawRay(enemy.transform.position, Vector2.right * float.MaxValue, Color.magenta);
         }
 
         public void FlipEnemy(_EnemyStateManager enemy)
