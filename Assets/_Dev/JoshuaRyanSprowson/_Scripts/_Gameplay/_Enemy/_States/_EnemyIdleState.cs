@@ -38,7 +38,6 @@ namespace AdventureStorm
             {
                 var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
                 RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
-                Debug.DrawRay(enemy.transform.position, direction * DistanceForMovementState, Color.blue);
 
                 if (hit.collider != null)
                 {

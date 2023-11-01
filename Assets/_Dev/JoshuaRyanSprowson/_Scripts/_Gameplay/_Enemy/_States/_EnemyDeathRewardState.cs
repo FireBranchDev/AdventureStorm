@@ -32,7 +32,7 @@ namespace AdventureStorm
 
         public override void EnterState(_EnemyStateManager enemy)
         {
-            Debug.Log("Enemy death reward state");
+            
         }
 
         public override void ExitState(_EnemyStateManager enemy)
