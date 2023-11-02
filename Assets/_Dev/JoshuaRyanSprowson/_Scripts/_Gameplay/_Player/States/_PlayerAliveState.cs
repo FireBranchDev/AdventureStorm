@@ -11,7 +11,7 @@ namespace AdventureStorm
             IdleState = new _PlayerIdleState();
             MovementState = new _PlayerMovementState();
             AttackingState = new _PlayerAttackingState();
-            DodgeAttackState = new _PlayerDodgeAttackState();
+            DodgingState = new _PlayerDodgingState();
 
             RechargeDodgeAttackStaminaCoroutine = null;
         }
@@ -26,7 +26,7 @@ namespace AdventureStorm
 
         public _PlayerAttackingState AttackingState { get; private set; }
 
-        public _PlayerDodgeAttackState DodgeAttackState { get; private set; }
+        public _PlayerDodgingState DodgingState { get; private set; }
 
         public Coroutine RechargeDodgeAttackStaminaCoroutine { get; set; }
 

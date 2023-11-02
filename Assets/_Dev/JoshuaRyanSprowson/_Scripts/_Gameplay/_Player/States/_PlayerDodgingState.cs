@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AdventureStorm
 {
-    public class _PlayerDodgeAttackState : _PlayerBaseState
+    public class _PlayerDodgingState : _PlayerBaseState
     {
         #region Constant Fields
 
@@ -33,7 +33,7 @@ namespace AdventureStorm
 
         #region Constructors
 
-        public _PlayerDodgeAttackState()
+        public _PlayerDodgingState()
         {
             _dodgeAttackStamina = MaximumDodgeAttackStamina;
             _isDodgeAttackInProgress = false;

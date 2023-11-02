@@ -42,7 +42,7 @@ namespace AdventureStorm
             _walkingCoroutine = player.StartCoroutine(WalkingCoroutine(player));
 
             player.AliveState.RechargeDodgeAttackStaminaCoroutine ??=
-                player.StartCoroutine(player.AliveState.DodgeAttackState.RechargeDodgeAttackStaminaCoroutine());
+                player.StartCoroutine(player.AliveState.DodgingState.RechargeDodgeAttackStaminaCoroutine());
         }
 
         public override void ExitState(_PlayerStateManager player)
@@ -101,7 +101,7 @@ namespace AdventureStorm
 
             if (Input.GetKey(KeyCode.Space) && _horizontalAxis != 0f)
             {
-                player.SwitchState(player.AliveState.DodgeAttackState);
+                player.SwitchState(player.AliveState.DodgingState);
             }
         }
 
