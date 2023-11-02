@@ -49,6 +49,16 @@ namespace AdventureStorm
 
         }
 
+        public override void OnTriggerEnter2D(_PlayerStateManager player, Collider2D collision)
+        {
+
+        }
+
+        public override void OnTriggerExit2D(_PlayerStateManager player, Collider2D collision)
+        {
+
+        }
+
         public override void UpdateState(_PlayerStateManager player)
         {
 

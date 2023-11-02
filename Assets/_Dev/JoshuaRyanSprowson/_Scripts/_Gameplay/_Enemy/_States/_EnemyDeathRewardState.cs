@@ -32,7 +32,7 @@ namespace AdventureStorm
 
         public override void EnterState(_EnemyStateManager enemy)
         {
-            
+
         }
 
         public override void ExitState(_EnemyStateManager enemy)
@@ -46,7 +46,7 @@ namespace AdventureStorm
 
         public override void FixedUpdateState(_EnemyStateManager enemy)
         {
-            
+
         }
 
         public override void UpdateState(_EnemyStateManager enemy)

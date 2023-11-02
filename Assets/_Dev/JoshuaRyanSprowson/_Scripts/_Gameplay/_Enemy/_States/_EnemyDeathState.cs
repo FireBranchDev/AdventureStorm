@@ -60,7 +60,7 @@ namespace AdventureStorm
 
         public override void UpdateState(_EnemyStateManager enemy)
         {
-           
+
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace AdventureStorm
         private IEnumerator DeathCoroutine(_EnemyStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(DyingAnimation);
-            
+
             while (!enemy.AnimatorManager.DidAnimationFinish(DyingAnimation))
             {
                 yield return null;

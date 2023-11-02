@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace AdventureStorm
 {
@@ -95,7 +94,7 @@ namespace AdventureStorm
             {
                 enemy.AnimatorManager.ChangeAnimationState(AttackingAnimation);
             }
-            
+
             while (!enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
             {
                 yield return null;

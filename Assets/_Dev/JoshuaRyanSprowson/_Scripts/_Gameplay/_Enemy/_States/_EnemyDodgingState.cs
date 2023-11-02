@@ -36,12 +36,12 @@ namespace AdventureStorm
 
         public override void FixedUpdateState(_EnemyStateManager enemy)
         {
-            
+
         }
 
         public override void UpdateState(_EnemyStateManager enemy)
         {
-            
+
         }
 
         #endregion
@@ -53,7 +53,7 @@ namespace AdventureStorm
             yield return new WaitForSeconds(0.25f);
             enemy.SwitchState(enemy.AliveState.CombatState);
         }
-        
+
         #endregion
     }
 }

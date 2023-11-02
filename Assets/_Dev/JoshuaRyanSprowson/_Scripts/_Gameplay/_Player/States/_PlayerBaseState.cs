@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace AdventureStorm
 {
     public abstract class _PlayerBaseState
@@ -7,6 +9,10 @@ namespace AdventureStorm
         public abstract void ExitState(_PlayerStateManager player);
 
         public abstract void FixedUpdateState(_PlayerStateManager player);
+
+        public abstract void OnTriggerEnter2D(_PlayerStateManager player, Collider2D collision);
+
+        public abstract void OnTriggerExit2D(_PlayerStateManager player, Collider2D collision);
 
         public abstract void UpdateState(_PlayerStateManager player);
     }

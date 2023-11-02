@@ -8,16 +8,30 @@ namespace AdventureStorm
         #region Constant Fields
 
         private const string WalkingAnimation = "Walking";
-
         private const float WalkingSpeed = 5f;
+        private const string LeftWallTag = "LeftWall";
+        private const string RightWallTag = "RightWall";
 
         #endregion
 
         #region Fields
 
         private Coroutine _walkingCoroutine;
-
         private float _horizontalAxis;
+        private bool _canMoveLeft;
+        private bool _canMoveRight;
+
+        #endregion
+
+        #region Constructors
+
+        public _PlayerMovementState()
+        {
+            _walkingCoroutine = null;
+            _horizontalAxis = 0f;
+            _canMoveLeft = true;
+            _canMoveRight = true;
+        }
 
         #endregion
 
@@ -43,6 +57,32 @@ namespace AdventureStorm
         public override void FixedUpdateState(_PlayerStateManager player)
         {
             Move(player);
+        }
+
+        public override void OnTriggerEnter2D(_PlayerStateManager player, Collider2D collision)
+        {
+            if (collision.CompareTag(LeftWallTag))
+            {
+                _canMoveLeft = false;
+            }
+
+            if (collision.CompareTag(RightWallTag))
+            {
+                _canMoveRight = false;
+            }
+        }
+
+        public override void OnTriggerExit2D(_PlayerStateManager player, Collider2D collision)
+        {
+            if (collision.CompareTag(LeftWallTag))
+            {
+                _canMoveLeft = true;
+            }
+
+            if (collision.CompareTag(RightWallTag))
+            {
+                _canMoveRight = true;
+            }
         }
 
         public override void UpdateState(_PlayerStateManager player)
@@ -88,15 +128,13 @@ namespace AdventureStorm
 
         private void Move(_PlayerStateManager player)
         {
-            Vector2 velocity = new(0, 0);
+            Vector2 velocity = Vector2.zero;
 
-            // Move to the right.
-            if (_horizontalAxis > 0f && _horizontalAxis != 0)
+            if (_horizontalAxis > 0f && _canMoveRight)
             {
                 velocity.x = WalkingSpeed;
             }
-            // Move to the left.
-            else
+            else if (_horizontalAxis < 0f && _canMoveLeft)
             {
                 velocity.x = -WalkingSpeed;
             }

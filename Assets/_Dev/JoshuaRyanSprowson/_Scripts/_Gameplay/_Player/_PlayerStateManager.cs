@@ -59,15 +59,25 @@ namespace AdventureStorm
             Health = MaximumHealth;
         }
 
+        private void FixedUpdate()
+        {
+            _currentState.FixedUpdateState(this);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            _currentState.OnTriggerEnter2D(this, collision);
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            _currentState.OnTriggerExit2D(this, collision);
+        }
+
         private void Start()
         {
             _currentState = AliveState;
             _currentState.EnterState(this);
-        }
-
-        private void FixedUpdate()
-        {
-            _currentState.FixedUpdateState(this);
         }
 
         private void Update()
