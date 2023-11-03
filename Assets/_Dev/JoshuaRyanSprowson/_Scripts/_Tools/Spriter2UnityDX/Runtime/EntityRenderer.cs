@@ -91,6 +91,8 @@ namespace Spriter2UnityDX
             }
         }
 
+        public SpriteRenderer SpriteRenderer { get => first; }
+
         private void Awake()
         {
             RefreshRenders();

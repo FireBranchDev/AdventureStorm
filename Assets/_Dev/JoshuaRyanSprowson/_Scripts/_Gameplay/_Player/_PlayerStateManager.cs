@@ -1,3 +1,4 @@
+using Spriter2UnityDX;
 using UnityEngine;
 
 namespace AdventureStorm
@@ -12,11 +13,27 @@ namespace AdventureStorm
 
         public const float MaximumHealth = 5f;
 
+        private const string LeftBoundaryTag = "LeftBoundary";
+
+        private const string RightBoundaryTag = "RightBoundary";
+
+        private const string GroundBoundaryTag = "GroundBoundary";
+
+        private const float BoundaryWallMargin = 3.6f;
+
         #endregion
 
         #region Fields
 
+        private EntityRenderer _entityRenderer;
+
         private _PlayerBaseState _currentState;
+
+        private GameObject _leftBoundary;
+        private GameObject _rightBoundary;
+        private GameObject _groundBoundary;
+
+        private float _spriteWidth;
 
         #endregion
 
@@ -44,7 +61,18 @@ namespace AdventureStorm
 
         private void Awake()
         {
+            if (TryGetComponent<EntityRenderer>(out var entityRenderer))
+            {
+                _entityRenderer = entityRenderer;
+            }
+
             _currentState = null;
+
+            _leftBoundary = GameObject.FindWithTag(LeftBoundaryTag);
+            _rightBoundary = GameObject.FindWithTag(RightBoundaryTag);
+            _groundBoundary = GameObject.FindWithTag(GroundBoundaryTag);
+
+            _spriteWidth = 0f;
 
             Rb2D = GetComponent<Rigidbody2D>();
             AnimatorManager = GetComponent<_AnimatorManager>();
@@ -76,12 +104,30 @@ namespace AdventureStorm
 
         private void Start()
         {
+            if (_entityRenderer != null)
+            {
+                _spriteWidth = _entityRenderer.SpriteRenderer.size.x;
+            }
+
             _currentState = AliveState;
             _currentState.EnterState(this);
         }
 
         private void Update()
         {
+            if (_groundBoundary != null)
+            {
+                if (_leftBoundary != null)
+                {
+                    PreventPassingThroughLeftWallBoundary();
+                }
+
+                if (_rightBoundary != null)
+                {
+                    PreventPassingThroughRightWallBoundary();
+                }
+            }
+
             if (IsAlive)
             {
                 FlipPlayerSprite();
@@ -128,6 +174,38 @@ namespace AdventureStorm
         #endregion
 
         #region Private Methods
+
+        private void PreventPassingThroughLeftWallBoundary()
+        {
+            Vector3 playerPos = transform.position;
+            Vector3 leftWallPos = _leftBoundary.transform.position;
+
+            if (playerPos.x <= leftWallPos.x + _spriteWidth * BoundaryWallMargin)
+            {
+                Vector3 newPosition = Vector3.zero;
+
+                newPosition.x = leftWallPos.x + _spriteWidth * BoundaryWallMargin;
+                newPosition.y = _groundBoundary.transform.position.y;
+
+                transform.position = newPosition;
+            }
+        }
+
+        private void PreventPassingThroughRightWallBoundary()
+        {
+            Vector3 playerPos = transform.position;
+            Vector3 rightWallPos = _rightBoundary.transform.position;
+
+            if (playerPos.x >= rightWallPos.x - _spriteWidth * BoundaryWallMargin)
+            {
+                Vector3 newPosition = Vector3.zero;
+
+                newPosition.x = rightWallPos.x - _spriteWidth * BoundaryWallMargin;
+                newPosition.y = _groundBoundary.transform.position.y;
+
+                transform.position = newPosition;
+            }
+        }
 
         private void FlipPlayerSprite()
         {

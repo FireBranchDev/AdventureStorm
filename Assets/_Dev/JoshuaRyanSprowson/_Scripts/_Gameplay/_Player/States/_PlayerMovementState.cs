@@ -9,8 +9,6 @@ namespace AdventureStorm
 
         private const string WalkingAnimation = "Walking";
         private const float WalkingSpeed = 5f;
-        private const string LeftWallTag = "LeftWall";
-        private const string RightWallTag = "RightWall";
 
         #endregion
 
@@ -18,8 +16,6 @@ namespace AdventureStorm
 
         private Coroutine _walkingCoroutine;
         private float _horizontalAxis;
-        private bool _canMoveLeft;
-        private bool _canMoveRight;
 
         #endregion
 
@@ -29,8 +25,6 @@ namespace AdventureStorm
         {
             _walkingCoroutine = null;
             _horizontalAxis = 0f;
-            _canMoveLeft = true;
-            _canMoveRight = true;
         }
 
         #endregion
@@ -61,28 +55,12 @@ namespace AdventureStorm
 
         public override void OnTriggerEnter2D(_PlayerStateManager player, Collider2D collision)
         {
-            if (collision.CompareTag(LeftWallTag))
-            {
-                _canMoveLeft = false;
-            }
 
-            if (collision.CompareTag(RightWallTag))
-            {
-                _canMoveRight = false;
-            }
         }
 
         public override void OnTriggerExit2D(_PlayerStateManager player, Collider2D collision)
         {
-            if (collision.CompareTag(LeftWallTag))
-            {
-                _canMoveLeft = true;
-            }
 
-            if (collision.CompareTag(RightWallTag))
-            {
-                _canMoveRight = true;
-            }
         }
 
         public override void UpdateState(_PlayerStateManager player)
@@ -130,11 +108,11 @@ namespace AdventureStorm
         {
             Vector2 velocity = Vector2.zero;
 
-            if (_horizontalAxis > 0f && _canMoveRight)
+            if (_horizontalAxis > 0f)
             {
                 velocity.x = WalkingSpeed;
             }
-            else if (_horizontalAxis < 0f && _canMoveLeft)
+            else if (_horizontalAxis < 0f)
             {
                 velocity.x = -WalkingSpeed;
             }
