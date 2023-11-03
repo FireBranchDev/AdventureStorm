@@ -100,17 +100,20 @@ namespace AdventureStorm
                 yield return null;
             }
 
-            float distance = Mathf.Abs(enemy.transform.position.x - _player.transform.position.x);
-
-            if (distance <= AttackRange)
+            if (_player != null)
             {
-                if (_playerStateManager != null)
-                {
-                    _playerStateManager.Damage(AttackDamage);
+                float distance = Mathf.Abs(enemy.transform.position.x - _player.transform.position.x);
 
-                    if (!_playerStateManager.IsAlive)
+                if (distance <= AttackRange)
+                {
+                    if (_playerStateManager != null)
                     {
-                        _playerStateManager.SwitchState(_playerStateManager.DeathState);
+                        _playerStateManager.Damage(AttackDamage);
+
+                        if (!_playerStateManager.IsAlive)
+                        {
+                            _playerStateManager.SwitchState(_playerStateManager.DeathState);
+                        }
                     }
                 }
             }
