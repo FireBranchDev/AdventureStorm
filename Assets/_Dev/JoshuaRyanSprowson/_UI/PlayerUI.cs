@@ -9,6 +9,8 @@ namespace AdventureStorm
 
         private ProgressBar _staminaBar;
 
+        private Label _collectedKey;
+
         private GameObject _player;
 
         private _PlayerStateManager _playerStateManager;
@@ -36,6 +38,8 @@ namespace AdventureStorm
 
             _healthBar = _uiDocument.rootVisualElement.Q("health-bar") as ProgressBar;
             _staminaBar = _uiDocument.rootVisualElement.Q("stamina-bar") as ProgressBar;
+
+            _collectedKey = _uiDocument.rootVisualElement.Q("collected-key") as Label;
 
             _healthBar.highValue = _PlayerStateManager.MaximumHealth;
 
@@ -69,6 +73,15 @@ namespace AdventureStorm
                 if (_playerDodgingState != null)
                 {
                     _staminaBar.value = _playerDodgingState.DodgeStamina;
+                }
+
+                if (_playerStateManager.HasKey)
+                {
+                    _collectedKey.text = "1/1 Key";
+                }
+                else
+                {
+                    _collectedKey.text = "0/1 Key";
                 }
             }
         }

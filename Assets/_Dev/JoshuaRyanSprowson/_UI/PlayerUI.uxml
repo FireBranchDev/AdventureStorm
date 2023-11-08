@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/PlayerUI.uss?fileID=7433441132597879392&amp;guid=03a6fdeb374b74941bbf7b4d755fc250&amp;type=3#PlayerUI" />
-    <ui:VisualElement name="screen">
-        <ui:ProgressBar name="health-bar" />
+    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/PlayerUI.uss?fileID=7433441132597879392&amp;guid=c6635987f25ac214bb907f88d491f639&amp;type=3#PlayerUI" />
+    <ui:VisualElement name="screen" style="align-items: center; margin-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; position: relative; justify-content: flex-start;">
+        <ui:VisualElement name="collected-key-background" class="collected-key-background">
+            <ui:Label tabindex="-1" text="0/1 Key" display-tooltip-when-elided="true" focusable="true" enable-rich-text="true" name="collected-key" class="collected-key" style="position: relative; left: auto; top: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; font-size: 60px; color: rgb(255, 255, 255); padding-left: 16px; padding-right: 16px; padding-top: 16px; padding-bottom: 16px;" />
+        </ui:VisualElement>
+        <ui:ProgressBar name="health-bar" style="flex-direction: column-reverse;" />
         <ui:ProgressBar name="stamina-bar" />
     </ui:VisualElement>
 </ui:UXML>

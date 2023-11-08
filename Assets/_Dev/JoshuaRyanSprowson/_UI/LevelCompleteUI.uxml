@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/LevelCompleteUI.uss?fileID=7433441132597879392&amp;guid=cc5bc9c3950bd7b4c87efca6050c4416&amp;type=3#LevelCompleteUI" />
+    <ui:VisualElement name="container" class="container">
+        <ui:Label tabindex="-1" text="LEVEL COMPLETE!" display-tooltip-when-elided="true" name="level-complete" class="level-complete" />
+        <ui:VisualElement name="buttons-container" class="buttons-container">
+            <ui:Button text="Next Level" display-tooltip-when-elided="true" name="next-level" class="next-level" />
+            <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="main-menu" class="main-menu" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

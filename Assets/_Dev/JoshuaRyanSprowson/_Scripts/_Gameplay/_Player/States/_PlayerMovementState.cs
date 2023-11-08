@@ -10,6 +10,12 @@ namespace AdventureStorm
         private const string WalkingAnimation = "Walking";
         private const float WalkingSpeed = 5f;
 
+        private const string KeyTag = "Key";
+
+        private const string ExitDoorTag = "ExitDoor";
+
+        private const string SystemGameObjectName = "@System";
+
         #endregion
 
         #region Fields
@@ -61,6 +67,31 @@ namespace AdventureStorm
         public override void OnTriggerExit2D(_PlayerStateManager player, Collider2D collision)
         {
 
+        }
+
+        public override void OnTriggerStay2D(_PlayerStateManager player, Collider2D collision)
+        {
+            if (collision.CompareTag(KeyTag))
+            {
+                GameObject key = collision.gameObject;
+                Object.Destroy(key);
+                player.HasKey = true;
+            }
+
+            if (collision.CompareTag(ExitDoorTag))
+            {
+                if (player.HasKey)
+                {
+                    GameObject system = GameObject.Find(SystemGameObjectName);
+                    if (system != null)
+                    {
+                        if (system.TryGetComponent<_LevelManager>(out var levelManager))
+                        {
+                            levelManager.IsLevelCompleted = true;
+                        }
+                    }
+                }
+            }
         }
 
         public override void UpdateState(_PlayerStateManager player)

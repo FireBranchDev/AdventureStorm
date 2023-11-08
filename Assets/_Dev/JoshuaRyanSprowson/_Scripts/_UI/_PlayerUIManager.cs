@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AdventureStorm
 {
-    public class PlayerUIManager : MonoBehaviour
+    public class _PlayerUIManager : MonoBehaviour
     {
         #region Fields
 
@@ -15,11 +15,21 @@ namespace AdventureStorm
         [SerializeField]
         private GameObject _restartLevelUI;
 
+        [Tooltip("Displays the level complete UI in the game.")]
+        [SerializeField]
+        private GameObject _levelCompleteUI;
+
         [Tooltip("The playable hero of the game.")]
         [SerializeField]
         private GameObject _player;
 
+        [Tooltip("Contains the system scripts for the game.")]
+        [SerializeField]
+        private GameObject _system;
+
         private _PlayerStateManager _playerStateManager;
+
+        private _LevelManager _levelManager;
 
         private Coroutine _displayRestartLevelUI;
 
@@ -30,12 +40,13 @@ namespace AdventureStorm
         private void Awake()
         {
             _playerStateManager = null;
+            _levelManager = null;
             _displayRestartLevelUI = null;
         }
 
         private void Update()
         {
-            if (_player != null)
+            if (_player != null && _system != null)
             {
                 if (_playerStateManager == null)
                 {
@@ -44,19 +55,35 @@ namespace AdventureStorm
                         _playerStateManager = playerStateManager;
                     }
                 }
-                else
+
+                if (_levelManager == null)
+                {
+                    if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                    {
+                        _levelManager = levelManager;
+                    }
+                }
+
+                if (_playerStateManager != null && _levelManager != null)
                 {
                     if (_playerStateManager.IsAlive)
                     {
-                        _playerUI.SetActive(true);
-                        _restartLevelUI.SetActive(false);
+                        if (_levelManager.IsLevelCompleted)
+                        {
+                            _levelCompleteUI.SetActive(true);
+                            Time.timeScale = 0f;
+                        }
+                        else
+                        {
+                            _playerUI.SetActive(true);
+                        }
                     }
                     else
                     {
 #pragma warning disable IDE0074 // Use compound assignment
                         if (_displayRestartLevelUI == null)
                         {
-                           _displayRestartLevelUI = StartCoroutine(DisplayRestartLevelUI());
+                            _displayRestartLevelUI = StartCoroutine(DisplayRestartLevelUI());
                         }
 #pragma warning restore IDE0074 // Use compound assignment
                     }
@@ -70,9 +97,8 @@ namespace AdventureStorm
 
         private IEnumerator DisplayRestartLevelUI()
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
 
-            _playerUI.SetActive(false);
             _restartLevelUI.SetActive(true);
         }
 

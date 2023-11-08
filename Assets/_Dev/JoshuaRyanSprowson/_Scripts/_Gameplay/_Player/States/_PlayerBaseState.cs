@@ -12,6 +12,8 @@ namespace AdventureStorm
 
         public abstract void OnTriggerEnter2D(_PlayerStateManager player, Collider2D collision);
 
+        public abstract void OnTriggerStay2D(_PlayerStateManager player, Collider2D collision);
+
         public abstract void OnTriggerExit2D(_PlayerStateManager player, Collider2D collision);
 
         public abstract void UpdateState(_PlayerStateManager player);

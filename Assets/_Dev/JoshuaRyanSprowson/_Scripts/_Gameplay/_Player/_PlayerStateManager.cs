@@ -51,6 +51,8 @@ namespace AdventureStorm
 
         public _PlayerDeathState DeathState { get; private set; }
 
+        public bool HasKey { get; set; }
+
         public float Health { get; private set; }
 
         public bool IsAlive { get => Health > 0f; }
@@ -84,6 +86,8 @@ namespace AdventureStorm
             AliveState = new _PlayerAliveState();
             DeathState = new _PlayerDeathState();
 
+            HasKey = false;
+
             Health = MaximumHealth;
         }
 
@@ -100,6 +104,11 @@ namespace AdventureStorm
         private void OnTriggerExit2D(Collider2D collision)
         {
             _currentState.OnTriggerExit2D(this, collision);
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            _currentState.OnTriggerStay2D(this, collision);
         }
 
         private void Start()

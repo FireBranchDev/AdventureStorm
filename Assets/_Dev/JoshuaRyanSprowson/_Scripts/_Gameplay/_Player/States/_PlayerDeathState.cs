@@ -37,6 +37,11 @@ namespace AdventureStorm
 
         }
 
+        public override void OnTriggerStay2D(_PlayerStateManager player, Collider2D collision)
+        {
+
+        }
+
         public override void UpdateState(_PlayerStateManager player)
         {
             if (player.AnimatorManager.DidAnimationFinish(DyingAnimation))

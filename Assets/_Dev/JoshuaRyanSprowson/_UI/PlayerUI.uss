@@ -55,5 +55,35 @@
 }
 
 #stamina-bar .unity-progress-bar__progress {
-    background-color: #E5EC1D;
+    background-color: rgb(229, 236, 29);
+}
+
+.collected-key {
+    align-items: auto;
+    font-size: 42px;
+    -unity-font-style: bold;
+    color: rgb(0, 0, 0);
+    margin-left: 60px;
+    -unity-text-align: upper-center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 50px;
+}
+
+.progress-bars {
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.collected-key-background {
+    position: absolute;
+    left: 60px;
+    top: 50px;
+    background-color: rgb(0, 0, 0);
+    align-items: auto;
 }

@@ -21,7 +21,7 @@ namespace AdventureStorm
 
             if (enemies.Length > 0)
             {
-                int result = Random.Range(1, enemies.Length+1);
+                int result = Random.Range(1, enemies.Length + 1);
 
                 GameObject enemy = enemies[result - 1];
 
