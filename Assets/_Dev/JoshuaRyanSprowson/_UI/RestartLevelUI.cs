@@ -7,6 +7,12 @@ namespace AdventureStorm
 {
     public class RestartLevelUI : MonoBehaviour
     {
+        #region Constant Fields
+
+        private const string TestingScene = "_TestingScene";
+
+        #endregion
+
         #region Fields
 
         private Button _restartButton;
@@ -39,7 +45,7 @@ namespace AdventureStorm
 
         private IEnumerator ReloadActiveScene()
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(TestingScene);
 
             while (!asyncLoad.isDone)
             {
