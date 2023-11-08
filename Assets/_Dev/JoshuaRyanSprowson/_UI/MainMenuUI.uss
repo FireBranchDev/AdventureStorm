@@ -1,0 +1,93 @@
+.screen {
+    flex-shrink: 0;
+    flex-grow: 1;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.heading {
+    background-color: rgb(0, 0, 0);
+    font-size: 60px;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 100px;
+    margin-bottom: 0;
+    width: 50%;
+    align-items: auto;
+    justify-content: flex-start;
+    color: rgb(47, 149, 114);
+}
+
+.play {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 80px;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 250px;
+    height: 93px;
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgb(0, 0, 0);
+}
+
+.replay-level {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 80px;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 250px;
+    height: 93px;
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgb(0, 0, 0);
+}
+
+.quit {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 80px;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 250px;
+    height: 93px;
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgb(0, 0, 0);
+}

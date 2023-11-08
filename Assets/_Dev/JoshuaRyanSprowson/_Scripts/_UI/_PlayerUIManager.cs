@@ -1,23 +1,26 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace AdventureStorm
 {
     public class _PlayerUIManager : MonoBehaviour
     {
+        #region Constant Fields
+
+        private const string LevelCompleteUIScene = "_LevelCompleteUIScene";
+
+        private const string RestartLevelUIScene = "_RestartLevelUIScene";
+
+        private const float RestartLevelUIDelay = 0.45f;
+
+        #endregion
+
         #region Fields
 
         [Tooltip("Displays the player's UI in the game.")]
         [SerializeField]
         private GameObject _playerUI;
-
-        [Tooltip("Displays the restart level UI in the game.")]
-        [SerializeField]
-        private GameObject _restartLevelUI;
-
-        [Tooltip("Displays the level complete UI in the game.")]
-        [SerializeField]
-        private GameObject _levelCompleteUI;
 
         [Tooltip("The playable hero of the game.")]
         [SerializeField]
@@ -31,8 +34,6 @@ namespace AdventureStorm
 
         private _LevelManager _levelManager;
 
-        private Coroutine _displayRestartLevelUI;
-
         #endregion
 
         #region LifeCycle
@@ -41,7 +42,6 @@ namespace AdventureStorm
         {
             _playerStateManager = null;
             _levelManager = null;
-            _displayRestartLevelUI = null;
         }
 
         private void Update()
@@ -70,8 +70,7 @@ namespace AdventureStorm
                     {
                         if (_levelManager.IsLevelCompleted)
                         {
-                            _levelCompleteUI.SetActive(true);
-                            Time.timeScale = 0f;
+                            StartCoroutine(LoadLevelCompleteUIScene());
                         }
                         else
                         {
@@ -80,12 +79,7 @@ namespace AdventureStorm
                     }
                     else
                     {
-#pragma warning disable IDE0074 // Use compound assignment
-                        if (_displayRestartLevelUI == null)
-                        {
-                            _displayRestartLevelUI = StartCoroutine(DisplayRestartLevelUI());
-                        }
-#pragma warning restore IDE0074 // Use compound assignment
+                        StartCoroutine(LoadRestartLevelUIScene());
                     }
                 }
             }
@@ -95,11 +89,26 @@ namespace AdventureStorm
 
         #region Private Methods
 
-        private IEnumerator DisplayRestartLevelUI()
+        private IEnumerator LoadLevelCompleteUIScene()
         {
-            yield return new WaitForSeconds(0.1f);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LevelCompleteUIScene);
 
-            _restartLevelUI.SetActive(true);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+        }
+
+        private IEnumerator LoadRestartLevelUIScene()
+        {
+            yield return new WaitForSeconds(RestartLevelUIDelay);
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(RestartLevelUIScene);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
         }
 
         #endregion

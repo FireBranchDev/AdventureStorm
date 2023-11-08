@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -33,7 +34,17 @@ namespace AdventureStorm
 
         private void OnRestartButtonClicked(ClickEvent evt)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StartCoroutine(ReloadActiveScene());
+        }
+
+        private IEnumerator ReloadActiveScene()
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
         }
 
         private void OnQuitButtonClicked(ClickEvent evt)
