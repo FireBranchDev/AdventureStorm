@@ -16,6 +16,9 @@ namespace AdventureStorm
 
         #region Fields
 
+        [Tooltip("Used when the randomly selected enemy dies.")]
+        public GameObject KeyPrefab;
+
         private _EnemyBaseState _currentState;
 
         #endregion

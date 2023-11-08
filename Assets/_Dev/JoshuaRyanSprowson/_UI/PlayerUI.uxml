@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/PlayerUI.uss?fileID=7433441132597879392&amp;guid=03a6fdeb374b74941bbf7b4d755fc250&amp;type=3#PlayerUI" />
+    <ui:VisualElement name="screen">
+        <ui:ProgressBar name="health-bar" />
+        <ui:ProgressBar name="stamina-bar" />
+    </ui:VisualElement>
+</ui:UXML>

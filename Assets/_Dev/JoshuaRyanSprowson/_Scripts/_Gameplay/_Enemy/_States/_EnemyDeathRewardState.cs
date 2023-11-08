@@ -7,6 +7,8 @@ namespace AdventureStorm
     {
         #region Fields
 
+        private const string _DynamicGameObjectName = "_Dynamic";
+
         private _PlayerStateManager _playerStateManager;
 
         private bool _rewardGiven;
@@ -24,7 +26,15 @@ namespace AdventureStorm
             _rewardGiven = false;
 
             _deleteEnemyCoroutine = null;
+
+            HasKey = false;
         }
+
+        #endregion
+
+        #region Properties
+
+        public bool HasKey { get; set; }
 
         #endregion
 
@@ -74,6 +84,18 @@ namespace AdventureStorm
                 {
                     float playerHealth = _playerStateManager.Health;
                     _playerStateManager.Heal(playerHealth * 0.25f);
+                }
+
+                if (HasKey)
+                {
+                    var keySpawnPosition = Vector3.zero;
+
+                    keySpawnPosition.x = enemy.transform.position.x + 2.5f;
+                    keySpawnPosition.y = enemy.transform.position.y + 1.5f;
+
+                    GameObject key = Object.Instantiate(enemy.KeyPrefab, keySpawnPosition, Quaternion.Euler(0, 0, 90));
+
+                    key.transform.parent = GameObject.Find(_DynamicGameObjectName).transform;
                 }
 
                 _rewardGiven = true;

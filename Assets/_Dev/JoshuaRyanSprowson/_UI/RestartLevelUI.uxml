@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/RestartLevelUI.uss?fileID=7433441132597879392&amp;guid=dd22995daaf3f8041a628cae4926dfea&amp;type=3#RestartLevelUI" />
+    <ui:VisualElement name="container" class="container">
+        <ui:Label text="YOU ARE DEAD!" display-tooltip-when-elided="true" class="title" />
+        <ui:VisualElement name="buttons-container" class="buttons-container">
+            <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="restart-button" />
+            <ui:Button text="Quit" display-tooltip-when-elided="true" name="quit-button" class="quit-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

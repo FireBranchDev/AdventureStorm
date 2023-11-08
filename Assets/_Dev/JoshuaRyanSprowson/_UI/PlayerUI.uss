@@ -1,0 +1,59 @@
+#screen {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#health-bar {
+    margin-top: 20px;
+    width: 25%;
+}
+
+#health-bar .unity-progress-bar {
+    min-height: 60px;
+    height: 60px;
+}
+
+#health-bar .unity-progress-bar__container {
+    min-height: 60px;
+    height: 60px;
+}
+
+#health-bar .unity-progress-bar__background {
+    background-color: rgb(34, 32, 32);
+    border-width: 0;
+}
+
+#health-bar .unity-progress-bar__progress {
+    background-color: rgb(224, 88, 58);
+}
+
+#health-bar .unity-progress-bar__title {
+    -unity-font-style: bold;
+    font-size: 60px;
+    color: rgb(255, 255, 255);
+}
+
+#stamina-bar {
+    margin-top: 20px;
+    width: 25%;
+}
+
+#stamina-bar .unity-progress-bar {
+    min-height: 60px;
+    height: 60px;
+}
+
+#stamina-bar .unity-progress-bar__container {
+    min-height: 60px;
+    height: 60px;
+}
+
+#stamina-bar .unity-progress-bar__background {
+    border-width: 0;
+}
+
+#stamina-bar .unity-progress-bar__progress {
+    background-color: #E5EC1D;
+}

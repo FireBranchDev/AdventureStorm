@@ -7,9 +7,9 @@ namespace AdventureStorm
     {
         #region Constant Fields
 
-        private const string StartJumpAnimation = "Start Jump";
+        public const float MaximumDodgeAttackStamina = 4f;
 
-        private const float MaximumDodgeAttackStamina = 4f;
+        private const string StartJumpAnimation = "Start Jump";
 
         private const float SecondsForDodgeAttackCooldown = 0.65f;
 
@@ -39,6 +39,12 @@ namespace AdventureStorm
             _isDodgeAttackInProgress = false;
             _isDodgeAttackCooldownFinished = true;
         }
+
+        #endregion
+
+        #region Properties
+
+        public float DodgeStamina => _dodgeAttackStamina;
 
         #endregion
 
