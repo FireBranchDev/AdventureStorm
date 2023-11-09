@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/ReplayLevelUI.uss?fileID=7433441132597879392&amp;guid=f73c8922b8df6cf4791dffe094aec614&amp;type=3#ReplayLevelUI" />
+    <ui:VisualElement name="screen" class="screen" style="background-color: rgb(255, 255, 255);">
+        <ui:VisualElement name="levels" class="levels">
+            <ui:Button text="Level One" display-tooltip-when-elided="true" name="level-one" class="level-unlocked" />
+            <ui:Button text="Level Two" display-tooltip-when-elided="true" name="level-two" class="level-locked" />
+            <ui:Button text="Level Three" display-tooltip-when-elided="true" name="level-three" class="level-locked" />
+        </ui:VisualElement>
+        <ui:VisualElement name="buttons-container" class="buttons-container">
+            <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="main-menu" class="main-menu" />
+            <ui:Button text="Select Level" display-tooltip-when-elided="true" name="select-level" class="select-level" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

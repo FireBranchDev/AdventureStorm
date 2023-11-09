@@ -11,11 +11,15 @@ namespace AdventureStorm
 
         private const string LastLevelPlayedScene = "_TestingScene";
 
+        private const string ReplayLevelUIScene = "_ReplayLevelUIScene";
+
         #endregion
 
         #region Fields
 
         private Button _playButton;
+
+        private Button _replayLevel;
 
         private Button _quitButton;
 
@@ -28,9 +32,12 @@ namespace AdventureStorm
             var uiDocument = GetComponent<UIDocument>();
 
             _playButton = uiDocument.rootVisualElement.Q("play") as Button;
-            _quitButton = uiDocument.rootVisualElement.Q("quit") as Button;
-
             _playButton.RegisterCallback<ClickEvent>(OnPlayButtonClicked);
+
+            _replayLevel = uiDocument.rootVisualElement.Q("replay-level") as Button;
+            _replayLevel.RegisterCallback<ClickEvent>(OnReplayLevelClicked);
+
+            _quitButton = uiDocument.rootVisualElement.Q("quit") as Button;
             _quitButton.RegisterCallback<ClickEvent>(OnQuitButtonClicked);
         }
 
@@ -43,6 +50,11 @@ namespace AdventureStorm
             StartCoroutine(LoadLastLevelPlayedScene());
         }
 
+        private void OnReplayLevelClicked(ClickEvent evt)
+        {
+            StartCoroutine(LoadReplayLevelUIScene());
+        }
+
         private void OnQuitButtonClicked(ClickEvent evt)
         {
             Application.Quit();
@@ -51,7 +63,15 @@ namespace AdventureStorm
         private IEnumerator LoadLastLevelPlayedScene()
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LastLevelPlayedScene);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+        }
 
+        private IEnumerator LoadReplayLevelUIScene()
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(ReplayLevelUIScene);
             while (!asyncLoad.isDone)
             {
                 yield return null;

@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Dev/JoshuaRyanSprowson/_Levels/_RestartLevelUIScene.unity
     guid: aa40e34edfa14aa47a379708d5a94e1b
+  - enabled: 1
+    path: Assets/_Dev/JoshuaRyanSprowson/_Levels/_ReplayLevelUIScene.unity
+    guid: fa86c801c580dce448004a0bd9cd20ca
   m_configObjects: {}
