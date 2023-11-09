@@ -83,13 +83,6 @@ namespace AdventureStorm
                 if (player.HasKey)
                 {
                     GameObject system = GameObject.Find(SystemGameObjectName);
-                    if (system != null)
-                    {
-                        if (system.TryGetComponent<_LevelManager>(out var levelManager))
-                        {
-                            levelManager.IsLevelCompleted = true;
-                        }
-                    }
                 }
             }
         }

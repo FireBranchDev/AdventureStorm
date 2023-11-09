@@ -15,7 +15,12 @@ namespace AdventureStorm
 
         #region Fields
 
+        [SerializeField]
+        private GameObject System;
+
         private Button _mainMenuButton;
+
+        private Button _nextLevel;
 
         #endregion
 
@@ -27,6 +32,9 @@ namespace AdventureStorm
 
             _mainMenuButton = uiDocument.rootVisualElement.Q("main-menu") as Button;
             _mainMenuButton.RegisterCallback<ClickEvent>(OnMainMenuButtonClicked);
+
+            _nextLevel = uiDocument.rootVisualElement.Q("next-level") as Button;
+            _nextLevel.RegisterCallback<ClickEvent>(OnNextLevelClicked);
         }
 
         #endregion
@@ -38,10 +46,14 @@ namespace AdventureStorm
             StartCoroutine(LoadMainMenuUIScene());
         }
 
+        private void OnNextLevelClicked(ClickEvent evt)
+        {
+
+        }
+
         private IEnumerator LoadMainMenuUIScene()
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(MainMenuUIScene);
-
             while (!asyncLoad.isDone)
             {
                 yield return null;

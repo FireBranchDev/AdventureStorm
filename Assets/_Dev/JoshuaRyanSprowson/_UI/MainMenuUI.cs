@@ -17,6 +17,10 @@ namespace AdventureStorm
 
         #region Fields
 
+        [Tooltip("The gameobject which contains all the level scripts")]
+        [SerializeField]
+        private GameObject _system;
+
         private Button _playButton;
 
         private Button _replayLevel;
@@ -47,7 +51,7 @@ namespace AdventureStorm
 
         private void OnPlayButtonClicked(ClickEvent evt)
         {
-            StartCoroutine(LoadLastLevelPlayedScene());
+
         }
 
         private void OnReplayLevelClicked(ClickEvent evt)

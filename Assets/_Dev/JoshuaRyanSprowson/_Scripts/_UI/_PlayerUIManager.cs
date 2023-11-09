@@ -72,14 +72,7 @@ namespace AdventureStorm
                 {
                     if (_playerStateManager.IsAlive)
                     {
-                        if (_levelManager.IsLevelCompleted)
-                        {
-                            StartCoroutine(LoadLevelCompleteUIScene());
-                        }
-                        else
-                        {
-                            _playerUI.SetActive(true);
-                        }
+                        _playerUI.SetActive(true);
                     }
                     else
                     {

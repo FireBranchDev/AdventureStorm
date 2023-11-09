@@ -1,20 +1,23 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace AdventureStorm
 {
     public class _LevelManager : MonoBehaviour
     {
-        #region Properties
+        #region Private Methods
 
-        public bool IsLevelCompleted { get; set; }
-
-        #endregion
-
-        #region LifeCycle
-
-        private void Awake()
+        private IEnumerator LoadSceneCoroutine(string sceneName)
         {
-            IsLevelCompleted = false;
+            if (!string.IsNullOrEmpty(sceneName))
+            {
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+                while (!asyncLoad.isDone)
+                {
+                    yield return null;
+                }
+            }
         }
 
         #endregion
