@@ -34,6 +34,8 @@ namespace AdventureStorm
 
         private _LevelManager _levelManager;
 
+        private Coroutine _loadRestartLevelUIScene;
+
         #endregion
 
         #region LifeCycle
@@ -42,6 +44,8 @@ namespace AdventureStorm
         {
             _playerStateManager = null;
             _levelManager = null;
+
+            _loadRestartLevelUIScene = null;
         }
 
         private void Update()
@@ -79,7 +83,10 @@ namespace AdventureStorm
                     }
                     else
                     {
-                        StartCoroutine(LoadRestartLevelUIScene());
+                        if (_loadRestartLevelUIScene == null)
+                        {
+                            _loadRestartLevelUIScene = StartCoroutine(LoadRestartLevelUIScene());
+                        }
                     }
                 }
             }
@@ -103,7 +110,7 @@ namespace AdventureStorm
         {
             yield return new WaitForSeconds(RestartLevelUIDelay);
 
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(RestartLevelUIScene);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(RestartLevelUIScene, LoadSceneMode.Additive);
 
             while (!asyncLoad.isDone)
             {

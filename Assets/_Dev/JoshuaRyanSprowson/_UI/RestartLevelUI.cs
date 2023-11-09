@@ -7,12 +7,6 @@ namespace AdventureStorm
 {
     public class RestartLevelUI : MonoBehaviour
     {
-        #region Constant Fields
-
-        private const string TestingScene = "_TestingScene";
-
-        #endregion
-
         #region Fields
 
         private Button _restartButton;
@@ -40,16 +34,21 @@ namespace AdventureStorm
 
         private void OnRestartButtonClicked(ClickEvent evt)
         {
-            StartCoroutine(ReloadActiveScene());
+            StartCoroutine(ReloadPreviousScene());
         }
 
-        private IEnumerator ReloadActiveScene()
+        private IEnumerator ReloadPreviousScene()
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(TestingScene);
-
-            while (!asyncLoad.isDone)
+            if (SceneManager.sceneCount > 1)
             {
-                yield return null;
+                // The previous level would be the first scene loaded by the scene manager.
+                Scene previousLevel = SceneManager.GetSceneAt(0);
+
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(previousLevel.buildIndex);
+                while (!asyncLoad.isDone)
+                {
+                    yield return null;
+                }
             }
         }
 
