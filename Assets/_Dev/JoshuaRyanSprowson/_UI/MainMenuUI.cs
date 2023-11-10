@@ -9,15 +9,13 @@ namespace AdventureStorm
     {
         #region Constant Fields
 
-        private const string LastLevelPlayedScene = "_TestingScene";
-
         private const string ReplayLevelUIScene = "_ReplayLevelUIScene";
 
         #endregion
 
         #region Fields
 
-        [Tooltip("The gameobject which contains all the level scripts")]
+        [Tooltip("The gameobject which contains all the level's scripts")]
         [SerializeField]
         private GameObject _system;
 
@@ -51,7 +49,13 @@ namespace AdventureStorm
 
         private void OnPlayButtonClicked(ClickEvent evt)
         {
-
+            if (_system != null)
+            {
+                if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                {
+                    levelManager.LoadFirstUncompletedLevel();
+                }
+            }
         }
 
         private void OnReplayLevelClicked(ClickEvent evt)
@@ -62,15 +66,6 @@ namespace AdventureStorm
         private void OnQuitButtonClicked(ClickEvent evt)
         {
             Application.Quit();
-        }
-
-        private IEnumerator LoadLastLevelPlayedScene()
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LastLevelPlayedScene);
-            while (!asyncLoad.isDone)
-            {
-                yield return null;
-            }
         }
 
         private IEnumerator LoadReplayLevelUIScene()

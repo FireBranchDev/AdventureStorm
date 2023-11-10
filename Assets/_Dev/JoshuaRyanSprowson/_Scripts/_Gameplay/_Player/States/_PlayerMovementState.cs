@@ -1,4 +1,7 @@
+using AdventureStorm._Data;
+using AdventureStorm._Tools;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AdventureStorm
@@ -15,6 +18,10 @@ namespace AdventureStorm
         private const string ExitDoorTag = "ExitDoor";
 
         private const string SystemGameObjectName = "@System";
+
+        private const string GameCompleteUIScene = "_GameCompleteUIScene";
+
+        private const string LevelCompleteUIScene = "_LevelCompleteUIScene";
 
         #endregion
 
@@ -83,6 +90,21 @@ namespace AdventureStorm
                 if (player.HasKey)
                 {
                     GameObject system = GameObject.Find(SystemGameObjectName);
+
+                    if (system != null)
+                    {
+                        if (system.TryGetComponent<_LevelManager>(out var levelManager))
+                        {
+                            levelManager.MarkCurrentLevelAsComplete();
+
+                            List<_LevelData> levels = levelManager.GetUncompletedLevels();
+
+                            if (levels.Count >= 1)
+                            {
+                                player.StartCoroutine(_SceneHelper.LoadSceneCoroutine(LevelCompleteUIScene));
+                            }
+                        }
+                    }
                 }
             }
         }

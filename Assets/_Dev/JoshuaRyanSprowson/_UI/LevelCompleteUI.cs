@@ -16,7 +16,7 @@ namespace AdventureStorm
         #region Fields
 
         [SerializeField]
-        private GameObject System;
+        private GameObject _system;
 
         private Button _mainMenuButton;
 
@@ -48,7 +48,13 @@ namespace AdventureStorm
 
         private void OnNextLevelClicked(ClickEvent evt)
         {
-
+            if (_system != null)
+            {
+                if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                {
+                    levelManager.LoadFirstUncompletedLevel();
+                }
+            }
         }
 
         private IEnumerator LoadMainMenuUIScene()
