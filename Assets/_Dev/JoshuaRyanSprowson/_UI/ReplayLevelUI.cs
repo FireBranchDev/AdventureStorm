@@ -1,4 +1,6 @@
+using AdventureStorm._Data;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -11,15 +13,23 @@ namespace AdventureStorm
 
         private const string LevelOneScene = "_TestingScene";
 
+        private const string LevelTwoScene = "_TestingScene2";
+
         private const string MainMenuUIScene = "_MainMenuUIScene";
 
         #endregion
 
-        #region Fields
+        #region Fields  
+
+        [Tooltip("Container for the scene's scripts")]
+        [SerializeField]
+        private GameObject _system;
 
         private string _selectedLevel;
 
         private Button _levelOne;
+
+        private Button _levelTwo;
 
         private Button _mainMenu;
 
@@ -39,13 +49,21 @@ namespace AdventureStorm
             var uiDocument = GetComponent<UIDocument>();
 
             _levelOne = uiDocument.rootVisualElement.Q("level-one") as Button;
-            _levelOne.RegisterCallback<ClickEvent>(OnLevelOneClicked);
+            _levelTwo = uiDocument.rootVisualElement.Q("level-two") as Button;
 
             _mainMenu = uiDocument.rootVisualElement.Q("main-menu") as Button;
             _mainMenu.RegisterCallback<ClickEvent>(OnMainMenuClicked);
 
             _selectLevel = uiDocument.rootVisualElement.Q("select-level") as Button;
             _selectLevel.RegisterCallback<ClickEvent>(OnSelectLevelClicked);
+
+            if (_system != null)
+            {
+                if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                {
+                    StartCoroutine(AllowUnlockedLevelsToBeClicked(levelManager));
+                }
+            }
         }
 
         #endregion
@@ -55,6 +73,11 @@ namespace AdventureStorm
         private void OnLevelOneClicked(ClickEvent evt)
         {
             _selectedLevel = LevelOneScene;
+        }
+
+        private void OnLevelTwoClicked(ClickEvent evt)
+        {
+            _selectedLevel = LevelTwoScene;
         }
 
         private void OnMainMenuClicked(ClickEvent evt)
@@ -76,16 +99,38 @@ namespace AdventureStorm
         {
             if (!string.IsNullOrEmpty(_selectedLevel))
             {
-                StartCoroutine(LoadSelectedLevel(_selectedLevel));
+                if (_system != null)
+                {
+                    if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                    {
+                        levelManager.ReplayCompletedLevel(_selectedLevel);
+                    }
+                }
             }
         }
 
-        private IEnumerator LoadSelectedLevel(string level)
+        private IEnumerator AllowUnlockedLevelsToBeClicked(_LevelManager levelManager)
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level);
-            while (!asyncLoad.isDone)
+            while (!levelManager.HasLoaded)
             {
                 yield return null;
+            }
+
+            List<_LevelData> unlockedLevels = levelManager.GetCompletedLevels();
+
+            foreach (var levelData in unlockedLevels)
+            {
+                switch (levelData.ID)
+                {
+                    case 1:
+                        _levelOne.RegisterCallback<ClickEvent>(OnLevelOneClicked);
+                        break;
+                    case 2:
+                        _levelTwo.RegisterCallback<ClickEvent>(OnLevelTwoClicked);
+                        break;
+                    case 3:
+                        break;
+                }
             }
         }
 

@@ -52,7 +52,7 @@ namespace AdventureStorm
             {
                 if (_system.TryGetComponent<_LevelManager>(out var levelManager))
                 {
-                    levelManager.LoadFirstUncompletedLevel();
+                    levelManager.LoadNextLevel();
                 }
             }
         }

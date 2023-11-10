@@ -7,5 +7,7 @@ namespace AdventureStorm._Data
     public class _LevelsData
     {
         public List<_LevelData> Levels;
+
+        public _LevelData CurrentLevel;
     }
 }

@@ -97,9 +97,15 @@ namespace AdventureStorm
                         {
                             levelManager.MarkCurrentLevelAsComplete();
 
-                            List<_LevelData> levels = levelManager.GetUncompletedLevels();
+                            List<_LevelData> completedLevels = levelManager.GetCompletedLevels();
+                            List<_LevelData> uncompletedLevels = levelManager.GetUncompletedLevels();
 
-                            if (levels.Count >= 1)
+                            // Last level of the game.
+                            if (levelManager.CurrentLevel.ID == completedLevels.Count + uncompletedLevels.Count)
+                            {
+                                player.StartCoroutine(_SceneHelper.LoadSceneCoroutine(GameCompleteUIScene));
+                            }
+                            else
                             {
                                 player.StartCoroutine(_SceneHelper.LoadSceneCoroutine(LevelCompleteUIScene));
                             }

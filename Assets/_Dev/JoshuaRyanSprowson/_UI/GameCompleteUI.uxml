@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_Scripts/_UI/GameCompleteUI.uss?fileID=7433441132597879392&amp;guid=178398cf26fbaa142a9f7606694d46d8&amp;type=3#GameCompleteUI" />
+    <ui:VisualElement name="screen" class="screen">
+        <ui:Label tabindex="-1" text="Game Complete!" display-tooltip-when-elided="true" name="title" class="title" />
+        <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="main-menu" class="main-menu" />
+    </ui:VisualElement>
+</ui:UXML>

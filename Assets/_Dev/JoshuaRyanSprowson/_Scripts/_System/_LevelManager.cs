@@ -26,11 +26,21 @@ namespace AdventureStorm
 
         #endregion
 
+        #region Properties
+
+        public bool HasLoaded { get; private set; }
+
+        public _LevelData CurrentLevel { get => _levelsData.CurrentLevel; }
+
+        #endregion
+
         #region LifeCycle
 
         private void Awake()
         {
             _saveFilePath = Path.Combine(Application.persistentDataPath, SaveFileName);
+
+            HasLoaded = false;
 
             LoadData();
         }
@@ -41,26 +51,47 @@ namespace AdventureStorm
 
         public void LoadFirstUncompletedLevel()
         {
-            _LevelData currentLevel = _levelsData.Levels.FirstOrDefault(level => !level.LevelCompleted);
+            _LevelData firstUncompletedLevel = _levelsData.Levels.FirstOrDefault(level => !level.LevelCompleted);
 
-            if (currentLevel == null)
+            if (firstUncompletedLevel == null)
             {
                 return;
             }
 
-            StartCoroutine(_SceneHelper.LoadSceneCoroutine(currentLevel.SceneName));
+            _levelsData.CurrentLevel = firstUncompletedLevel;
+
+            SaveData();
+
+            StartCoroutine(_SceneHelper.LoadSceneCoroutine(firstUncompletedLevel.SceneName));
+        }
+
+        public void ReplayCompletedLevel(string sceneName)
+        {
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                return;
+            }
+
+            _LevelData level = _levelsData.Levels.FirstOrDefault(level => level.SceneName == sceneName);
+
+            if (level == null)
+            {
+                return;
+            }
+
+            _levelsData.CurrentLevel = level;
+
+            SaveData();
+
+            StartCoroutine(_SceneHelper.LoadSceneCoroutine(sceneName));
         }
 
         public void MarkCurrentLevelAsComplete()
         {
-            _LevelData currentLevel = _levelsData.Levels.FirstOrDefault(level => !level.LevelCompleted);
+            _LevelData level = _levelsData.Levels.Find(level => level.ID == CurrentLevel.ID);
+            level.LevelCompleted = true;
 
-            if (currentLevel == null)
-            {
-                return;
-            }
-
-            currentLevel.LevelCompleted = true;
+            _levelsData.CurrentLevel = level;
 
             SaveData();
         }
@@ -68,7 +99,33 @@ namespace AdventureStorm
         public List<_LevelData> GetUncompletedLevels()
         {
             List<_LevelData> levels = _levelsData.Levels.FindAll(level => !level.LevelCompleted);
+
             return levels;
+        }
+
+        public List<_LevelData> GetCompletedLevels()
+        {
+            List<_LevelData> levels = _levelsData.Levels.FindAll(level => level.LevelCompleted);
+
+            return levels;
+        }
+
+        public void LoadNextLevel()
+        {
+            int id = _levelsData.CurrentLevel.ID + 1;
+
+            _LevelData nextLevel = _levelsData.Levels.Find(level => level.ID == id);
+
+            if (nextLevel == null)
+            {
+                return;
+            }
+
+            _levelsData.CurrentLevel = nextLevel;
+
+            SaveData();
+
+            StartCoroutine(_SceneHelper.LoadSceneCoroutine(CurrentLevel.SceneName));
         }
 
         #endregion
@@ -98,20 +155,24 @@ namespace AdventureStorm
             }
 
             _levelsData = levelsData;
+
+            HasLoaded = true;
         }
 
         private void InitialiseData()
         {
             var levelOne = new _LevelData
             {
+                ID = 1,
                 SceneName = LevelOneScene,
-                LevelCompleted = false,
+                LevelCompleted = false
             };
 
             var levelTwo = new _LevelData()
             {
+                ID = 2,
                 SceneName = LevelTwoScene,
-                LevelCompleted = false,
+                LevelCompleted = false
             };
 
             _levelsData = new _LevelsData
