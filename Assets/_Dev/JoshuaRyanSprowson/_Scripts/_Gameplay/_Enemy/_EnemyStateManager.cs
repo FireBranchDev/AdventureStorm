@@ -1,3 +1,4 @@
+using AdventureStorm.Tools;
 using UnityEngine;
 
 namespace AdventureStorm
@@ -27,7 +28,7 @@ namespace AdventureStorm
 
         public Rigidbody2D RB2D { get; private set; }
 
-        public _AnimatorManager AnimatorManager { get; private set; }
+        public AnimatorManager AnimatorManager { get; private set; }
 
         public LayerMask PlayerLayerMask { get; private set; }
 
@@ -49,7 +50,7 @@ namespace AdventureStorm
         {
             RB2D = GetComponent<Rigidbody2D>();
 
-            AnimatorManager = GetComponent<_AnimatorManager>();
+            AnimatorManager = GetComponent<AnimatorManager>();
 
             PlayerLayerMask = LayerMask.GetMask(PlayerLayerMaskName);
 

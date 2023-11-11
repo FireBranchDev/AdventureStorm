@@ -1,3 +1,4 @@
+using AdventureStorm.Tools;
 using Spriter2UnityDX;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace AdventureStorm
 
         public Rigidbody2D Rb2D { get; private set; }
 
-        public _AnimatorManager AnimatorManager { get; private set; }
+        public AnimatorManager AnimatorManager { get; private set; }
 
         public bool IsFacingLeft { get; private set; }
 
@@ -77,7 +78,7 @@ namespace AdventureStorm
             _spriteWidth = 0f;
 
             Rb2D = GetComponent<Rigidbody2D>();
-            AnimatorManager = GetComponent<_AnimatorManager>();
+            AnimatorManager = GetComponent<AnimatorManager>();
 
             IsFacingLeft = false;
 

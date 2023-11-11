@@ -1,5 +1,5 @@
 using AdventureStorm._Data;
-using AdventureStorm._Tools;
+using AdventureStorm.Tools;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,7 +62,7 @@ namespace AdventureStorm
 
             SaveData();
 
-            StartCoroutine(_SceneHelper.LoadSceneCoroutine(firstUncompletedLevel.SceneName));
+            StartCoroutine(SceneHelper.LoadSceneCoroutine(firstUncompletedLevel.SceneName));
         }
 
         public void ReplayCompletedLevel(string sceneName)
@@ -83,7 +83,7 @@ namespace AdventureStorm
 
             SaveData();
 
-            StartCoroutine(_SceneHelper.LoadSceneCoroutine(sceneName));
+            StartCoroutine(SceneHelper.LoadSceneCoroutine(sceneName));
         }
 
         public void MarkCurrentLevelAsComplete()
@@ -124,7 +124,7 @@ namespace AdventureStorm
 
             SaveData();
 
-            StartCoroutine(_SceneHelper.LoadSceneCoroutine(CurrentLevel.SceneName));
+            StartCoroutine(SceneHelper.LoadSceneCoroutine(CurrentLevel.SceneName));
         }
 
         #endregion

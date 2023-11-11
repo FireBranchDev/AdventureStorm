@@ -1,5 +1,5 @@
 using AdventureStorm._Data;
-using AdventureStorm._Tools;
+using AdventureStorm.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -103,11 +103,11 @@ namespace AdventureStorm
                             // Last level of the game.
                             if (levelManager.CurrentLevel.ID == completedLevels.Count + uncompletedLevels.Count)
                             {
-                                player.StartCoroutine(_SceneHelper.LoadSceneCoroutine(GameCompleteUIScene));
+                                player.StartCoroutine(SceneHelper.LoadSceneCoroutine(GameCompleteUIScene));
                             }
                             else
                             {
-                                player.StartCoroutine(_SceneHelper.LoadSceneCoroutine(LevelCompleteUIScene));
+                                player.StartCoroutine(SceneHelper.LoadSceneCoroutine(LevelCompleteUIScene));
                             }
                         }
                     }

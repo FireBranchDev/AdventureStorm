@@ -1,4 +1,4 @@
-using AdventureStorm._Tools;
+using AdventureStorm.Tools;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,7 +35,7 @@ namespace AdventureStorm.UI
 
         private void OnMenuMenuClicked(ClickEvent evt)
         {
-            StartCoroutine(_SceneHelper.LoadSceneCoroutine(MainMenuUIScene));
+            StartCoroutine(SceneHelper.LoadSceneCoroutine(MainMenuUIScene));
         }
 
         #endregion
