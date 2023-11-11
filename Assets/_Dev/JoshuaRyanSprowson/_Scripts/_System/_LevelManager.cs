@@ -90,8 +90,7 @@ namespace AdventureStorm
         {
             _LevelData level = _levelsData.Levels.Find(level => level.ID == CurrentLevel.ID);
             level.LevelCompleted = true;
-
-            _levelsData.CurrentLevel = level;
+            CurrentLevel.LevelCompleted = true;
 
             SaveData();
         }

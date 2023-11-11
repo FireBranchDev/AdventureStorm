@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace AdventureStorm
+namespace AdventureStorm.UI
 {
     public class ReplayLevelUI : MonoBehaviour
     {

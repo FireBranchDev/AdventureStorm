@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace AdventureStorm
+namespace AdventureStorm.UI
 {
     public class MainMenuUI : MonoBehaviour
     {
         #region Constant Fields
 
-        private const string ReplayLevelUIScene = "_ReplayLevelUIScene";
+        private const string ReplayLevelUIScene = "ReplayLevelUIScene";
 
         #endregion
 

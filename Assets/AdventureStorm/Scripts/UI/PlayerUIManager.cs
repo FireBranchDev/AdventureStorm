@@ -2,15 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace AdventureStorm
+namespace AdventureStorm.UI
 {
-    public class _PlayerUIManager : MonoBehaviour
+    public class PlayerUIManager : MonoBehaviour
     {
         #region Constant Fields
 
-        private const string LevelCompleteUIScene = "_LevelCompleteUIScene";
-
-        private const string RestartLevelUIScene = "_RestartLevelUIScene";
+        private const string RestartLevelUIScene = "RestartLevelUIScene";
 
         private const float RestartLevelUIDelay = 0.45f;
 
@@ -88,16 +86,6 @@ namespace AdventureStorm
         #endregion
 
         #region Private Methods
-
-        private IEnumerator LoadLevelCompleteUIScene()
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LevelCompleteUIScene);
-
-            while (!asyncLoad.isDone)
-            {
-                yield return null;
-            }
-        }
 
         private IEnumerator LoadRestartLevelUIScene()
         {

@@ -2,13 +2,13 @@ using AdventureStorm._Tools;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace AdventureStorm._UI
+namespace AdventureStorm.UI
 {
     public class GameCompleteUI : MonoBehaviour
     {
         #region Constant Fields
 
-        private const string MainMenuUIScene = "_MainMenuUIScene";
+        private const string MainMenuUIScene = "MainMenuUIScene";
 
         #endregion
 

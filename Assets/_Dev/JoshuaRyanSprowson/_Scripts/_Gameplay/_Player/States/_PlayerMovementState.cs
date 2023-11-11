@@ -19,9 +19,9 @@ namespace AdventureStorm
 
         private const string SystemGameObjectName = "@System";
 
-        private const string GameCompleteUIScene = "_GameCompleteUIScene";
+        private const string GameCompleteUIScene = "GameCompleteUIScene";
 
-        private const string LevelCompleteUIScene = "_LevelCompleteUIScene";
+        private const string LevelCompleteUIScene = "LevelCompleteUIScene";
 
         #endregion
 

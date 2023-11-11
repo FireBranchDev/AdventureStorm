@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace AdventureStorm
+namespace AdventureStorm.UI
 {
     public class PlayerUI : MonoBehaviour
     {
