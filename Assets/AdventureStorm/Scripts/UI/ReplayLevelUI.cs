@@ -1,4 +1,5 @@
-using AdventureStorm._Data;
+using AdventureStorm.Data;
+using AdventureStorm.Systems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,7 +60,7 @@ namespace AdventureStorm.UI
 
             if (_system != null)
             {
-                if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                if (_system.TryGetComponent<LevelManager>(out var levelManager))
                 {
                     StartCoroutine(AllowUnlockedLevelsToBeClicked(levelManager));
                 }
@@ -101,7 +102,7 @@ namespace AdventureStorm.UI
             {
                 if (_system != null)
                 {
-                    if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                    if (_system.TryGetComponent<LevelManager>(out var levelManager))
                     {
                         levelManager.ReplayCompletedLevel(_selectedLevel);
                     }
@@ -109,14 +110,14 @@ namespace AdventureStorm.UI
             }
         }
 
-        private IEnumerator AllowUnlockedLevelsToBeClicked(_LevelManager levelManager)
+        private IEnumerator AllowUnlockedLevelsToBeClicked(LevelManager levelManager)
         {
             while (!levelManager.HasLoaded)
             {
                 yield return null;
             }
 
-            List<_LevelData> unlockedLevels = levelManager.GetCompletedLevels();
+            List<LevelData> unlockedLevels = levelManager.GetCompletedLevels();
 
             foreach (var levelData in unlockedLevels)
             {

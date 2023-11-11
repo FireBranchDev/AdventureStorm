@@ -1,3 +1,4 @@
+using AdventureStorm.Systems;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -50,7 +51,7 @@ namespace AdventureStorm.UI
         {
             if (_system != null)
             {
-                if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                if (_system.TryGetComponent<LevelManager>(out var levelManager))
                 {
                     levelManager.LoadNextLevel();
                 }

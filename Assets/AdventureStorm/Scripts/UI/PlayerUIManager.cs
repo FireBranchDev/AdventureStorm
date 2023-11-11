@@ -1,3 +1,5 @@
+using AdventureStorm.Gameplay;
+using AdventureStorm.Systems;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,9 +30,9 @@ namespace AdventureStorm.UI
         [SerializeField]
         private GameObject _system;
 
-        private _PlayerStateManager _playerStateManager;
+        private PlayerStateManager _playerStateManager;
 
-        private _LevelManager _levelManager;
+        private LevelManager _levelManager;
 
         private Coroutine _loadRestartLevelUIScene;
 
@@ -52,7 +54,7 @@ namespace AdventureStorm.UI
             {
                 if (_playerStateManager == null)
                 {
-                    if (_player.TryGetComponent<_PlayerStateManager>(out var playerStateManager))
+                    if (_player.TryGetComponent<PlayerStateManager>(out var playerStateManager))
                     {
                         _playerStateManager = playerStateManager;
                     }
@@ -60,7 +62,7 @@ namespace AdventureStorm.UI
 
                 if (_levelManager == null)
                 {
-                    if (_system.TryGetComponent<_LevelManager>(out var levelManager))
+                    if (_system.TryGetComponent<LevelManager>(out var levelManager))
                     {
                         _levelManager = levelManager;
                     }

@@ -1,3 +1,4 @@
+using AdventureStorm.Gameplay;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,9 +14,9 @@ namespace AdventureStorm.UI
 
         private GameObject _player;
 
-        private _PlayerStateManager _playerStateManager;
+        private PlayerStateManager _playerStateManager;
 
-        private _PlayerDodgingState _playerDodgingState;
+        private PlayerDodgingState _playerDodgingState;
 
         private UIDocument _uiDocument;
 
@@ -41,15 +42,15 @@ namespace AdventureStorm.UI
 
             _collectedKey = _uiDocument.rootVisualElement.Q("collected-key") as Label;
 
-            _healthBar.highValue = _PlayerStateManager.MaximumHealth;
+            _healthBar.highValue = PlayerStateManager.MaximumHealth;
 
-            _staminaBar.highValue = _PlayerDodgingState.MaximumDodgeAttackStamina;
+            _staminaBar.highValue = PlayerDodgingState.MaximumDodgeAttackStamina;
 
             _player = GameObject.FindWithTag("Player");
 
             if (_player != null)
             {
-                if (_player.TryGetComponent<_PlayerStateManager>(out var x))
+                if (_player.TryGetComponent<PlayerStateManager>(out var x))
                 {
                     _playerStateManager = x;
                 }
