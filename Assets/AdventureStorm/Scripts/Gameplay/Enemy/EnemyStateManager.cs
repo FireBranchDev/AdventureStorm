@@ -82,6 +82,13 @@ namespace AdventureStorm.Gameplay
                 AliveState.FacePlayer(this);
                 AliveState.FlipEnemy(this);
             }
+            else
+            {
+                if (_currentState.ToString() != DeathState.ToString())
+                {
+                    SwitchState(DeathState);
+                }
+            }
 
             _currentState.UpdateState(this);
         }
@@ -89,17 +96,21 @@ namespace AdventureStorm.Gameplay
         #endregion
 
         #region Public Methods
-
+        
         public void SwitchState(EnemyBaseState state)
         {
             _currentState.ExitState(this);
+            
             _currentState = state;
             _currentState.EnterState(this);
         }
 
         public void Damage(float damage)
         {
-            Health -= damage;
+            if (IsAlive)
+            {
+                Health -= damage;
+            }
         }
 
         public void FinishedDyingAnimation()

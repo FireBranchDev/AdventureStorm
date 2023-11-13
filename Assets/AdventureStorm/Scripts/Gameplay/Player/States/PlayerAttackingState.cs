@@ -54,11 +54,6 @@ namespace AdventureStorm.Gameplay
                     if (hit.collider.gameObject.TryGetComponent<EnemyStateManager>(out var enemy))
                     {
                         enemy.Damage(AttackDamage);
-
-                        if (!enemy.IsAlive)
-                        {
-                            enemy.SwitchState(enemy.DeathState);
-                        }
                     }
                 }
 

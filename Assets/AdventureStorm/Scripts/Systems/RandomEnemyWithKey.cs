@@ -30,9 +30,9 @@ namespace AdventureStorm.Systems
                 {
                     if (enemyStateManager.DeathState != null)
                     {
-                        if (enemyStateManager.DeathState.DeathRewardState != null)
+                        if (enemyStateManager.DeathState != null)
                         {
-                            enemyStateManager.DeathState.DeathRewardState.HasKey = true;
+                            enemyStateManager.DeathState.HasKey = true;
                         }
                     }
                 }

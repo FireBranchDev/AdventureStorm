@@ -12,20 +12,12 @@ namespace AdventureStorm.Gameplay
 
         #endregion
 
-        #region Fields
-
-        private PlayerStateManager _playerStateManager;
-
-        #endregion
-
         #region Constructors
 
         public EnemyCombatState()
         {
             AttackingState = new EnemyAttackingState();
             DodgingState = new EnemyDodgingState();
-
-            _playerStateManager = null;
         }
 
         #endregion
@@ -52,48 +44,42 @@ namespace AdventureStorm.Gameplay
 
         public override void FixedUpdateState(EnemyStateManager enemy)
         {
-            if (_playerStateManager == null)
-            {
-                var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
-                RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, CombatDistance, enemy.PlayerLayerMask);
-
-                if (hit.collider != null)
-                {
-                    if (hit.collider.gameObject.TryGetComponent<PlayerStateManager>(out var playerStateManager))
-                    {
-                        _playerStateManager = playerStateManager;
-                    }
-                }
-            }
+            
         }
 
         public override void UpdateState(EnemyStateManager enemy)
         {
-            if (_playerStateManager != null)
+            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, CombatDistance, enemy.PlayerLayerMask);
+
+            if (hit.collider != null)
             {
-                if (_playerStateManager.IsAlive)
+                if (hit.collider.gameObject.TryGetComponent<PlayerStateManager>(out var playerStateManager))
                 {
-                    float distance = Mathf.Abs(enemy.transform.position.x - _playerStateManager.transform.position.x);
-                    if (distance <= CombatDistance)
+                    if (playerStateManager.IsAlive)
                     {
-                        float random = Random.Range(1f, 100f);
-                        if (random / 100f <= DodgeChance)
+                        float distance = Mathf.Abs(enemy.transform.position.x - playerStateManager.transform.position.x);
+                        if (distance <= CombatDistance)
                         {
-                            enemy.SwitchState(enemy.AliveState.CombatState.DodgingState);
+                            float random = Random.Range(1f, 100f);
+                            if (random / 100f <= DodgeChance)
+                            {
+                                enemy.SwitchState(enemy.AliveState.CombatState.DodgingState);
+                            }
+                            else
+                            {
+                                enemy.SwitchState(enemy.AliveState.CombatState.AttackingState);
+                            }
                         }
                         else
                         {
-                            enemy.SwitchState(enemy.AliveState.CombatState.AttackingState);
+                            enemy.SwitchState(enemy.AliveState.MovementState);
                         }
                     }
                     else
                     {
-                        enemy.SwitchState(enemy.AliveState.MovementState);
+                        enemy.SwitchState(enemy.AliveState.IdleState);
                     }
-                }
-                else
-                {
-                    enemy.SwitchState(enemy.AliveState.IdleState);
                 }
             }
         }
