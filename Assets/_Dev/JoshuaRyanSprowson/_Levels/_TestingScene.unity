@@ -1548,6 +1548,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -54.00616
       objectReference: {fileID: 0}
+    - target: {fileID: 4794590043962006274, guid: f0386e31e991b1d49aa820c0c995ac75, type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 62837166}
     - target: {fileID: 5391695055708758113, guid: f0386e31e991b1d49aa820c0c995ac75, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1606,6 +1610,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6683410162614872270, guid: f0386e31e991b1d49aa820c0c995ac75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980223968309574079, guid: f0386e31e991b1d49aa820c0c995ac75, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980223968309574079, guid: f0386e31e991b1d49aa820c0c995ac75, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7035020471854643895, guid: f0386e31e991b1d49aa820c0c995ac75, type: 3}

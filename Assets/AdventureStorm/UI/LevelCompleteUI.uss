@@ -3,7 +3,7 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(236, 236, 236);
 }
 
 .level-complete {

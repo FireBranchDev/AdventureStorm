@@ -82,6 +82,10 @@ namespace AdventureStorm.Gameplay
                     }
                 }
             }
+            else
+            {
+                enemy.SwitchState(enemy.AliveState.MovementState);
+            }
         }
 
         #endregion

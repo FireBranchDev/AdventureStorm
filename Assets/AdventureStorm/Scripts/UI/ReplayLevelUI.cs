@@ -16,7 +16,7 @@ namespace AdventureStorm.UI
 
         private const string LevelTwoScene = "_TestingScene2";
 
-        private const string MainMenuUIScene = "_MainMenuUIScene";
+        private const string MainMenuUIScene = "MainMenuUIScene";
 
         #endregion
 
