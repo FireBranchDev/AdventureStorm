@@ -11,7 +11,7 @@ namespace AdventureStorm.Systems
     {
         #region Constant Fields
 
-        private const string LevelOneScene = "_TestingScene";
+        private const string LevelOneScene = "LevelOneScene";
         private const string LevelTwoScene = "_TestingScene2";
 
         private const string SaveFileName = "levels.json";
