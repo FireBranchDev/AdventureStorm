@@ -10,15 +10,17 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         private const string DyingAnimation = "Dying";
 
-        private const string _DynamicGameObjectName = "_Dynamic";
+        private const string DynamicGameObjectName = "_Dynamic";
+
+        private const float HealMultiplier = 0.4f;
+
+        private const string PlayerTag = "Player";
 
         #endregion
 
         #region Fields
 
         private Coroutine _deathCoroutine;
-
-        private bool _rewardGiven;
 
         private Coroutine _deleteEnemyCoroutine;
 
@@ -29,8 +31,6 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
         public EnemyOneDeathState()
         {
             _deathCoroutine = null;
-
-            _rewardGiven = false;
 
             _deleteEnemyCoroutine = null;
 
@@ -93,37 +93,12 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
                 yield return null;
             }
 
-            if (!_rewardGiven)
+            GameObject player = GameObject.FindGameObjectWithTag(PlayerTag);
+            if (player != null)
             {
-                PlayerStateManager playerStateManager = null;
-
-                RaycastHit2D left = Physics2D.Raycast(enemy.transform.position, Vector2.left, float.MaxValue, enemy.PlayerLayerMask);
-                if (left.collider != null)
+                if (player.TryGetComponent<PlayerStateManager>(out var playerStateManager))
                 {
-                    if (left.collider.TryGetComponent<PlayerStateManager>(out var player))
-                    {
-                        playerStateManager = player;
-                    }
-                }
-
-                RaycastHit2D right = Physics2D.Raycast(enemy.transform.position, Vector2.right, float.MaxValue, enemy.PlayerLayerMask);
-                if (right.collider != null)
-                {
-                    if (right.collider.TryGetComponent<PlayerStateManager>(out var player))
-                    {
-                        playerStateManager = player;
-                    }
-                }
-
-                if (playerStateManager != null)
-                {
-                    float result = Random.Range(1f, 100f);
-
-                    if (result <= 75f)
-                    {
-                        float playerHealth = playerStateManager.Health;
-                        playerStateManager.Heal(playerHealth * 0.25f);
-                    }
+                    playerStateManager.Heal(PlayerStateManager.MaximumHealth * HealMultiplier);
 
                     if (HasKey)
                     {
@@ -134,14 +109,12 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
                         GameObject key = Object.Instantiate(enemy.KeyPrefab, keySpawnPosition, Quaternion.Euler(0, 0, 90));
 
-                        key.transform.parent = GameObject.Find(_DynamicGameObjectName).transform;
+                        key.transform.parent = GameObject.Find(DynamicGameObjectName).transform;
                     }
-
-                    _rewardGiven = true;
-
-                    _deleteEnemyCoroutine = enemy.StartCoroutine(DeleteEnemyCoroutine(enemy));
                 }
             }
+
+            _deleteEnemyCoroutine = enemy.StartCoroutine(DeleteEnemyCoroutine(enemy));
         }
 
         private IEnumerator DeleteEnemyCoroutine(EnemyOneStateManager enemy)
