@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 4304052473188076763}
   - component: {fileID: 2232916125033099728}
   - component: {fileID: 6096397178304024610}
-  - component: {fileID: 3459418475330858418}
+  - component: {fileID: 3162683553405628479}
   - component: {fileID: 3711130883393462725}
   m_Layer: 6
   m_Name: Golem_03
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sortingOrder: 0
   applySpriterZOrder: 0
---- !u!114 &3459418475330858418
+--- !u!114 &3162683553405628479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1033,10 +1033,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7451737185708937678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65cf4bee062a550409606c3b50aa6b76, type: 3}
+  m_Script: {fileID: 11500000, guid: c48b5f2525178764c82fe5de25a7ad2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KeyPrefab: {fileID: 6852138812433940246, guid: 572b617de60a32f4c994f148e6eaf0a6, type: 3}
+  _keyPrefab: {fileID: 6852138812433940246, guid: 572b617de60a32f4c994f148e6eaf0a6, type: 3}
 --- !u!1 &7516578261267778607
 GameObject:
   m_ObjectHideFlags: 0

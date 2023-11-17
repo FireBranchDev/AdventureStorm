@@ -1,8 +1,9 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using UnityEngine;
 
-namespace AdventureStorm.Gameplay
+namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyCombatState : EnemyBaseState
+    public class EnemyOneCombatState : EnemyBaseState<EnemyOneStateManager>
     {
         #region Constant Fields
 
@@ -14,42 +15,42 @@ namespace AdventureStorm.Gameplay
 
         #region Constructors
 
-        public EnemyCombatState()
+        public EnemyOneCombatState()
         {
-            AttackingState = new EnemyAttackingState();
-            DodgingState = new EnemyDodgingState();
+            AttackingState = new EnemyOneAttackingState();
+            DodgingState = new EnemyOneDodgingState();
         }
 
         #endregion
 
         #region Properties
 
-        public EnemyAttackingState AttackingState { get; private set; }
+        public EnemyOneAttackingState AttackingState { get; private set; }
 
-        public EnemyDodgingState DodgingState { get; private set; }
+        public EnemyOneDodgingState DodgingState { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        public override void EnterState(EnemyStateManager enemy)
+        public override void EnterState(EnemyOneStateManager enemy)
         {
 
         }
 
-        public override void ExitState(EnemyStateManager enemy)
+        public override void ExitState(EnemyOneStateManager enemy)
         {
 
         }
 
-        public override void FixedUpdateState(EnemyStateManager enemy)
+        public override void FixedUpdateState(EnemyOneStateManager enemy)
         {
-            
+
         }
 
-        public override void UpdateState(EnemyStateManager enemy)
+        public override void UpdateState(EnemyOneStateManager enemy)
         {
-            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, CombatDistance, enemy.PlayerLayerMask);
 
             if (hit.collider != null)

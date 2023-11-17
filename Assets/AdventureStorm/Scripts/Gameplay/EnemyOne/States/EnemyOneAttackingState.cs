@@ -1,9 +1,10 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
 
-namespace AdventureStorm.Gameplay
+namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyAttackingState : EnemyBaseState
+    public class EnemyOneAttackingState : EnemyBaseState<EnemyOneStateManager>
     {
         #region Constant Fields
 
@@ -29,7 +30,7 @@ namespace AdventureStorm.Gameplay
 
         #region Constructors
 
-        public EnemyAttackingState()
+        public EnemyOneAttackingState()
         {
             _attackCoroutine = null;
         }
@@ -38,7 +39,7 @@ namespace AdventureStorm.Gameplay
 
         #region Public Methods
 
-        public override void EnterState(EnemyStateManager enemy)
+        public override void EnterState(EnemyOneStateManager enemy)
         {
             if (_attackCoroutine == null)
             {
@@ -46,7 +47,7 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void ExitState(EnemyStateManager enemy)
+        public override void ExitState(EnemyOneStateManager enemy)
         {
             if (_attackCoroutine != null)
             {
@@ -55,9 +56,9 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void FixedUpdateState(EnemyStateManager enemy)
+        public override void FixedUpdateState(EnemyOneStateManager enemy)
         {
-            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, AttackRange, enemy.PlayerLayerMask);
 
             if (_player == null)
@@ -69,7 +70,7 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void UpdateState(EnemyStateManager enemy)
+        public override void UpdateState(EnemyOneStateManager enemy)
         {
             if (_player != null && _playerStateManager == null)
             {
@@ -84,7 +85,7 @@ namespace AdventureStorm.Gameplay
 
         #region Private Methods
 
-        private IEnumerator AttackCoroutine(EnemyStateManager enemy)
+        private IEnumerator AttackCoroutine(EnemyOneStateManager enemy)
         {
             if (enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
             {

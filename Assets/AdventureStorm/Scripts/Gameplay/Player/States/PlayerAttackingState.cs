@@ -1,3 +1,4 @@
+using AdventureStorm.Gameplay.EnemyOne;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay
@@ -18,7 +19,7 @@ namespace AdventureStorm.Gameplay
 
         public PlayerAttackingState()
         {
-            
+
         }
 
         #endregion
@@ -64,7 +65,7 @@ namespace AdventureStorm.Gameplay
 
                 if (hit.collider != null)
                 {
-                    if (hit.collider.gameObject.TryGetComponent<EnemyStateManager>(out var enemy))
+                    if (hit.collider.gameObject.TryGetComponent<EnemyOneStateManager>(out var enemy))
                     {
                         enemy.Damage(AttackDamage);
                     }

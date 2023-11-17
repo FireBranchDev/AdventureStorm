@@ -1,8 +1,9 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using UnityEngine;
 
-namespace AdventureStorm.Gameplay
+namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyIdleState : EnemyBaseState
+    public class EnemyOneIdleState : EnemyBaseState<EnemyOneStateManager>
     {
         #region Constant Fields
 
@@ -22,21 +23,21 @@ namespace AdventureStorm.Gameplay
 
         #region Public Methods
 
-        public override void EnterState(EnemyStateManager enemy)
+        public override void EnterState(EnemyOneStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(IdleAnimation);
         }
 
-        public override void ExitState(EnemyStateManager enemy)
+        public override void ExitState(EnemyOneStateManager enemy)
         {
 
         }
 
-        public override void FixedUpdateState(EnemyStateManager enemy)
+        public override void FixedUpdateState(EnemyOneStateManager enemy)
         {
             if (_player == null)
             {
-                var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+                var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
                 RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
 
                 if (hit.collider != null)
@@ -46,7 +47,7 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void UpdateState(EnemyStateManager enemy)
+        public override void UpdateState(EnemyOneStateManager enemy)
         {
             if (enemy.AnimatorManager.DidAnimationFinish(IdleAnimation))
             {

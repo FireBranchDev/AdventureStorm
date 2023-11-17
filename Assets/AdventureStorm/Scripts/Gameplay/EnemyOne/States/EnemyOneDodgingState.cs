@@ -1,10 +1,10 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace AdventureStorm.Gameplay
+namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyDodgingState : EnemyBaseState
+    public class EnemyOneDodgingState : EnemyBaseState<EnemyOneStateManager>
     {
         #region Constant Fields
 
@@ -26,12 +26,12 @@ namespace AdventureStorm.Gameplay
 
         #region Public Methods
 
-        public override void EnterState(EnemyStateManager enemy)
+        public override void EnterState(EnemyOneStateManager enemy)
         {
             _dodgeCoroutine = enemy.StartCoroutine(DodgeCoroutine(enemy));
         }
 
-        public override void ExitState(EnemyStateManager enemy)
+        public override void ExitState(EnemyOneStateManager enemy)
         {
             if (_dodgeCoroutine != null)
             {
@@ -40,12 +40,12 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void FixedUpdateState(EnemyStateManager enemy)
+        public override void FixedUpdateState(EnemyOneStateManager enemy)
         {
 
         }
 
-        public override void UpdateState(EnemyStateManager enemy)
+        public override void UpdateState(EnemyOneStateManager enemy)
         {
 
         }
@@ -54,13 +54,13 @@ namespace AdventureStorm.Gameplay
 
         #region Private Methods
 
-        private IEnumerator DodgeCoroutine(EnemyStateManager enemy)
+        private IEnumerator DodgeCoroutine(EnemyOneStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(StartJumpAnimation);
 
             Vector3 position = Vector3.zero;
 
-            if (enemy.AliveState.IsFacingLeft)
+            if (enemy.IsFacingLeft)
             {
                 position.x = DodgeDistance / 2f;
             }

@@ -1,4 +1,4 @@
-using AdventureStorm.Gameplay;
+using AdventureStorm.Gameplay.EnemyOne;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,7 +12,7 @@ public class EnemyHealthUI : MonoBehaviour
 
     private ProgressBar _healthBar;
 
-    private EnemyStateManager _enemyStateManager;
+    private EnemyOneStateManager _enemyStateManager;
 
     private void Start()
     {
@@ -25,11 +25,11 @@ public class EnemyHealthUI : MonoBehaviour
 
         if (_enemyStateManager == null)
         {
-            _enemyStateManager = GetComponentInParent<EnemyStateManager>();
+            _enemyStateManager = GetComponentInParent<EnemyOneStateManager>();
         }
 
         _root.AddToClassList("container");
-        
+
         _root.styleSheets.Add(_styleSheet);
 
         _healthBar = new ProgressBar();

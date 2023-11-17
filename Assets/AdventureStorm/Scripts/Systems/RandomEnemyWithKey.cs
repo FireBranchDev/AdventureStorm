@@ -1,4 +1,4 @@
-using AdventureStorm.Gameplay;
+using AdventureStorm.Gameplay.EnemyOne;
 using UnityEngine;
 
 namespace AdventureStorm.Systems
@@ -26,7 +26,7 @@ namespace AdventureStorm.Systems
 
                 GameObject enemy = enemies[result - 1];
 
-                if (enemy.TryGetComponent<EnemyStateManager>(out var enemyStateManager))
+                if (enemy.TryGetComponent<EnemyOneStateManager>(out var enemyStateManager))
                 {
                     if (enemyStateManager.DeathState != null)
                     {

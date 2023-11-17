@@ -78,7 +78,6 @@ namespace AdventureStorm.Gameplay
             _spriteWidth = 0f;
 
             Rb2D = GetComponent<Rigidbody2D>();
-            AnimatorManager = GetComponent<AnimatorManager>();
 
             IsFacingLeft = false;
 
@@ -114,6 +113,8 @@ namespace AdventureStorm.Gameplay
 
         private void Start()
         {
+            AnimatorManager = GetComponent<AnimatorManager>();
+
             if (_entityRenderer != null)
             {
                 _spriteWidth = _entityRenderer.SpriteRenderer.size.x;

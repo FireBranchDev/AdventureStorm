@@ -1,9 +1,10 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
 
-namespace AdventureStorm.Gameplay
+namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyMovementState : EnemyBaseState
+    public class EnemyOneMovementState : EnemyBaseState<EnemyOneStateManager>
     {
         #region Constant Fields
 
@@ -29,7 +30,7 @@ namespace AdventureStorm.Gameplay
 
         #region Public Methods
 
-        public override void EnterState(EnemyStateManager enemy)
+        public override void EnterState(EnemyOneStateManager enemy)
         {
             _idleCountDownTimer = null;
             _isIdle = false;
@@ -37,7 +38,7 @@ namespace AdventureStorm.Gameplay
             enemy.AnimatorManager.ChangeAnimationState(WalkingAnimation);
         }
 
-        public override void ExitState(EnemyStateManager enemy)
+        public override void ExitState(EnemyOneStateManager enemy)
         {
             if (_idleCountDownTimer != null)
             {
@@ -46,14 +47,14 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void FixedUpdateState(EnemyStateManager enemy)
+        public override void FixedUpdateState(EnemyOneStateManager enemy)
         {
             Combat(enemy);
             Idle(enemy);
             Movement(enemy);
         }
 
-        public override void UpdateState(EnemyStateManager enemy)
+        public override void UpdateState(EnemyOneStateManager enemy)
         {
             if (_isIdle)
             {
@@ -70,9 +71,9 @@ namespace AdventureStorm.Gameplay
 
         #region Private Methods
 
-        private void Combat(EnemyStateManager enemy)
+        private void Combat(EnemyOneStateManager enemy)
         {
-            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForCombatState, enemy.PlayerLayerMask);
 
             if (hit.collider != null)
@@ -87,9 +88,9 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        private void Idle(EnemyStateManager enemy)
+        private void Idle(EnemyOneStateManager enemy)
         {
-            var direction = enemy.AliveState.IsFacingLeft ? Vector2.left : Vector2.right;
+            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
             RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForIdleState, enemy.PlayerLayerMask);
 
             if (hit.collider != null)
@@ -115,11 +116,11 @@ namespace AdventureStorm.Gameplay
             _isIdle = true;
         }
 
-        private void Movement(EnemyStateManager enemy)
+        private void Movement(EnemyOneStateManager enemy)
         {
             Vector2 velocity = new(0, 0);
 
-            if (enemy.AliveState.IsFacingLeft)
+            if (enemy.IsFacingLeft)
             {
                 velocity.x = -MovementSpeed;
             }

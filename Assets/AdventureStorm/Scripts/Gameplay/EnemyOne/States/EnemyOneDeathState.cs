@@ -1,9 +1,10 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
 
-namespace AdventureStorm.Gameplay
+namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyDeathState : EnemyBaseState
+    public class EnemyOneDeathState : EnemyBaseState<EnemyOneStateManager>
     {
         #region Constant Fields
 
@@ -11,21 +12,21 @@ namespace AdventureStorm.Gameplay
 
         private const string _DynamicGameObjectName = "_Dynamic";
 
-        private bool _rewardGiven;
-
-        private Coroutine _deleteEnemyCoroutine;
-
         #endregion
 
         #region Fields
 
         private Coroutine _deathCoroutine;
 
+        private bool _rewardGiven;
+
+        private Coroutine _deleteEnemyCoroutine;
+
         #endregion
 
         #region Constructors
 
-        public EnemyDeathState()
+        public EnemyOneDeathState()
         {
             _deathCoroutine = null;
 
@@ -46,7 +47,7 @@ namespace AdventureStorm.Gameplay
 
         #region Public Methods
 
-        public override void EnterState(EnemyStateManager enemy)
+        public override void EnterState(EnemyOneStateManager enemy)
         {
             if (_deathCoroutine == null)
             {
@@ -54,7 +55,7 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void ExitState(EnemyStateManager enemy)
+        public override void ExitState(EnemyOneStateManager enemy)
         {
             if (_deathCoroutine != null)
             {
@@ -69,12 +70,12 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        public override void FixedUpdateState(EnemyStateManager enemy)
+        public override void FixedUpdateState(EnemyOneStateManager enemy)
         {
 
         }
 
-        public override void UpdateState(EnemyStateManager enemy)
+        public override void UpdateState(EnemyOneStateManager enemy)
         {
 
         }
@@ -83,7 +84,7 @@ namespace AdventureStorm.Gameplay
 
         #region Private Methods
 
-        private IEnumerator DeathCoroutine(EnemyStateManager enemy)
+        private IEnumerator DeathCoroutine(EnemyOneStateManager enemy)
         {
             enemy.AnimatorManager.ChangeAnimationState(DyingAnimation);
 
@@ -143,7 +144,7 @@ namespace AdventureStorm.Gameplay
             }
         }
 
-        private IEnumerator DeleteEnemyCoroutine(EnemyStateManager enemy)
+        private IEnumerator DeleteEnemyCoroutine(EnemyOneStateManager enemy)
         {
             yield return new WaitForSeconds(0.2f);
             Object.Destroy(enemy.gameObject);

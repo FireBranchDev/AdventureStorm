@@ -1,9 +1,10 @@
+using AdventureStorm.Gameplay.Enemy.States;
 using AdventureStorm.Tools;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay
 {
-    public class EnemyStateManager : MonoBehaviour, IDamageable
+    public class EnemyStateManager<T> : MonoBehaviour, IDamageable
     {
         #region Constant Fields
 
@@ -18,9 +19,9 @@ namespace AdventureStorm.Gameplay
         #region Fields
 
         [Tooltip("Used when the randomly selected enemy dies.")]
-        public GameObject KeyPrefab;
+        [SerializeField] private GameObject _keyPrefab;
 
-        private EnemyBaseState _currentState;
+        private EnemyBaseState<T> _currentState;
 
         #endregion
 
@@ -32,21 +33,21 @@ namespace AdventureStorm.Gameplay
 
         public LayerMask PlayerLayerMask { get; private set; }
 
-        public Coroutine RechargeDodgeAttackStaminaCoroutine { get; set; }
-
-        public EnemyAliveState AliveState { get; private set; }
-
-        public EnemyDeathState DeathState { get; private set; }
-
         public float Health { get; private set; }
 
-        public bool IsAlive { get => Health > 0f; }
+        public bool IsAlive { get => Health > 0; }
+
+        public bool IsFacingLeft { get; set; }
+
+        public GameObject KeyPrefab { get => _keyPrefab; }
+
+        protected T StateManager { get; set; }
 
         #endregion
 
         #region LifeCycle
 
-        private void Awake()
+        protected virtual void Awake()
         {
             RB2D = GetComponent<Rigidbody2D>();
 
@@ -54,55 +55,45 @@ namespace AdventureStorm.Gameplay
 
             PlayerLayerMask = LayerMask.GetMask(PlayerLayerMaskName);
 
-            RechargeDodgeAttackStaminaCoroutine = null;
-
-            AliveState = new EnemyAliveState();
-            DeathState = new EnemyDeathState();
-
             Health = MaximumHealth;
+
+            IsFacingLeft = true;
         }
 
-        // Start is called before the first frame update.
-        private void Start()
+        protected virtual void Start()
         {
-            _currentState = AliveState;
-            _currentState.EnterState(this);
+
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
-            _currentState.FixedUpdateState(this);
+            _currentState.FixedUpdateState(StateManager);
         }
 
-        // Update is called once per frame.
-        private void Update()
+        protected virtual void Update()
         {
             if (IsAlive)
             {
-                AliveState.FacePlayer(this);
-                AliveState.FlipEnemy(this);
-            }
-            else
-            {
-                if (_currentState.ToString() != DeathState.ToString())
-                {
-                    SwitchState(DeathState);
-                }
+                FacePlayer(this);
+                FlipEnemy(this);
             }
 
-            _currentState.UpdateState(this);
+            _currentState.UpdateState(StateManager);
         }
 
         #endregion
 
         #region Public Methods
-        
-        public void SwitchState(EnemyBaseState state)
+
+        public void SwitchState(EnemyBaseState<T> state)
         {
-            _currentState.ExitState(this);
-            
+            if (_currentState != null)
+            {
+                _currentState.ExitState(StateManager);
+            }
+
             _currentState = state;
-            _currentState.EnterState(this);
+            _currentState.EnterState(StateManager);
         }
 
         public void Damage(float damage)
@@ -116,6 +107,62 @@ namespace AdventureStorm.Gameplay
         public void FinishedDyingAnimation()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void FacePlayer(EnemyStateManager<T> enemy)
+        {
+            RaycastHit2D left = Physics2D.Raycast(enemy.transform.position, Vector2.left, float.MaxValue, enemy.PlayerLayerMask);
+            RaycastHit2D right = Physics2D.Raycast(enemy.transform.position, Vector2.right, float.MaxValue, enemy.PlayerLayerMask);
+
+            if (IsFacingLeft)
+            {
+                if (right.collider != null)
+                {
+                    IsFacingLeft = false;
+                }
+                else
+                {
+                    IsFacingLeft = true;
+                }
+            }
+            else
+            {
+                if (left.collider != null)
+                {
+                    IsFacingLeft = true;
+                }
+                else
+                {
+                    IsFacingLeft = false;
+                }
+            }
+
+            if (left.collider != null && right.collider != null)
+            {
+                IsFacingLeft = true;
+            }
+        }
+
+        public void FlipEnemy(EnemyStateManager<T> enemy)
+        {
+            Vector3 direction = enemy.transform.localScale;
+
+            if (IsFacingLeft && enemy.transform.localScale.x < 0)
+                return;
+
+            if (!IsFacingLeft && enemy.transform.localScale.x > 0)
+                return;
+
+            if (IsFacingLeft)
+            {
+                direction.x = -enemy.transform.localScale.x;
+            }
+            else
+            {
+                direction.x = Mathf.Abs(enemy.transform.localScale.x);
+            }
+
+            enemy.transform.localScale = direction;
         }
 
         #endregion
