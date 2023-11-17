@@ -11,10 +11,10 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
         private const string StartJumpAnimation = "Start Jump";
         private const string IdleAnimation = "Idle";
 
-        private const float DodgeDistance = 1.35f;
+        private const float DodgeDistance = 2f;
         private const float DodgeHeight = 0.75f;
-        private const float InAirDuration = 0.2f;
-        private const float DodgeCooldown = 0.5f;
+        private const float InAirDuration = 0.3f;
+        private const float DodgeCooldown = 0.65f;
 
         #endregion
 
@@ -60,18 +60,19 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
             Vector3 position = Vector3.zero;
 
+            position.y = DodgeHeight / 2f;
+            enemy.transform.Translate(position);
+
             if (enemy.IsFacingLeft)
             {
-                position.x = DodgeDistance / 2f;
+                position.x = DodgeDistance;
             }
             else
             {
-                position.x = -DodgeDistance / 2f;
+                position.x = -DodgeDistance;
             }
 
-            position.y = DodgeHeight / 2f;
-            enemy.transform.Translate(position);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
             enemy.transform.Translate(position);
 
             yield return new WaitForSeconds(InAirDuration);
