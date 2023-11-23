@@ -4,7 +4,7 @@ namespace AdventureStorm.Gameplay.EnemyTwo.States
 {
     public class Flee : BaseState
     {
-        private const float MaximumFleeDistance = 3f;
+        private const float MaximumFleeDistance = 1.5f;
 
         private GameObject _leftBoundary;
         private GameObject _rightBoundary;
