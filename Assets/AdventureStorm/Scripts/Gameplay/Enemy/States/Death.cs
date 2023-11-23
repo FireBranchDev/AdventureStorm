@@ -1,3 +1,4 @@
+using AdventureStorm.Systems;
 using System.Collections;
 using UnityEngine;
 
@@ -101,9 +102,15 @@ namespace AdventureStorm.Gameplay.Enemy.States
                         keySpawnPosition.x = enemy.transform.position.x + 2.5f;
                         keySpawnPosition.y = enemy.transform.position.y + 1.5f;
 
-                        GameObject key = Object.Instantiate(enemy.KeyPrefab, keySpawnPosition, Quaternion.Euler(0, 0, 90));
-
-                        key.transform.parent = GameObject.Find(DynamicGameObjectName).transform;
+                        var system = GameObject.Find("@System");
+                        if (system != null)
+                        {
+                            if (system.TryGetComponent<RandomEnemyWithKey>(out var randomEnemyWithKey))
+                            {
+                                GameObject key = Object.Instantiate(randomEnemyWithKey.Key, keySpawnPosition, Quaternion.Euler(0, 0, 90));
+                                key.transform.parent = GameObject.Find(DynamicGameObjectName).transform;
+                            }
+                        }
                     }
                 }
             }

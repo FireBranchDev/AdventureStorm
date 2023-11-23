@@ -12,10 +12,6 @@ namespace AdventureStorm.UI
     {
         #region Constant Fields
 
-        private const string LevelOneScene = "_TestingScene";
-
-        private const string LevelTwoScene = "_TestingScene2";
-
         private const string MainMenuUIScene = "MainMenuUIScene";
 
         #endregion
@@ -73,12 +69,24 @@ namespace AdventureStorm.UI
 
         private void OnLevelOneClicked(ClickEvent evt)
         {
-            _selectedLevel = LevelOneScene;
+            if (_system != null)
+            {
+                if (_system.TryGetComponent<LevelManager>(out var levelManager))
+                {
+                    _selectedLevel = levelManager.GetCompletedLevels()[0].SceneName;
+                }
+            }
         }
 
         private void OnLevelTwoClicked(ClickEvent evt)
         {
-            _selectedLevel = LevelTwoScene;
+            if (_system != null)
+            {
+                if (_system.TryGetComponent<LevelManager>(out var levelManager))
+                {
+                    _selectedLevel = levelManager.GetCompletedLevels()[1].SceneName;
+                }
+            }
         }
 
         private void OnMainMenuClicked(ClickEvent evt)

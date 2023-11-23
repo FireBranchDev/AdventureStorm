@@ -15,6 +15,13 @@ namespace AdventureStorm.Systems
 
         #endregion
 
+        #region Fields
+
+        [Tooltip("Key to be used when the random enemy is killed!")]
+        public GameObject Key;
+
+        #endregion
+
         #region LifeCycle
 
         private void Start()

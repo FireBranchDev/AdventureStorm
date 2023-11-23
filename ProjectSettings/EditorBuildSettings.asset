@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/AdventureStorm/Levels/LevelOneScene.unity
     guid: fb322bf2d9a4b3547bd1684fb90d1258
   - enabled: 1
-    path: Assets/_Dev/JoshuaRyanSprowson/_Levels/_TestingScene2.unity
+    path: Assets/AdventureStorm/Levels/LevelTwoScene.unity
     guid: 99a0d8801fd80554d835c0f09dc1e03a
   - enabled: 1
     path: Assets/AdventureStorm/Levels/LevelCompleteUIScene.unity

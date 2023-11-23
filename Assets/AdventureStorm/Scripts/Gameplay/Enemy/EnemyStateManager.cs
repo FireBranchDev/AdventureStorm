@@ -4,16 +4,7 @@ namespace AdventureStorm.Gameplay.Enemy
 {
     public class EnemyStateManager : StateManager
     {
-        #region Fields
-
-        [Tooltip("Used when the randomly selected enemy dies.")]
-        [SerializeField] private GameObject _keyPrefab;
-
-        #endregion
-
         #region Properties
-
-        public GameObject KeyPrefab { get => _keyPrefab; }
 
         public override float MaximumHealth { get => 5f; }
 
