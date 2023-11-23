@@ -1,3 +1,4 @@
+using AdventureStorm.Gameplay.Enemy;
 using AdventureStorm.Gameplay.EnemyOne;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,26 +7,23 @@ public class EnemyHealthUI : MonoBehaviour
 {
     [SerializeField] private StyleSheet _styleSheet;
 
-    [SerializeField] private GameObject _enemy;
+    private GameObject _enemy;
 
     private VisualElement _root;
 
     private ProgressBar _healthBar;
 
-    private EnemyOneStateManager _enemyStateManager;
+    private EnemyStateManager _enemyStateManager;
 
     private void Start()
     {
-        if (_styleSheet == null && _enemy == null)
-        {
-            return;
-        }
+        _enemy = gameObject.gameObject;
 
         _root = GetComponent<UIDocument>().rootVisualElement;
 
         if (_enemyStateManager == null)
         {
-            _enemyStateManager = GetComponentInParent<EnemyOneStateManager>();
+            _enemyStateManager = GetComponentInParent<EnemyStateManager>();
         }
 
         _root.AddToClassList("container");
