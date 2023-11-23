@@ -1,9 +1,8 @@
-using AdventureStorm.Gameplay.Enemy.States;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyOneIdleState : EnemyBaseState<EnemyOneStateManager>
+    public class EnemyOneIdleState : BaseState
     {
         #region Constant Fields
 
@@ -23,22 +22,22 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Public Methods
 
-        public override void EnterState(EnemyOneStateManager enemy)
+        public override void EnterState(StateManager stateManager)
         {
-            enemy.AnimatorManager.ChangeAnimationState(IdleAnimation);
+            stateManager.AnimatorManager.ChangeAnimationState(IdleAnimation);
         }
 
-        public override void ExitState(EnemyOneStateManager enemy)
+        public override void ExitState(StateManager stateManager)
         {
 
         }
 
-        public override void FixedUpdateState(EnemyOneStateManager enemy)
+        public override void FixedUpdateState(StateManager stateManager)
         {
             if (_player == null)
             {
-                var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
-                RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, DistanceForMovementState, enemy.PlayerLayerMask);
+                var direction = stateManager.IsFacingLeft ? Vector2.left : Vector2.right;
+                RaycastHit2D hit = Physics2D.Raycast(stateManager.transform.position, direction, DistanceForMovementState, stateManager.PlayerLayerMask);
 
                 if (hit.collider != null)
                 {
@@ -47,26 +46,29 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
             }
         }
 
-        public override void UpdateState(EnemyOneStateManager enemy)
+        public override void UpdateState(StateManager stateManager)
         {
-            if (enemy.AnimatorManager.DidAnimationFinish(IdleAnimation))
+            if (stateManager.TryGetComponent<EnemyOneStateManager>(out var enemyOneStateManager))
             {
-                enemy.AnimatorManager.ReplayAnimation();
-            }
-
-            if (_player != null && _playerStateManager == null)
-            {
-                if (_player.TryGetComponent<PlayerStateManager>(out var playerStateManager))
+                if (stateManager.AnimatorManager.DidAnimationFinish(IdleAnimation))
                 {
-                    _playerStateManager = playerStateManager;
+                    stateManager.AnimatorManager.ReplayAnimation();
                 }
-            }
 
-            if (_playerStateManager != null)
-            {
-                if (_playerStateManager.IsAlive)
+                if (_player != null && _playerStateManager == null)
                 {
-                    enemy.SwitchState(enemy.AliveState.MovementState);
+                    if (_player.TryGetComponent<PlayerStateManager>(out var playerStateManager))
+                    {
+                        _playerStateManager = playerStateManager;
+                    }
+                }
+
+                if (_playerStateManager != null)
+                {
+                    if (_playerStateManager.IsAlive)
+                    {
+                        stateManager.SwitchState(enemyOneStateManager.AliveState.MovementState);
+                    }
                 }
             }
         }

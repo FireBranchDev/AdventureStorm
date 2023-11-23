@@ -15,7 +15,7 @@ namespace AdventureStorm.Tools
 
         #region Properties
 
-        public Animator Animator { get; private set; }
+        protected Animator Animator { get; private set; }
 
         #endregion
 

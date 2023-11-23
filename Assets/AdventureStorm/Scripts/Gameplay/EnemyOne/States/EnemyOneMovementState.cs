@@ -1,10 +1,9 @@
-using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyOneMovementState : EnemyBaseState<EnemyOneStateManager>
+    public class EnemyOneMovementState : BaseState
     {
         #region Constant Fields
 
@@ -30,40 +29,46 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Public Methods
 
-        public override void EnterState(EnemyOneStateManager enemy)
+        public override void EnterState(StateManager stateManager)
         {
             _idleCountDownTimer = null;
             _isIdle = false;
 
-            enemy.AnimatorManager.ChangeAnimationState(WalkingAnimation);
+            stateManager.AnimatorManager.ChangeAnimationState(WalkingAnimation);
         }
 
-        public override void ExitState(EnemyOneStateManager enemy)
+        public override void ExitState(StateManager stateManager)
         {
             if (_idleCountDownTimer != null)
             {
-                enemy.StopCoroutine(_idleCountDownTimer);
+                stateManager.StopCoroutine(_idleCountDownTimer);
                 _idleCountDownTimer = null;
             }
         }
 
-        public override void FixedUpdateState(EnemyOneStateManager enemy)
+        public override void FixedUpdateState(StateManager stateManager)
         {
-            Combat(enemy);
-            Idle(enemy);
-            Movement(enemy);
+            if (stateManager.TryGetComponent<EnemyOneStateManager>(out var enemyOneStateManager))
+            {
+                Combat(enemyOneStateManager);
+                Idle(enemyOneStateManager);
+                Movement(enemyOneStateManager);
+            }
         }
 
-        public override void UpdateState(EnemyOneStateManager enemy)
+        public override void UpdateState(StateManager stateManager)
         {
-            if (_isIdle)
+            if (stateManager.TryGetComponent<EnemyOneStateManager>(out var enemyOneStateManager))
             {
-                enemy.SwitchState(enemy.AliveState.IdleState);
-            }
+                if (_isIdle)
+                {
+                    stateManager.SwitchState(enemyOneStateManager.AliveState.IdleState);
+                }
 
-            if (enemy.AnimatorManager.DidAnimationFinish(WalkingAnimation))
-            {
-                enemy.AnimatorManager.ReplayAnimation();
+                if (stateManager.AnimatorManager.DidAnimationFinish(WalkingAnimation))
+                {
+                    stateManager.AnimatorManager.ReplayAnimation();
+                }
             }
         }
 
@@ -129,7 +134,7 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
                 velocity.x = MovementSpeed;
             }
 
-            enemy.RB2D.MovePosition(enemy.RB2D.position + velocity * Time.fixedDeltaTime);
+            enemy.Rb2D.MovePosition(enemy.Rb2D.position + velocity * Time.fixedDeltaTime);
         }
 
         #endregion

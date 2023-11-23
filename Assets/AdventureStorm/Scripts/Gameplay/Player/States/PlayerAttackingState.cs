@@ -65,9 +65,14 @@ namespace AdventureStorm.Gameplay
 
                 if (hit.collider != null)
                 {
-                    if (hit.collider.gameObject.TryGetComponent<EnemyOneStateManager>(out var enemy))
+                    if (hit.collider.gameObject.TryGetComponent<EnemyOneStateManager>(out var enemyOne))
                     {
-                        enemy.Damage(AttackDamage);
+                        enemyOne.Damage(AttackDamage);
+                    }
+
+                    if (hit.collider.gameObject.TryGetComponent<EnemyTwo.StateManager>(out var enemyTwo))
+                    {
+                        enemyTwo.Damage(AttackDamage);
                     }
                 }
 

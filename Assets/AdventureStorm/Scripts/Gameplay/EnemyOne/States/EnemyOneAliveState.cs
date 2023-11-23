@@ -1,8 +1,6 @@
-using AdventureStorm.Gameplay.Enemy.States;
-
 namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyOneAliveState : EnemyBaseState<EnemyOneStateManager>
+    public class EnemyOneAliveState : BaseState
     {
         #region Constructors
 
@@ -25,22 +23,22 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Public Methods
 
-        public override void EnterState(EnemyOneStateManager enemy)
+        public override void EnterState(StateManager stateManager)
         {
-            enemy.SwitchState(IdleState);
+            stateManager.SwitchState(IdleState);
         }
 
-        public override void ExitState(EnemyOneStateManager enemy)
-        {
-
-        }
-
-        public override void FixedUpdateState(EnemyOneStateManager enemy)
+        public override void ExitState(StateManager stateManager)
         {
 
         }
 
-        public override void UpdateState(EnemyOneStateManager enemy)
+        public override void FixedUpdateState(StateManager stateManager)
+        {
+
+        }
+
+        public override void UpdateState(StateManager stateManager)
         {
 
         }

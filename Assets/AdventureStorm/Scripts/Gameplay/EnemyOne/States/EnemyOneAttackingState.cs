@@ -1,10 +1,9 @@
-using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyOneAttackingState : EnemyBaseState<EnemyOneStateManager>
+    public class EnemyOneAttackingState : BaseState
     {
         #region Constant Fields
 
@@ -39,27 +38,30 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Public Methods
 
-        public override void EnterState(EnemyOneStateManager enemy)
+        public override void EnterState(StateManager stateManager)
         {
-            if (_attackCoroutine == null)
+            if (stateManager.TryGetComponent<EnemyOneStateManager>(out var enemyOneStateManager))
             {
-                _attackCoroutine = enemy.StartCoroutine(AttackCoroutine(enemy));
+                if (_attackCoroutine == null)
+                {
+                    _attackCoroutine = stateManager.StartCoroutine(AttackCoroutine(enemyOneStateManager));
+                }
             }
         }
 
-        public override void ExitState(EnemyOneStateManager enemy)
+        public override void ExitState(StateManager stateManager)
         {
             if (_attackCoroutine != null)
             {
-                enemy.StopCoroutine(_attackCoroutine);
+                stateManager.StopCoroutine(_attackCoroutine);
                 _attackCoroutine = null;
             }
         }
 
-        public override void FixedUpdateState(EnemyOneStateManager enemy)
+        public override void FixedUpdateState(StateManager stateManager)
         {
-            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
-            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, AttackRange, enemy.PlayerLayerMask);
+            var direction = stateManager.IsFacingLeft ? Vector2.left : Vector2.right;
+            RaycastHit2D hit = Physics2D.Raycast(stateManager.transform.position, direction, AttackRange, stateManager.PlayerLayerMask);
 
             if (_player == null)
             {
@@ -70,7 +72,7 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
             }
         }
 
-        public override void UpdateState(EnemyOneStateManager enemy)
+        public override void UpdateState(StateManager stateManager)
         {
             if (_player != null && _playerStateManager == null)
             {
@@ -85,25 +87,25 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Private Methods
 
-        private IEnumerator AttackCoroutine(EnemyOneStateManager enemy)
+        private IEnumerator AttackCoroutine(EnemyOneStateManager stateManager)
         {
-            if (enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
+            if (stateManager.AnimatorManager.DidAnimationFinish(AttackingAnimation))
             {
-                enemy.AnimatorManager.ReplayAnimation();
+                stateManager.AnimatorManager.ReplayAnimation();
             }
             else
             {
-                enemy.AnimatorManager.ChangeAnimationState(AttackingAnimation);
+                stateManager.AnimatorManager.ChangeAnimationState(AttackingAnimation);
             }
 
-            while (!enemy.AnimatorManager.DidAnimationFinish(AttackingAnimation))
+            while (!stateManager.AnimatorManager.DidAnimationFinish(AttackingAnimation))
             {
                 yield return null;
             }
 
             if (_player != null)
             {
-                float distance = Mathf.Abs(enemy.transform.position.x - _player.transform.position.x);
+                float distance = Mathf.Abs(stateManager.transform.position.x - _player.transform.position.x);
 
                 if (distance <= AttackRange)
                 {
@@ -121,7 +123,7 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
             yield return new WaitForSeconds(AttackDelay);
 
-            enemy.SwitchState(enemy.AliveState.CombatState);
+            stateManager.SwitchState(stateManager.AliveState.CombatState);
         }
 
         #endregion

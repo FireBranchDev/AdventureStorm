@@ -1,3 +1,4 @@
+using AdventureStorm.Gameplay.Enemy;
 using AdventureStorm.Gameplay.EnemyOne;
 using UnityEngine;
 
@@ -26,15 +27,9 @@ namespace AdventureStorm.Systems
 
                 GameObject enemy = enemies[result - 1];
 
-                if (enemy.TryGetComponent<EnemyOneStateManager>(out var enemyStateManager))
+                if (enemy.TryGetComponent<EnemyStateManager>(out var enemyStateManager))
                 {
-                    if (enemyStateManager.DeathState != null)
-                    {
-                        if (enemyStateManager.DeathState != null)
-                        {
-                            enemyStateManager.DeathState.HasKey = true;
-                        }
-                    }
+                    enemyStateManager.HasKey = true;
                 }
             }
         }

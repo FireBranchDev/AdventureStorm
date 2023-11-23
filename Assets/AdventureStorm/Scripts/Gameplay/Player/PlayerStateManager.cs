@@ -1,18 +1,15 @@
-using AdventureStorm.Tools;
 using Spriter2UnityDX;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay
 {
-    public class PlayerStateManager : MonoBehaviour, IDamageable
+    public class PlayerStateManager : StateManager
     {
         #region Constant Fields
 
         public const string HorizontalAxis = "Horizontal";
 
         public const string EnemyLayerMaskName = "Enemy";
-
-        public const float MaximumHealth = 5f;
 
         private const string LeftBoundaryTag = "LeftBoundary";
 
@@ -40,12 +37,6 @@ namespace AdventureStorm.Gameplay
 
         #region Properties
 
-        public Rigidbody2D Rb2D { get; private set; }
-
-        public AnimatorManager AnimatorManager { get; private set; }
-
-        public bool IsFacingLeft { get; private set; }
-
         public LayerMask EnemyLayerMask { get; private set; }
 
         public PlayerAliveState AliveState { get; private set; }
@@ -54,16 +45,16 @@ namespace AdventureStorm.Gameplay
 
         public bool HasKey { get; set; }
 
-        public float Health { get; private set; }
-
-        public bool IsAlive { get => Health > 0f; }
+        public override float MaximumHealth { get => 5f; }
 
         #endregion
 
         #region LifeCycle
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             if (TryGetComponent<EntityRenderer>(out var entityRenderer))
             {
                 _entityRenderer = entityRenderer;
@@ -77,8 +68,6 @@ namespace AdventureStorm.Gameplay
 
             _spriteWidth = 0f;
 
-            Rb2D = GetComponent<Rigidbody2D>();
-
             IsFacingLeft = false;
 
             EnemyLayerMask = LayerMask.GetMask(EnemyLayerMaskName);
@@ -91,29 +80,31 @@ namespace AdventureStorm.Gameplay
             Health = MaximumHealth;
         }
 
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
+
             _currentState.FixedUpdateState(this);
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        protected void OnTriggerEnter2D(Collider2D collision)
         {
             _currentState.OnTriggerEnter2D(this, collision);
         }
 
-        private void OnTriggerExit2D(Collider2D collision)
+        protected void OnTriggerExit2D(Collider2D collision)
         {
             _currentState.OnTriggerExit2D(this, collision);
         }
 
-        private void OnTriggerStay2D(Collider2D collision)
+        protected void OnTriggerStay2D(Collider2D collision)
         {
             _currentState.OnTriggerStay2D(this, collision);
         }
 
-        private void Start()
+        protected override void Start()
         {
-            AnimatorManager = GetComponent<AnimatorManager>();
+            base.Start();
 
             if (_entityRenderer != null)
             {
@@ -124,8 +115,10 @@ namespace AdventureStorm.Gameplay
             _currentState.EnterState(this);
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             if (_groundBoundary != null)
             {
                 if (_leftBoundary != null)
@@ -158,11 +151,6 @@ namespace AdventureStorm.Gameplay
             _currentState.ExitState(this);
             _currentState = state;
             _currentState.EnterState(this);
-        }
-
-        public void Damage(float damage)
-        {
-            Health -= damage;
         }
 
         public void Heal(float health)

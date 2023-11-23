@@ -42,8 +42,6 @@ namespace AdventureStorm.UI
 
             _collectedKey = _uiDocument.rootVisualElement.Q("collected-key") as Label;
 
-            _healthBar.highValue = PlayerStateManager.MaximumHealth;
-
             _staminaBar.highValue = PlayerDodgingState.MaximumDodgeAttackStamina;
 
             _player = GameObject.FindWithTag("Player");
@@ -53,6 +51,7 @@ namespace AdventureStorm.UI
                 if (_player.TryGetComponent<PlayerStateManager>(out var x))
                 {
                     _playerStateManager = x;
+                    _healthBar.highValue = _playerStateManager.MaximumHealth;
                 }
             }
         }

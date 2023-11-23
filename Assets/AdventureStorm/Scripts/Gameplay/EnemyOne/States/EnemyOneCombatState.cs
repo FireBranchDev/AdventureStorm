@@ -1,9 +1,8 @@
-using AdventureStorm.Gameplay.Enemy.States;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyOneCombatState : EnemyBaseState<EnemyOneStateManager>
+    public class EnemyOneCombatState : BaseState
     {
         #region Constant Fields
 
@@ -33,59 +32,62 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Public Methods
 
-        public override void EnterState(EnemyOneStateManager enemy)
+        public override void EnterState(StateManager stateManager)
         {
 
         }
 
-        public override void ExitState(EnemyOneStateManager enemy)
+        public override void ExitState(StateManager stateManager)
         {
 
         }
 
-        public override void FixedUpdateState(EnemyOneStateManager enemy)
+        public override void FixedUpdateState(StateManager stateManager)
         {
 
         }
 
-        public override void UpdateState(EnemyOneStateManager enemy)
+        public override void UpdateState(StateManager stateManager)
         {
-            var direction = enemy.IsFacingLeft ? Vector2.left : Vector2.right;
-            RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, direction, CombatDistance, enemy.PlayerLayerMask);
-
-            if (hit.collider != null)
+            if (stateManager.TryGetComponent<EnemyOneStateManager>(out var enemyOneStateManager))
             {
-                if (hit.collider.gameObject.TryGetComponent<PlayerStateManager>(out var playerStateManager))
+                var direction = stateManager.IsFacingLeft ? Vector2.left : Vector2.right;
+                RaycastHit2D hit = Physics2D.Raycast(stateManager.transform.position, direction, CombatDistance, stateManager.PlayerLayerMask);
+
+                if (hit.collider != null)
                 {
-                    if (playerStateManager.IsAlive)
+                    if (hit.collider.gameObject.TryGetComponent<PlayerStateManager>(out var playerStateManager))
                     {
-                        float distance = Mathf.Abs(enemy.transform.position.x - playerStateManager.transform.position.x);
-                        if (distance <= CombatDistance)
+                        if (playerStateManager.IsAlive)
                         {
-                            float random = Random.Range(1f, 100f);
-                            if (random / 100f <= DodgeChance)
+                            float distance = Mathf.Abs(stateManager.transform.position.x - playerStateManager.transform.position.x);
+                            if (distance <= CombatDistance)
                             {
-                                enemy.SwitchState(enemy.AliveState.CombatState.DodgingState);
+                                float random = Random.Range(1f, 100f);
+                                if (random / 100f <= DodgeChance)
+                                {
+                                    stateManager.SwitchState(DodgingState);
+                                }
+                                else
+                                {
+                                    stateManager.SwitchState(AttackingState);
+                                }
                             }
                             else
                             {
-                                enemy.SwitchState(enemy.AliveState.CombatState.AttackingState);
+                                stateManager.SwitchState(enemyOneStateManager.AliveState.MovementState);
                             }
                         }
                         else
                         {
-                            enemy.SwitchState(enemy.AliveState.MovementState);
+                            stateManager.SwitchState(enemyOneStateManager.AliveState.IdleState);
                         }
                     }
-                    else
-                    {
-                        enemy.SwitchState(enemy.AliveState.IdleState);
-                    }
                 }
-            }
-            else
-            {
-                enemy.SwitchState(enemy.AliveState.MovementState);
+                else
+                {
+                    stateManager.SwitchState(enemyOneStateManager.AliveState.MovementState);
+                }
             }
         }
 

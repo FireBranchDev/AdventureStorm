@@ -1,15 +1,16 @@
+using AdventureStorm.Gameplay.Enemy;
 using AdventureStorm.Gameplay.EnemyOne.States;
 using System.Collections;
 
 namespace AdventureStorm.Gameplay.EnemyOne
 {
-    public class EnemyOneStateManager : EnemyStateManager<EnemyOneStateManager>
+    public class EnemyOneStateManager : EnemyStateManager
     {
         #region Constructors
 
         public EnemyOneStateManager()
         {
-            StateManager = this;
+            Self = this;
         }
 
         #endregion

@@ -1,10 +1,9 @@
-using AdventureStorm.Gameplay.Enemy.States;
 using System.Collections;
 using UnityEngine;
 
 namespace AdventureStorm.Gameplay.EnemyOne.States
 {
-    public class EnemyOneDodgingState : EnemyBaseState<EnemyOneStateManager>
+    public class EnemyOneDodgingState : BaseState
     {
         #region Constant Fields
 
@@ -26,26 +25,29 @@ namespace AdventureStorm.Gameplay.EnemyOne.States
 
         #region Public Methods
 
-        public override void EnterState(EnemyOneStateManager enemy)
+        public override void EnterState(StateManager stateManager)
         {
-            _dodgeCoroutine = enemy.StartCoroutine(DodgeCoroutine(enemy));
+            if (stateManager.TryGetComponent<EnemyOneStateManager>(out var enemyOneStateManager))
+            {
+                _dodgeCoroutine = stateManager.StartCoroutine(DodgeCoroutine(enemyOneStateManager));
+            }
         }
 
-        public override void ExitState(EnemyOneStateManager enemy)
+        public override void ExitState(StateManager stateManager)
         {
             if (_dodgeCoroutine != null)
             {
-                enemy.StopCoroutine(_dodgeCoroutine);
+                stateManager.StopCoroutine(_dodgeCoroutine);
                 _dodgeCoroutine = null;
             }
         }
 
-        public override void FixedUpdateState(EnemyOneStateManager enemy)
+        public override void FixedUpdateState(StateManager stateManager)
         {
 
         }
 
-        public override void UpdateState(EnemyOneStateManager enemy)
+        public override void UpdateState(StateManager stateManager)
         {
 
         }
