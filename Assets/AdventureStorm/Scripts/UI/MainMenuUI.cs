@@ -1,4 +1,5 @@
-using AdventureStorm.Systems;
+using AdventureStorm.Gameplay.Level;
+using AdventureStorm.Tools;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,17 +9,11 @@ namespace AdventureStorm.UI
 {
     public class MainMenuUI : MonoBehaviour
     {
-        #region Constant Fields
-
-        private const string ReplayLevelUIScene = "ReplayLevelUIScene";
-
-        #endregion
-
         #region Fields
 
-        [Tooltip("The gameobject which contains all the level's scripts")]
-        [SerializeField]
         private GameObject _system;
+
+        private LevelManager _levelManager;
 
         private Button _playButton;
 
@@ -29,6 +24,19 @@ namespace AdventureStorm.UI
         #endregion
 
         #region LifeCycle
+
+        private void Start()
+        {
+            if (_system == null)
+            {
+                _system = GameObject.Find("@System");
+            }
+
+            if (_system != null)
+            {
+                _levelManager = _system.GetComponent<LevelManager>();
+            }
+        }
 
         private void OnEnable()
         {
@@ -50,18 +58,15 @@ namespace AdventureStorm.UI
 
         private void OnPlayButtonClicked(ClickEvent evt)
         {
-            if (_system != null)
+            if (_levelManager != null)
             {
-                if (_system.TryGetComponent<LevelManager>(out var levelManager))
-                {
-                    levelManager.LoadFirstUncompletedLevel();
-                }
+                _levelManager.LoadFirstUncompletedLevel();
             }
         }
 
         private void OnReplayLevelClicked(ClickEvent evt)
         {
-            StartCoroutine(LoadReplayLevelUIScene());
+            StartCoroutine(LoadReplayLevelScene());
         }
 
         private void OnQuitButtonClicked(ClickEvent evt)
@@ -69,9 +74,9 @@ namespace AdventureStorm.UI
             Application.Quit();
         }
 
-        private IEnumerator LoadReplayLevelUIScene()
+        private IEnumerator LoadReplayLevelScene()
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(ReplayLevelUIScene);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneHelper.ReplayLevel);
             while (!asyncLoad.isDone)
             {
                 yield return null;

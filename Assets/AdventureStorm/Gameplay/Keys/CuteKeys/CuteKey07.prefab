@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1586970357859470079}
   - component: {fileID: 6646745433066717478}
   - component: {fileID: 7009615679715717351}
+  - component: {fileID: 7396415962524422866}
   m_Layer: 0
   m_Name: CuteKey07
   m_TagString: Key
@@ -101,3 +102,15 @@ CapsuleCollider2D:
   m_Offset: {x: -0.00000033020976, y: -1.3850003}
   m_Size: {x: 1.410001, y: 2.770001}
   m_Direction: 0
+--- !u!114 &7396415962524422866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7686233285136381478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1435cf5159fa75c4d917ea8d577cbdb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

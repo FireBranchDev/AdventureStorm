@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011778008400}
   - component: {fileID: 212000011307602790}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000011164630930}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000012242734798}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013499450486}
   - component: {fileID: 212000011403261328}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Shiled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000013373547002}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000010483084168}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000011006149456}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000013293121942}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011979872302}
   - component: {fileID: 212000010642810642}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Left Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012290187514}
   - component: {fileID: 212000012728178912}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Right Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 4000010320402836}
   - component: {fileID: 212000012509720550}
   - component: {fileID: 114000012151580274}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Face 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -644,7 +644,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000011597680360}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,8 +682,8 @@ GameObject:
   - component: {fileID: 3816870328595872917}
   - component: {fileID: 114000011083442008}
   - component: {fileID: 8123583575205107820}
-  - component: {fileID: 6051384702146669742}
-  m_Layer: 3
+  - component: {fileID: 3132137939114546288}
+  m_Layer: 0
   m_Name: KnightGray
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d2abb4d89ffa046af3ac5bd836da14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6051384702146669742
+--- !u!114 &3132137939114546288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -800,7 +800,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012912081574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18ad1696c33f15c45a25bb2ca043055d, type: 3}
+  m_Script: {fileID: 11500000, guid: 50ea80be4abc9cc4487a9de9f644fe0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1000013038388218
@@ -813,7 +813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010921361686}
   - component: {fileID: 212000010448528532}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Right Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012899230162}
   - component: {fileID: 212000013001517126}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,7 +981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012481113752}
   - component: {fileID: 212000012000240696}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Left Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1064,7 +1064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000012005878464}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,7 +1098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011094778708}
   - component: {fileID: 212000010757462642}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Left Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1182,7 +1182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013013382148}
   - component: {fileID: 212000010958307974}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1265,7 +1265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000010400262056}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bone_007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1299,7 +1299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013430727066}
   - component: {fileID: 212000011345592972}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Right Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26866,27 +26866,18 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 2
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.1
-        value: 2
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
         value: 2
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
@@ -26896,7 +26887,7 @@ AnimationClip:
     attribute: DisplayedSprite
     path: bone_006/bone_007/Face 01
     classID: 114
-    script: {fileID: 11500000, guid: 87d8dc87df01e4958ab48153b19f0ccd, type: 3}
+    script: {fileID: 11500000, guid: 9e67f1c0fb463744c9effbc6d5513c17, type: 3}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 2
@@ -26927,43 +26918,6 @@ AnimationClip:
     m_HeightFromFeet: 0
     m_Mirror: 0
   m_EditorCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 2
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.1
-        value: 2
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.4
-        value: 2
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: DisplayedSprite
-    path: bone_006/bone_007/Face 01
-    classID: 114
-    script: {fileID: 11500000, guid: 87d8dc87df01e4958ab48153b19f0ccd, type: 3}
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -28438,6 +28392,34 @@ AnimationClip:
     path: bone_006
     classID: 4
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: DisplayedSprite
+    path: bone_006/bone_007/Face 01
+    classID: 114
+    script: {fileID: 11500000, guid: 9e67f1c0fb463744c9effbc6d5513c17, type: 3}
   m_EulerEditorCurves:
   - curve:
       serializedVersion: 2

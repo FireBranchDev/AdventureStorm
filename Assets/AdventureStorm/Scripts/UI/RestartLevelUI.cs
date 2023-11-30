@@ -1,6 +1,6 @@
-using System.Collections;
+using AdventureStorm.Gameplay.Level;
+using AdventureStorm.Tools;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace AdventureStorm.UI
@@ -9,12 +9,26 @@ namespace AdventureStorm.UI
     {
         #region Fields
 
+        private GameObject _system;
+
+        private LevelManager _levelManager;
+
         private Button _restartButton;
         private Button _quitButton;
 
         #endregion
 
         #region LifeCycle
+
+        private void Start()
+        {
+            _system = GameObject.Find("@System");
+
+            if (_system != null)
+            {
+                _levelManager = _system.GetComponent<LevelManager>();
+            }
+        }
 
         private void OnEnable()
         {
@@ -34,21 +48,10 @@ namespace AdventureStorm.UI
 
         private void OnRestartButtonClicked(ClickEvent evt)
         {
-            StartCoroutine(ReloadPreviousScene());
-        }
-
-        private IEnumerator ReloadPreviousScene()
-        {
-            if (SceneManager.sceneCount > 1)
+            if (_levelManager != null)
             {
-                // The previous level would be the first scene loaded by the scene manager.
-                Scene previousLevel = SceneManager.GetSceneAt(0);
-
-                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(previousLevel.buildIndex);
-                while (!asyncLoad.isDone)
-                {
-                    yield return null;
-                }
+                StartCoroutine(SceneHelper.LoadSceneCoroutine(_levelManager.CurrentLevel.SceneName));
+                _restartButton.UnregisterCallback<ClickEvent>(OnRestartButtonClicked);
             }
         }
 

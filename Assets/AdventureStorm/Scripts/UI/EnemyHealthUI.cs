@@ -1,5 +1,4 @@
-using AdventureStorm.Gameplay.Enemy;
-using AdventureStorm.Gameplay.EnemyOne;
+using AdventureStorm.Gameplay;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,24 +6,15 @@ public class EnemyHealthUI : MonoBehaviour
 {
     [SerializeField] private StyleSheet _styleSheet;
 
-    private GameObject _enemy;
-
     private VisualElement _root;
 
     private ProgressBar _healthBar;
 
-    private EnemyStateManager _enemyStateManager;
+    private EnemyController _enemyController;
 
     private void Start()
     {
-        _enemy = gameObject.gameObject;
-
         _root = GetComponent<UIDocument>().rootVisualElement;
-
-        if (_enemyStateManager == null)
-        {
-            _enemyStateManager = GetComponentInParent<EnemyStateManager>();
-        }
 
         _root.AddToClassList("container");
 
@@ -33,9 +23,14 @@ public class EnemyHealthUI : MonoBehaviour
         _healthBar = new ProgressBar();
         _healthBar.AddToClassList("health-bar");
 
-        _healthBar.highValue = _enemyStateManager.Health;
-
         _root.Add(_healthBar);
+
+        _enemyController = GetComponentInParent<EnemyController>();
+
+        if (_enemyController != null)
+        {
+            _healthBar.highValue = _enemyController.MaxHealth;
+        }
 
         SetPosition();
     }
@@ -44,15 +39,12 @@ public class EnemyHealthUI : MonoBehaviour
     {
         if (gameObject.transform != null)
         {
-            SetPosition();
-        }
-    }
+            if (_enemyController != null)
+            {
+                _healthBar.value = _enemyController.Health;
+            }
 
-    private void Update()
-    {
-        if (_healthBar != null)
-        {
-            _healthBar.value = _enemyStateManager.Health;
+            SetPosition();
         }
     }
 
@@ -60,8 +52,8 @@ public class EnemyHealthUI : MonoBehaviour
     {
         if (_root != null)
         {
-            Vector3 enemyPosition = _enemy.transform.position;
-            enemyPosition.y += 3.6f;
+            Vector3 enemyPosition = gameObject.transform.position;
+            enemyPosition.y += 3.75f;
             enemyPosition.x -= 0.2f;
 
             Vector2 newPosition = RuntimePanelUtils.CameraTransformWorldToPanel(_root.panel, enemyPosition, Camera.allCameras[0]);

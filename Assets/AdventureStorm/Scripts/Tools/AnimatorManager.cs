@@ -53,6 +53,7 @@ namespace AdventureStorm.Tools
         /// <returns></returns>
         public bool DidAnimationFinish(string name)
         {
+            if (name != _currentState) return true;
             AnimatorStateInfo animationState = Animator.GetCurrentAnimatorStateInfo(0);
             // Matching the name of the state and checking that the animation clip has finished.
             return animationState.IsName(name) && animationState.normalizedTime >= 1f;
@@ -71,6 +72,20 @@ namespace AdventureStorm.Tools
 
             // Play the last animation played.
             Animator.Play(_currentState);
+        }
+
+        /// <summary>
+        /// Replays the last played animation.
+        /// </summary>
+        public void ReplayAnimation(string name)
+        {
+            if (name != _currentState) return;
+
+            if (DidAnimationFinish(name))
+            {
+                Animator.Play(string.Empty);
+                Animator.Play(_currentState);
+            }
         }
 
         #endregion

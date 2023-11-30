@@ -9,21 +9,24 @@ EditorBuildSettings:
     path: Assets/AdventureStorm/Levels/MainMenuUIScene.unity
     guid: e27f5c9f995a26949bc7151afeb63e4b
   - enabled: 1
+    path: Assets/AdventureStorm/Levels/ReplayLevelUIScene.unity
+    guid: fa86c801c580dce448004a0bd9cd20ca
+  - enabled: 1
+    path: Assets/AdventureStorm/Levels/RestartLevelUIScene.unity
+    guid: aa40e34edfa14aa47a379708d5a94e1b
+  - enabled: 1
+    path: Assets/AdventureStorm/Levels/LevelCompleteUIScene.unity
+    guid: 1cafe6ad3f243df489a6950dc5f8b6c9
+  - enabled: 1
+    path: Assets/AdventureStorm/Levels/GameCompleteUIScene.unity
+    guid: 31ff41e245b5e824fa2ae129a080fe08
+  - enabled: 1
     path: Assets/AdventureStorm/Levels/LevelOneScene.unity
     guid: fb322bf2d9a4b3547bd1684fb90d1258
   - enabled: 1
     path: Assets/AdventureStorm/Levels/LevelTwoScene.unity
     guid: 99a0d8801fd80554d835c0f09dc1e03a
   - enabled: 1
-    path: Assets/AdventureStorm/Levels/LevelCompleteUIScene.unity
-    guid: 1cafe6ad3f243df489a6950dc5f8b6c9
-  - enabled: 1
-    path: Assets/AdventureStorm/Levels/RestartLevelUIScene.unity
-    guid: aa40e34edfa14aa47a379708d5a94e1b
-  - enabled: 1
-    path: Assets/AdventureStorm/Levels/ReplayLevelUIScene.unity
-    guid: fa86c801c580dce448004a0bd9cd20ca
-  - enabled: 1
-    path: Assets/AdventureStorm/Levels/GameCompleteUIScene.unity
-    guid: 31ff41e245b5e824fa2ae129a080fe08
+    path: Assets/AdventureStorm/Levels/LevelThreeScene.unity
+    guid: e46611ebc4855b44fbc6b41834b1c784
   m_configObjects: {}

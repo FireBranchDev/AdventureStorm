@@ -1,5 +1,4 @@
-using AdventureStorm.Gameplay;
-using AdventureStorm.Systems;
+using AdventureStorm.Gameplay.Level;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,11 +29,7 @@ namespace AdventureStorm.UI
         [SerializeField]
         private GameObject _system;
 
-        private PlayerStateManager _playerStateManager;
-
         private LevelManager _levelManager;
-
-        private Coroutine _loadRestartLevelUIScene;
 
         #endregion
 
@@ -42,44 +37,18 @@ namespace AdventureStorm.UI
 
         private void Awake()
         {
-            _playerStateManager = null;
             _levelManager = null;
-
-            _loadRestartLevelUIScene = null;
         }
 
         private void Update()
         {
             if (_player != null && _system != null)
             {
-                if (_playerStateManager == null)
-                {
-                    if (_player.TryGetComponent<PlayerStateManager>(out var playerStateManager))
-                    {
-                        _playerStateManager = playerStateManager;
-                    }
-                }
-
                 if (_levelManager == null)
                 {
                     if (_system.TryGetComponent<LevelManager>(out var levelManager))
                     {
                         _levelManager = levelManager;
-                    }
-                }
-
-                if (_playerStateManager != null && _levelManager != null)
-                {
-                    if (_playerStateManager.IsAlive)
-                    {
-                        _playerUI.SetActive(true);
-                    }
-                    else
-                    {
-                        if (_loadRestartLevelUIScene == null)
-                        {
-                            _loadRestartLevelUIScene = StartCoroutine(LoadRestartLevelUIScene());
-                        }
                     }
                 }
             }

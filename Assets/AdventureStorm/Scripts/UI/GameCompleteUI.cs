@@ -6,12 +6,6 @@ namespace AdventureStorm.UI
 {
     public class GameCompleteUI : MonoBehaviour
     {
-        #region Constant Fields
-
-        private const string MainMenuUIScene = "MainMenuUIScene";
-
-        #endregion
-
         #region Fields
 
         private Button _mainMenu;
@@ -35,7 +29,7 @@ namespace AdventureStorm.UI
 
         private void OnMenuMenuClicked(ClickEvent evt)
         {
-            StartCoroutine(SceneHelper.LoadSceneCoroutine(MainMenuUIScene));
+            StartCoroutine(SceneHelper.LoadSceneCoroutine(SceneHelper.MainMenu));
         }
 
         #endregion

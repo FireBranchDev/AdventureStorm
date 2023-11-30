@@ -1,10 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Dev/JoshuaRyanSprowson/_UI/ReplayLevelUI.uss?fileID=7433441132597879392&amp;guid=f73c8922b8df6cf4791dffe094aec614&amp;type=3#ReplayLevelUI" />
+    <Style src="project://database/Assets/AdventureStorm/UI/ReplayLevel.uss?fileID=7433441132597879392&amp;guid=b2a075b0ee4a2f64688e001c6d759782&amp;type=3#ReplayLevel" />
     <ui:VisualElement name="screen" class="screen">
+        <ui:Label tabindex="-1" text="Pick a level to replay" display-tooltip-when-elided="true" enable-rich-text="true" />
         <ui:VisualElement name="levels" class="levels">
-            <ui:Button text="Level One" display-tooltip-when-elided="true" name="level-one" class="level-unlocked" />
-            <ui:Button text="Level Two" display-tooltip-when-elided="true" name="level-two" class="level-locked" />
-            <ui:Button text="Level Three" display-tooltip-when-elided="true" name="level-three" class="level-locked" />
+            <ui:Button text="Level One" display-tooltip-when-elided="true" name="level-one" class="level" />
+            <ui:Button text="Level Two" display-tooltip-when-elided="true" name="level-two" class="level" />
+            <ui:Button text="Level Three" display-tooltip-when-elided="true" name="level-three" class="level" />
         </ui:VisualElement>
         <ui:VisualElement name="buttons-container" class="buttons-container">
             <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="main-menu" class="main-menu" />

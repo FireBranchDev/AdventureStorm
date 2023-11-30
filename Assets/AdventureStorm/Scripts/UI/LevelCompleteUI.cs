@@ -1,4 +1,5 @@
-using AdventureStorm.Systems;
+using AdventureStorm.Gameplay.Level;
+using AdventureStorm.Tools;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,12 +9,6 @@ namespace AdventureStorm.UI
 {
     public class LevelCompleteUI : MonoBehaviour
     {
-        #region Constant Fields
-
-        private const string MainMenuUIScene = "MainMenuUIScene";
-
-        #endregion
-
         #region Fields
 
         [SerializeField]
@@ -44,7 +39,7 @@ namespace AdventureStorm.UI
 
         private void OnMainMenuButtonClicked(ClickEvent evt)
         {
-            StartCoroutine(LoadMainMenuUIScene());
+            StartCoroutine(LoadMainMenuCoroutine());
         }
 
         private void OnNextLevelClicked(ClickEvent evt)
@@ -58,9 +53,9 @@ namespace AdventureStorm.UI
             }
         }
 
-        private IEnumerator LoadMainMenuUIScene()
+        private IEnumerator LoadMainMenuCoroutine()
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(MainMenuUIScene);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneHelper.MainMenu);
             while (!asyncLoad.isDone)
             {
                 yield return null;

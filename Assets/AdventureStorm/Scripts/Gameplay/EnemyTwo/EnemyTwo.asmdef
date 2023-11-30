@@ -1,0 +1,19 @@
+{
+    "name": "EnemyTwo",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c2846793ea3173d4387fe9f93cb9731c",
+        "GUID:08d8db63718505247bfccc329d08dbd9",
+        "GUID:183dda5d86a80cd468dc341975dc9e24",
+        "GUID:0b1cd3b04f675754b81128523520f716"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

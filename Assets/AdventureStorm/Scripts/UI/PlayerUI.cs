@@ -1,4 +1,4 @@
-using AdventureStorm.Gameplay;
+using AdventureStorm.Gameplay.Player;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,24 +14,9 @@ namespace AdventureStorm.UI
 
         private GameObject _player;
 
-        private PlayerStateManager _playerStateManager;
-
-        private PlayerDodgingState _playerDodgingState;
-
         private UIDocument _uiDocument;
 
-        private void Awake()
-        {
-            _healthBar = null;
-
-            _staminaBar = null;
-
-            _player = null;
-
-            _playerStateManager = null;
-
-            _playerDodgingState = null;
-        }
+        private PlayerController _playerController;
 
         private void OnEnable()
         {
@@ -42,40 +27,24 @@ namespace AdventureStorm.UI
 
             _collectedKey = _uiDocument.rootVisualElement.Q("collected-key") as Label;
 
-            _staminaBar.highValue = PlayerDodgingState.MaximumDodgeAttackStamina;
-
             _player = GameObject.FindWithTag("Player");
 
             if (_player != null)
             {
-                if (_player.TryGetComponent<PlayerStateManager>(out var x))
-                {
-                    _playerStateManager = x;
-                    _healthBar.highValue = _playerStateManager.MaximumHealth;
-                }
+                _playerController = _player.GetComponent<PlayerController>();
+                _healthBar.highValue = _playerController.MaxHealth;
+                _staminaBar.highValue = _playerController.MaxDodgeStamina;
             }
         }
 
         private void Update()
         {
-            if (_playerStateManager != null)
+            if (_playerController != null)
             {
-                if (_playerDodgingState == null)
-                {
-                    if (_playerStateManager.AliveState != null)
-                    {
-                        _playerDodgingState = _playerStateManager.AliveState.DodgingState;
-                    }
-                }
+                _healthBar.value = _playerController.Health;
+                _staminaBar.value = _playerController.DodgeStamina;
 
-                _healthBar.value = _playerStateManager.Health;
-
-                if (_playerDodgingState != null)
-                {
-                    _staminaBar.value = _playerDodgingState.DodgeStamina;
-                }
-
-                if (_playerStateManager.HasKey)
+                if (_playerController.WasKeyPickedUp)
                 {
                     _collectedKey.text = "1/1 Key";
                 }

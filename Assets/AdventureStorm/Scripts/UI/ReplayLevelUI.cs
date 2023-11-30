@@ -1,32 +1,28 @@
 using AdventureStorm.Data;
-using AdventureStorm.Systems;
+using AdventureStorm.Gameplay.Level;
+using AdventureStorm.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace AdventureStorm.UI
 {
     public class ReplayLevelUI : MonoBehaviour
     {
-        #region Constant Fields
-
-        private const string MainMenuUIScene = "MainMenuUIScene";
-
-        #endregion
-
         #region Fields  
 
-        [Tooltip("Container for the scene's scripts")]
-        [SerializeField]
         private GameObject _system;
+
+        private LevelManager _levelManager;
 
         private string _selectedLevel;
 
         private Button _levelOne;
 
         private Button _levelTwo;
+
+        private Button _levelThree;
 
         private Button _mainMenu;
 
@@ -36,29 +32,34 @@ namespace AdventureStorm.UI
 
         #region LifeCycle
 
-        private void Awake()
-        {
-            _selectedLevel = string.Empty;
-        }
-
         private void OnEnable()
         {
             var uiDocument = GetComponent<UIDocument>();
 
             _levelOne = uiDocument.rootVisualElement.Q("level-one") as Button;
             _levelTwo = uiDocument.rootVisualElement.Q("level-two") as Button;
+            _levelThree = uiDocument.rootVisualElement.Q("level-three") as Button;
 
             _mainMenu = uiDocument.rootVisualElement.Q("main-menu") as Button;
             _mainMenu.RegisterCallback<ClickEvent>(OnMainMenuClicked);
 
             _selectLevel = uiDocument.rootVisualElement.Q("select-level") as Button;
             _selectLevel.RegisterCallback<ClickEvent>(OnSelectLevelClicked);
+        }
 
-            if (_system != null)
+        private void Start()
+        {
+            if (_system == null)
             {
-                if (_system.TryGetComponent<LevelManager>(out var levelManager))
+                _system = GameObject.Find("@System");
+            }
+
+            if (_levelManager == null)
+            {
+                if (_system != null)
                 {
-                    StartCoroutine(AllowUnlockedLevelsToBeClicked(levelManager));
+                    _levelManager = _system.GetComponent<LevelManager>();
+                    StartCoroutine(UnlockedLevelsClickableCoroutine());
                 }
             }
         }
@@ -69,75 +70,91 @@ namespace AdventureStorm.UI
 
         private void OnLevelOneClicked(ClickEvent evt)
         {
-            if (_system != null)
+            if (_levelManager != null)
             {
-                if (_system.TryGetComponent<LevelManager>(out var levelManager))
+                foreach (var level in _levelManager.GetCompletedLevels())
                 {
-                    _selectedLevel = levelManager.GetCompletedLevels()[0].SceneName;
+                    if (level.ID == 1)
+                    {
+                        _selectedLevel = level.SceneName;
+                    }
                 }
             }
         }
 
         private void OnLevelTwoClicked(ClickEvent evt)
         {
-            if (_system != null)
+            if (_levelManager != null)
             {
-                if (_system.TryGetComponent<LevelManager>(out var levelManager))
+                foreach (var level in _levelManager.GetCompletedLevels())
                 {
-                    _selectedLevel = levelManager.GetCompletedLevels()[1].SceneName;
+                    if (level.ID == 2)
+                    {
+                        _selectedLevel = level.SceneName;
+                    }
                 }
             }
         }
 
-        private void OnMainMenuClicked(ClickEvent evt)
+        private void OnLevelThreeClicked(ClickEvent evt)
         {
-            StartCoroutine(LoadMainMenuUIScene());
+            if (_levelManager != null)
+            {
+                foreach (var level in _levelManager.GetCompletedLevels())
+                {
+                    if (level.ID == 3)
+                    {
+                        _selectedLevel = level.SceneName;
+                    }
+                }
+            }
         }
 
-        private IEnumerator LoadMainMenuUIScene()
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(MainMenuUIScene);
 
-            while (!asyncLoad.isDone)
-            {
-                yield return null;
-            }
+        private void OnMainMenuClicked(ClickEvent evt)
+        {
+            StartCoroutine(SceneHelper.LoadSceneCoroutine(SceneHelper.MainMenu));
         }
 
         private void OnSelectLevelClicked(ClickEvent evt)
         {
             if (!string.IsNullOrEmpty(_selectedLevel))
             {
-                if (_system != null)
+                if (_levelManager != null)
                 {
-                    if (_system.TryGetComponent<LevelManager>(out var levelManager))
-                    {
-                        levelManager.ReplayCompletedLevel(_selectedLevel);
-                    }
+                    _levelManager.ReplayCompletedLevel(_selectedLevel);
                 }
             }
         }
 
-        private IEnumerator AllowUnlockedLevelsToBeClicked(LevelManager levelManager)
+        private IEnumerator UnlockedLevelsClickableCoroutine()
         {
-            while (!levelManager.HasLoaded)
+            while (_levelManager == null)
             {
                 yield return null;
             }
 
-            List<LevelData> unlockedLevels = levelManager.GetCompletedLevels();
+            while (!_levelManager.HasLoaded)
+            {
+                yield return null;
+            }
 
+            List<LevelData> unlockedLevels = _levelManager.GetCompletedLevels();
             foreach (var levelData in unlockedLevels)
             {
                 switch (levelData.ID)
                 {
                     case 1:
+                        _levelOne.AddToClassList("unlocked-level");
                         _levelOne.RegisterCallback<ClickEvent>(OnLevelOneClicked);
                         break;
                     case 2:
+                        _levelTwo.AddToClassList("unlocked-level");
                         _levelTwo.RegisterCallback<ClickEvent>(OnLevelTwoClicked);
                         break;
                     case 3:
+                        _levelThree.AddToClassList("unlocked-level");
+                        _levelThree.RegisterCallback<ClickEvent>(OnLevelThreeClicked);
                         break;
                 }
             }
