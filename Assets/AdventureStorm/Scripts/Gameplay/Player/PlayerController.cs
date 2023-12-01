@@ -50,6 +50,11 @@ namespace AdventureStorm.Gameplay.Player
         {
             base.Update();
 
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                StartCoroutine(SceneHelper.LoadSceneCoroutine(SceneHelper.MainMenu));
+            }
+
             if (IsAlive)
             {
                 float hAxis = Input.GetAxis("Horizontal");
@@ -297,6 +302,8 @@ namespace AdventureStorm.Gameplay.Player
                 AnimatorManager.ReplayAnimation(PlayerAnimation.Jump);
             }
 
+            Vector3 originalPosition = transform.position;
+
             Vector3 maxPosition = transform.position + new Vector3 { y = JumpHeight };
 
             Vector3 direction = maxPosition - transform.position;
@@ -313,18 +320,7 @@ namespace AdventureStorm.Gameplay.Player
 
             yield return new WaitForSeconds(JumpInAirTime);
 
-            maxPosition = transform.position - new Vector3 { y = JumpHeight };
-            direction = maxPosition - transform.position;
-            direction.x = 0;
-            direction.z = 0;
-
-            distance = direction.magnitude;
-
-            while (transform.position.y >= maxPosition.y)
-            {
-                transform.Translate(direction * Time.deltaTime * (distance / TimeToReachJumpHeight));
-                yield return null;
-            }
+            transform.position = originalPosition;
 
             _jump = null;
         }
